@@ -1,16 +1,14 @@
 <template>
   <div v-if="clubs.length > 0" class="clubs-container">
-    <!-- somehow comp got loaded before App has loaded the clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
-    <DisplayClubs :clubs="clubs"/>
+    <!-- comp loaded before App has loaded clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
+    <DisplayClubs :clubs/>
   </div>
-  <div class="body">
-    <div class="season-container">
-        <SimulateSeason :schedule="schedule"/>
-    </div>
-    <div v-if="clubs.length > 0" class="tables-container">
-      <!-- somehow comp got loaded before App has loaded the clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
-      <DisplayTables :clubs="clubs"/>
-    </div>
+  <div v-if="clubs.length > 0" class="tables-container">
+    <!-- comp loaded before App has loaded clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
+    <DisplayTables :clubs/>
+  </div>
+  <div class="season-container">
+    <SimulateSeason :schedule/>
   </div>
 </template>
 
@@ -65,7 +63,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
-
+  
   // min-width: 320px;
   // min-height: 100vh;
 }
@@ -73,28 +71,20 @@ body {
 #app {
   // max-width: 1280px;
   // margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-  padding: 1rem;
-
+  padding: 0.5rem;
+  
   .clubs-container {
-    max-height: 320px;
+    max-height: 312px;
     overflow-y: scroll;
   }
+  
+  .tables-container {
+    padding: 0.5rem 0;
+    overflow-x: scroll;
+  }
 
-  .body {
-    display: flex;
-    column-gap: 1rem;
-
-    .season-container {
-      max-height: 100svh;
-      overflow-x: scroll;
-    }
-
-    .tables-container {
-      max-height: 100svh;
-    }
+  .season-container {
+    overflow-x: scroll;
   }
 }
 </style>

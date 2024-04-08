@@ -91,7 +91,7 @@ export default {
   .matchdays {
     display: flex;
     column-gap: 4px;
-    overflow: scroll;
+    overflow-x: scroll;
   }
 }
 </style>

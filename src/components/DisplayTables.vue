@@ -2,10 +2,10 @@
   <div class="display-tables-wrapper">
     <div class="live-table">
       <div class="header">
-        <div class="column" @click="setSortTopic('')">
+        <div class="column sticky-pos0" @click="setSortTopic('')">
           <label>Pos</label>
         </div>
-        <div class="column" @click="showDetails = !showDetails">
+        <div class="column sticky-pos1" @click="showDetails = !showDetails">
           <label>+++</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
@@ -89,10 +89,10 @@
       </div>
       <div class="body">
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
-          <div class="column">
+          <div class="column sticky-pos0">
             <label>{{ club.tablePosition }}</label>
           </div>
-          <div class="column">
+          <div class="column sticky-pos1">
             <label>{{ club.initials }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' }">
@@ -226,9 +226,11 @@ export default {
 
 <style lang="scss" scoped>
 .display-tables-wrapper {
-  border-radius: 8px;
-
+  overflow-x: scroll;
+  
   .live-table {
+    min-width: fit-content;
+    max-width: fit-content;
     list-style: none;
     border: 1px solid #fff;
     border-radius: 8px;
@@ -247,9 +249,9 @@ export default {
     }
     
     .column {
-        width: 2.5rem;
-        text-align: center;
-      }
+      width: 2.5rem;
+      text-align: center;
+    }
 
     .entry {
       display: flex;
@@ -261,6 +263,18 @@ export default {
 
     .bold {
       font-weight: bold;
+    }
+
+    .sticky-pos0 {
+      position: sticky;
+      left: 0;
+      backdrop-filter: blur(20px)
+    }
+
+    .sticky-pos1 {
+      position: sticky;
+      left: 2.5rem;
+      backdrop-filter: blur(20px)
     }
   }
 }
