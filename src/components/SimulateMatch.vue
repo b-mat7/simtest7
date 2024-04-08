@@ -258,7 +258,7 @@ export default {
             defender.goalsAgainst++
 
             this.liveTicker.unshift(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr - this.saveStr}
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr - this.saveStr} | ${this.homeGoals}:${this.awayGoals}
               `)
 
             updateTeam(
