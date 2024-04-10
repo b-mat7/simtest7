@@ -53,7 +53,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -107,7 +107,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -161,7 +161,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -215,7 +215,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -269,7 +269,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -323,7 +323,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -377,7 +377,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -431,7 +431,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -485,7 +485,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -539,7 +539,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -593,7 +593,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -647,7 +647,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -701,7 +701,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },
@@ -755,7 +755,7 @@ const clubsData = [
     'attPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.attPlayStrSum / this.attPlays).toFixed(2)) : 0 },
     'defPlayStrAverage': function () { return this.matchesPlayed > 0    ? parseFloat((this.defPlayStrSum / this.defPlays).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
-    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.saves).toFixed(2)) : 0 },
+    'saveStrAverage': function () { return this.matchesPlayed > 0       ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
 
     'attPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.attPlays / this.intervalsPlayed * 100).toFixed() : 0 },
     'defPlaysPercentage': function () { return this.matchesPlayed > 0   ? (this.defPlays / this.intervalsPlayed * 100).toFixed() : 0 },

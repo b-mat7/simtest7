@@ -64,8 +64,8 @@
             </div>
             <div class="entry">
               <label>SaStr</label>
-              <label>{{ (homeSaveStrSum).toFixed() }} {{ parseFloat((homeSaveStrSum / homeSaves).toFixed(1)) }}</label>
-              <label>{{ (awaySaveStrSum).toFixed() }} {{ parseFloat((awaySaveStrSum / awaySaves).toFixed(1)) }}</label>
+              <label>{{ (homeSaveStrSum).toFixed() }} {{ parseFloat((homeSaveStrSum / awayShots).toFixed(1)) }}</label>
+              <label>{{ (awaySaveStrSum).toFixed() }} {{ parseFloat((awaySaveStrSum / homeShots).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>SV, %</label>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div v-else @click="showStats = !showStats" class="ticker">
-          <li v-for="(tick, index) in liveTicker" :key="index">
+          <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index">
             {{ tick }}
           </li>
           <label>Unser LiveTicker berichtet live...oO</label>
@@ -150,6 +150,7 @@ export default {
       awayDefPlays: 0,
       homeShots: 0,
       awayShots: 0,
+      // no shotsAgainst registered here (using #opponent's shots)
       homeSaves: 0,
       awaySaves: 0,
       homeGoals: 0,
@@ -257,8 +258,8 @@ export default {
             attacker.goals++
             defender.goalsAgainst++
 
-            this.liveTicker.unshift(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr - this.saveStr} | ${this.homeGoals}:${this.awayGoals}
+            this.liveTicker.push(`
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${this.shotStr - this.saveStr}) | ${this.homeGoals}:${this.awayGoals}
               `)
 
             updateTeam(
@@ -273,15 +274,15 @@ export default {
             attacker === this.home ? this.awaySaves++ : this.homeSaves++
             defender.saves++
 
-            this.liveTicker.unshift(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr - this.saveStr}
+            this.liveTicker.push(`
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${this.shotStr - this.saveStr})
               `)
           }
         }
 
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // >--< >--< >--< HANDLE INTERVAL-END >--< >--< >--<
+        // >--< >--< >--< HANDLE INTERVALL-END >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // update club points per current standing
         updatePoints(this, this.home, this.away)
@@ -322,6 +323,10 @@ export default {
           }
         )
 
+        // reset all stats that may not be re-calculatet next intervall
+        this.shotStr = 0
+        this.saveStr = 0
+
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< HANDLE THIRD-BREAKS >--< >--< >--<
@@ -340,7 +345,7 @@ export default {
           if (this.homeGoals === this.awayGoals) {
             this.matchLength += 5
 
-            this.liveTicker.unshift(`${this.matchTime}.: Overtime, +5min`)
+            this.liveTicker.push(`${this.matchTime}.: Overtime, +5min`)
           }
           else {
             this.stopSimulateMatch()
@@ -363,7 +368,7 @@ export default {
               }
             )
 
-            this.liveTicker.unshift(`${this.matchTime}.: End of the game`)
+            this.liveTicker.push(`${this.matchTime}.: End of the game`)
 
             // emit: match is finished
             this.$emit('matchFinished', this.match.matchNr)
@@ -375,7 +380,7 @@ export default {
             return this.match
           }
         }
-      }, 250)
+      }, 50)
     },
     stopSimulateMatch() {
       clearInterval(this.simulateMatchIntervall)

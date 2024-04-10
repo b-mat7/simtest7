@@ -284,7 +284,6 @@ export default {
       font-size: 0.5rem;
       display: flex;
       flex-direction: column;
-
     }
   }
 }
