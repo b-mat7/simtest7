@@ -29,7 +29,7 @@
         </div>
         <div class="seed-entry">
           <label>Mr</label>
-          <label>{{ club.morale }}</label>
+          <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
         </div>
       </div>
       <div class="play-stats">

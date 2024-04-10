@@ -61,7 +61,7 @@ const calcMomentum = (team) => {
 const calcTeamBuff = (team) => {
   const returnVal = +(
     (1 * team.morale)
-  ).toFixed(1)
+  ).toFixed(2)
 
   // könnte result auch an team{} zurück dranhängen -> kann darauf zugreifen in anderen ()
 
@@ -108,45 +108,68 @@ const updateTeam = (team, ...updateCallbacks) => {
   updateCallbacks.forEach(callback => callback(team))
 }
 
-const createSchedule2 = (clubsArr) => {
-  const numClubs = clubsArr.length;
-  const numMatchdays = (numClubs - 1) * 2; // Two halves
+const updatePoints = (comp, home, away) => {
+  // one-time: set revert-to value, add points for draw
+  if(!comp.initPointsSet) {
+    const homePointsInit = home.points
+    const awayPointsInit = away.points
+    comp.initPointsSet = true
 
-  const shuffledClubs = shuffleClubs(clubsArr)
+    home.points += 1
+    away.points += 1
+  }
 
-  // Initialize schedule object
-  // const schedule = Array.from({ length: numMatchdays }, () => []);   // as Array
-  const schedule = {};
+  // determine current leader if any
+  const [leader, trailer] = comp.homeGoals === comp.awayGoals
+    ? ['', '']
+    : comp.homeGoals > comp.awayGoals
+      ? [home, away]
+      : [away, home]
 
-  // Generate first half of the schedule using modified round-robin algorithm
-  for (let day = 0; day < numClubs - 1; day++) {
-    schedule[day] = []
-    for (let i = 0; i < numClubs / 2; i++) {
-      const homeClub = shuffledClubs[i];
-      const awayClub = shuffledClubs[numClubs - 1 - i];
-      if (day % 2 === 1) {
-        schedule[day].push({ "day": day + 1, "match": i + 1, "home": awayClub, "away": homeClub });
-      } else {
-        schedule[day].push({ "day": day + 1, "match": i + 1, "home": homeClub, "away": awayClub });
+  // update points if leader emerges or going back to draw
+  if (leader !== comp.lastIntervalLeader) {
+
+    // during regular matchTime 
+    if (comp.matchTime <= 60) {
+      if (leader !== '') {
+        leader.points += 2
+        trailer.points -= 1
+      }
+      if (leader === '') {
+        comp.lastIntervalLeader.points -= 2
+        comp.lastIntervalTrailer.points += 1
       }
     }
 
-    // Rotate the clubs
-    const temp = shuffledClubs[1];
-    for (let i = 1; i < numClubs - 1; i++) {
-      shuffledClubs[i] = shuffledClubs[i + 1];
+    // during overtime 
+    if (comp.matchTime > 60) {
+      if (leader !== '') {
+        leader.points += 1
+      }
+      if (leader === '') {
+        comp.lastIntervalLeader.points -= 1
+      }
     }
-    shuffledClubs[numClubs - 1] = temp;
   }
 
-  // Generate second half of the schedule by switching home/away
-  for (let day = 0; day < numClubs - 1; day++) {
-    for (let match of schedule[day]) {
-      schedule[(day + numClubs - 1)] = schedule[(day + numClubs - 1)] || [];  // {} only special ?!
-      schedule[(day + numClubs - 1)].push({ "day": day + numClubs, "match": match.match, "home": match.away, "away": match.home });
-    }
-  }
-  return schedule;
+  // prep for next interval
+  comp.lastIntervalLeader = leader
+  comp.lastIntervalTrailer = trailer
+}
+
+const updateMorale = (comp, home, away) => {
+  // determine winner & loser
+  const [winner, loser] = comp.homeGoals >= comp.awayGoals
+  ? [home, away]
+  : [away, home]
+
+  // update morale
+  winner.morale += 0.02
+  loser.morale -= 0.03
+
+  // ensure morale boundaries
+  winner.morale > 1.1 ? winner.morale = 1.1 : null
+  loser.morale < 0.9 ? loser.morale = 0.9 : null
 }
 
 const shuffleClubs = (clubsArr) => {
@@ -274,55 +297,6 @@ const updateLiveTable = (clubsArr) => {
   return sortedArray
 }
 
-const updatePoints = (comp, home, away) => {
-  // one-time: set revert-to value, add points for draw
-  if(!comp.initPointsSet) {
-    const homePointsInit = home.points
-    const awayPointsInit = away.points
-    comp.initPointsSet = true
-
-    home.points += 1
-    away.points += 1
-  }
-
-  // determine current leader if any
-  const [leader, trailer] = comp.homeGoals === comp.awayGoals
-    ? ['', '']
-    : comp.homeGoals > comp.awayGoals
-      ? [home, away]
-      : [away, home]
-
-  // update points if leader emerges or going back to draw
-  if (leader !== comp.lastIntervalLeader) {
-
-    // during regular matchTime 
-    if (comp.matchTime <= 60) {
-      if (leader !== '') {
-        leader.points += 2
-        trailer.points -= 1
-      }
-      if (leader === '') {
-        comp.lastIntervalLeader.points -= 2
-        comp.lastIntervalTrailer.points += 1
-      }
-    }
-
-    // during overtime 
-    if (comp.matchTime > 60) {
-      if (leader !== '') {
-        leader.points += 1
-      }
-      if (leader === '') {
-        comp.lastIntervalLeader.points -= 1
-      }
-    }
-  }
-
-  // prep for next interval
-  comp.lastIntervalLeader = leader
-  comp.lastIntervalTrailer = trailer
-}
-
 export {
   calcMomentum,
   calcTeamBuff,
@@ -331,8 +305,9 @@ export {
   calcShotStr,
   calcSaveStr,
   updateTeam,
+  updatePoints,
+  updateMorale,
   shuffleClubs,
   createSchedule,
   updateLiveTable,
-  updatePoints,
 }

@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcTeamBuff, calcAttPlayStr, calcDefPlayStr, calcShotStr, calcSaveStr, updateTeam, updatePoints } from '../lib/util.js';
+import { calcMomentum, calcTeamBuff, calcAttPlayStr, calcDefPlayStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateMorale} from '../lib/util.js';
 
 export default {
   emits: ['matchFinished'],
@@ -284,9 +284,6 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< HANDLE INTERVALL-END >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // update club points per current standing
-        updatePoints(this, this.home, this.away)
-
         // reset & update attacker with its play-stats
         updateTeam(
           attacker === this.home ? this.home : this.away,
@@ -322,6 +319,9 @@ export default {
             team.momentumSum += this.awayMomentum
           }
         )
+
+        // update club points per current standing
+        updatePoints(this, this.home, this.away)
 
         // reset all stats that may not be re-calculatet next intervall
         this.shotStr = 0
@@ -367,6 +367,9 @@ export default {
                 this.matchTime === 60 ? team.losses++ : team.lossesOvertime++
               }
             )
+
+            // update morale (depends on current table positions / form)
+            updateMorale(this, this.home, this.away)
 
             this.liveTicker.push(`${this.matchTime}.: End of the game`)
 

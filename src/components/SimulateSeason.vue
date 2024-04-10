@@ -60,7 +60,7 @@ export default {
               }, 100)
             })
           }
-        }, 2000)
+        }, 1000)
 
       } else {
         clearInterval(this.startDayIntervall)
