@@ -48,10 +48,10 @@
         <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' }" @click="setSortTopic('playsDiff')" v-if="showDetails">
           <label>Pl</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attPlayStrSum' }" @click="setSortTopic('attPlayStrSum')"v-if="showDetails">
-          <label>APStr</label>
+        <div class="column" :class="{ 'bold': sortTopic === 'attackStrSum' }" @click="setSortTopic('attackStrSum')"v-if="showDetails">
+          <label>AtStr</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attPlayStrAverage' }" @click="setSortTopic('attPlayStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" @click="setSortTopic('attackStrAverage')"v-if="showDetails">
           <label>ø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrSum' }" @click="setSortTopic('defPlayStrSum')"v-if="showDetails">
@@ -135,11 +135,11 @@
           <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' }" v-if="showDetails">
             <label>{{ club.playsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attPlayStrSum' }" v-if="showDetails">
-            <label>{{ (club.attPlayStrSum).toFixed() }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrSum' }" v-if="showDetails">
+            <label>{{ (club.attackStrSum).toFixed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attPlayStrAverage' }" v-if="showDetails">
-            <label>{{ club.attPlayStrAverage() }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" v-if="showDetails">
+            <label>{{ club.attackStrAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrSum' }" v-if="showDetails">
             <label>{{ (club.defPlayStrSum).toFixed() }}</label>

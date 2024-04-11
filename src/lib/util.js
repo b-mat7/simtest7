@@ -68,7 +68,7 @@ const calcTeamBuff = (team) => {
   return returnVal
 }
 
-const calcAttPlayStr = (team, teamBuffValue, dice) => {
+const calcAttackStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.attack * teamBuffValue)
     + diceMaxInt(dice)
@@ -300,7 +300,7 @@ const updateLiveTable = (clubsArr) => {
 export {
   calcMomentum,
   calcTeamBuff,
-  calcAttPlayStr,
+  calcAttackStr,
   calcDefPlayStr,
   calcShotStr,
   calcSaveStr,

@@ -24,8 +24,8 @@
             </div>
             <div class="entry">
               <label>OP %</label>
-              <label>{{ parseFloat((homeAttPlays / matchTime * 100).toFixed()) }}</label>
-              <label>{{ parseFloat((awayAttPlays / matchTime * 100).toFixed()) }}</label>
+              <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed()) }}</label>
+              <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="tweaks">
@@ -42,8 +42,8 @@
           <div class="attack">
             <div class="entry">
               <label>APStr</label>
-              <label>{{ (homeAttPlayStrSum).toFixed() }} {{ parseFloat((homeAttPlayStrSum / homeAttPlays).toFixed(1)) }}</label>
-              <label>{{ (awayAttPlayStrSum).toFixed() }} {{ parseFloat((awayAttPlayStrSum / awayAttPlays).toFixed(1)) }}</label>
+              <label>{{ (homeAttackStrSum).toFixed() }} {{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
+              <label>{{ (awayAttackStrSum).toFixed() }} {{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>ShStr</label>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcTeamBuff, calcAttPlayStr, calcDefPlayStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateMorale} from '../lib/util.js';
+import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefPlayStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateMorale} from '../lib/util.js';
 
 export default {
   emits: ['matchFinished'],
@@ -131,10 +131,10 @@ export default {
       defenderBuff: 1,
       homeBuffSum: 0,
       awayBuffSum: 0,
-      attPlayStr: 0,
+      attackStr: 0,
       defPlayStr: 0,
-      homeAttPlayStrSum: 0,
-      awayAttPlayStrSum: 0,
+      homeAttackStrSum: 0,
+      awayAttackStrSum: 0,
       homeDefPlayStrSum: 0,
       awayDefPlayStrSum: 0,
       shotStr: 0,
@@ -144,8 +144,8 @@ export default {
       homeSaveStrSum: 0,
       awaySaveStrSum: 0,
 
-      homeAttPlays: 0,
-      awayAttPlays: 0,
+      homeAttacks: 0,
+      awayAttacks: 0,
       homeDefPlays: 0,
       awayDefPlays: 0,
       homeShots: 0,
@@ -202,9 +202,9 @@ export default {
 
         // add attackPlay and defPlay
         attacker === this.home 
-          ? (this.homeAttPlays++, this.awayDefPlays++) 
-          : (this.homeDefPlays++, this.awayAttPlays++)
-        attacker.attPlays++
+          ? (this.homeAttacks++, this.awayDefPlays++) 
+          : (this.homeDefPlays++, this.awayAttacks++)
+        attacker.attacks++
         defender.defPlays++
 
 
@@ -222,14 +222,14 @@ export default {
           : (this.homeBuffSum += this.defenderBuff, this.awayBuffSum += this.attackerBuff)
 
         // calc playStr
-        this.attPlayStr = calcAttPlayStr(attacker, this.attackerBuff, 10)
+        this.attackStr = calcAttackStr(attacker, this.attackerBuff, 10)
         this.defPlayStr = calcDefPlayStr(defender, this.defenderBuff, 10)
         attacker === this.home
-          ? (this.homeAttPlayStrSum += this.attPlayStr, this.awayDefPlayStrSum += this.defPlayStr)
-          : (this.homeDefPlayStrSum += this.defPlayStr, this.awayAttPlayStrSum += this.attPlayStr)
+          ? (this.homeAttackStrSum += this.attackStr, this.awayDefPlayStrSum += this.defPlayStr)
+          : (this.homeDefPlayStrSum += this.defPlayStr, this.awayAttackStrSum += this.attackStr)
 
-        // if attPlayStr > defPlayStr => get Shot on goal
-        if (this.attPlayStr - this.defPlayStr > 1.5) {
+        // if attackStr > defPlayStr => get Shot on goal
+        if (this.attackStr - this.defPlayStr > 1.5) {
           attacker === this.home ? this.homeShots++ : this.awayShots++
           attacker.shots++;
           defender.shotsAgainst++;
@@ -289,7 +289,7 @@ export default {
           attacker === this.home ? this.home : this.away,
           team => {
             team.buffSum += this.attackerBuff
-            team.attPlayStrSum += this.attPlayStr
+            team.attackStrSum += this.attackStr
             team.shotStrSum += this.shotStr
           }
         )
@@ -408,10 +408,10 @@ export default {
       this.defenderBuff = 1
       this.homeBuffSum = 0
       this.awayBuffSum = 0
-      this.attPlayStr = 0,
+      this.attackStr = 0,
       this.defPlayStr = 0,
-      this.homeAttPlayStrSum = 0
-      this.awayAttPlayStrSum = 0
+      this.homeAttackStrSum = 0
+      this.awayAttackStrSum = 0
       this.homeDefPlayStrSum = 0
       this.awayDefPlayStrSum = 0
       this.shotStr = 0
@@ -420,8 +420,8 @@ export default {
       this.awayShotStrSum = 0
       this.homeSaveStrSum = 0
       this.awaySaveStrSum = 0
-      this.homeAttPlays = 0
-      this.awayAttPlays = 0
+      this.homeAttacks = 0
+      this.awayAttacks = 0
       this.homeDefPlays = 0
       this.awayDefPlays = 0
       this.homeShots = 0
