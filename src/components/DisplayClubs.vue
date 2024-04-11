@@ -41,7 +41,7 @@
             <label>AtStr</label><label>{{ (club.attackStrSum).toFixed() }}</label>
           </div>
           <div class="play-entry">
-            <label>DPStr</label><label>{{ (club.defPlayStrSum).toFixed() }}</label>
+            <label>DeStr</label><label>{{ (club.defendStrSum).toFixed() }}</label>
           </div>
           <div class="play-entry">
             <label>ShStr</label><label>{{ (club.shotStrSum).toFixed() }}</label>
@@ -50,7 +50,7 @@
             <label>SaStr</label><label>{{ (club.saveStrSum).toFixed() }}</label>
           </div>
           <div class="play-entry">
-            <label>Pl</label><label>{{ club.attacks }}:{{ club.defPlays }}</label>
+            <label>Pl</label><label>{{ club.attacks }}:{{ club.defends }}</label>
           </div>
           <div class="play-entry">
             <label>Sh</label><label>{{ club.shots }}:{{ club.shotsAgainst }}</label>
@@ -77,7 +77,7 @@
             <label>AtStr ø</label><label>{{ club.attackStrAverage() }}</label>
           </div>
           <div class="play-entry">
-            <label>DPStr ø</label><label>{{ club.defPlayStrAverage() }}</label>
+            <label>DeStr ø</label><label>{{ club.defendStrAverage() }}</label>
           </div>
           <div class="play-entry">
             <label>ShStr ø</label><label>{{ club.shotStrAverage() }}</label>
@@ -86,7 +86,7 @@
             <label>SaStr ø</label><label>{{ club.saveStrAverage() }}</label>
           </div>
           <div class="play-entry">
-            <label>Pl%</label><label>{{ club.playsDiff() }}</label><label>{{ club.attacksPercentage() }}:{{ club.defPlaysPercentage() }}</label>
+            <label>Pl%</label><label>{{ club.playsDiff() }}</label><label>{{ club.attacksPercentage() }}:{{ club.defendsPercentage() }}</label>
           </div>
           <div class="play-entry">
             <label>Sh%</label><label>{{ club.shotsPercentage() }}</label>

@@ -54,10 +54,10 @@
         <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" @click="setSortTopic('attackStrAverage')"v-if="showDetails">
           <label>ø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrSum' }" @click="setSortTopic('defPlayStrSum')"v-if="showDetails">
-          <label>DPStr</label>
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrSum' }" @click="setSortTopic('defendStrSum')"v-if="showDetails">
+          <label>DeStr</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrAverage' }" @click="setSortTopic('defPlayStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" @click="setSortTopic('defendStrAverage')"v-if="showDetails">
           <label>ø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotStrSum' }" @click="setSortTopic('shotStrSum')"v-if="showDetails">
@@ -141,11 +141,11 @@
           <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" v-if="showDetails">
             <label>{{ club.attackStrAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrSum' }" v-if="showDetails">
-            <label>{{ (club.defPlayStrSum).toFixed() }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrSum' }" v-if="showDetails">
+            <label>{{ (club.defendStrSum).toFixed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defPlayStrAverage' }" v-if="showDetails">
-            <label>{{ club.defPlayStrAverage() }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" v-if="showDetails">
+            <label>{{ club.defendStrAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotStrSum' }" v-if="showDetails">
             <label>{{ (club.shotStrSum).toFixed() }}</label>

@@ -77,7 +77,7 @@ const calcAttackStr = (team, teamBuffValue, dice) => {
   return returnVal
 }
 
-const calcDefPlayStr = (team, teamBuffValue, dice) => {
+const calcDefendStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.defend * teamBuffValue)
     + diceMaxInt(dice)
@@ -301,7 +301,7 @@ export {
   calcMomentum,
   calcTeamBuff,
   calcAttackStr,
-  calcDefPlayStr,
+  calcDefendStr,
   calcShotStr,
   calcSaveStr,
   updateTeam,
