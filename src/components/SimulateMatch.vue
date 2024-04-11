@@ -23,16 +23,16 @@
               <label>{{ awayMomentum }} {{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
-              <label>OP %</label>
+              <label>OP%</label>
               <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed()) }}</label>
               <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="tweaks">
             <div class="entry">
-              <label>Buf</label>
-              <label>{{ homeBuffSum }} {{ parseFloat((homeBuffSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ awayBuffSum }} {{ parseFloat((awayBuffSum / matchTime).toFixed(1)) }}</label>
+              <label>Bufø</label>
+              <label>{{ parseFloat((homeBuffSum / matchTime).toFixed(2)) }}</label>
+              <label>{{ parseFloat((awayBuffSum / matchTime).toFixed(2)) }}</label>
             </div>
             <div class="entry">
               <label>Mod</label>
@@ -41,34 +41,34 @@
           </div>
           <div class="attack">
             <div class="entry">
-              <label>AtStr</label>
-              <label>{{ (homeAttackStrSum).toFixed() }} {{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
-              <label>{{ (awayAttackStrSum).toFixed() }} {{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
+              <label>Atø</label>
+              <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }} {{  }}</label>
             </div>
             <div class="entry">
-              <label>ShStr</label>
-              <label>{{ (homeShotStrSum).toFixed() }} {{ parseFloat((homeShotStrSum / homeShots).toFixed(1)) }}</label>
-              <label>{{ (awayShotStrSum).toFixed() }} {{ parseFloat((awayShotStrSum / awayShots).toFixed(1)) }}</label>
+              <label>Shø</label>
+              <label>{{ parseFloat((homeShotStrSum / homeShots).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((awayShotStrSum / awayShots).toFixed(1)) }} {{  }}</label>
             </div>
             <div class="entry">
-              <label>SG, %</label>
+              <label>Sh, %</label>
               <label>{{ homeShots }} {{ parseFloat((homeGoals / homeShots * 100).toFixed()) }}</label>
               <label>{{ awayShots }} {{ parseFloat((awayGoals / awayShots * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="defend">
             <div class="entry">
-              <label>DeStr</label>
-              <label>{{ (homeDefendStrSum).toFixed() }} {{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }}</label>
-              <label>{{ (awayDefendStrSum).toFixed() }} {{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }}</label>
+              <label>Deø</label>
+              <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }} {{  }}</label>
             </div>
             <div class="entry">
-              <label>SaStr</label>
-              <label>{{ (homeSaveStrSum).toFixed() }} {{ parseFloat((homeSaveStrSum / awayShots).toFixed(1)) }}</label>
-              <label>{{ (awaySaveStrSum).toFixed() }} {{ parseFloat((awaySaveStrSum / homeShots).toFixed(1)) }}</label>
+              <label>Saø</label>
+              <label>{{ parseFloat((homeSaveStrSum / awayShots).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((awaySaveStrSum / homeShots).toFixed(1)) }} {{  }}</label>
             </div>
             <div class="entry">
-              <label>SV, %</label>
+              <label>Sa, %</label>
               <label>{{ homeSaves }} {{ parseFloat((homeSaves / awayShots * 100).toFixed()) }}</label>
               <label>{{ awaySaves }} {{ parseFloat((awaySaves / homeShots * 100).toFixed()) }}</label>
             </div>
@@ -259,7 +259,7 @@ export default {
             defender.goalsAgainst++
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${this.shotStr - this.saveStr}) | ${this.homeGoals}:${this.awayGoals}
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals}:${this.awayGoals}
               `)
 
             updateTeam(
@@ -275,7 +275,7 @@ export default {
             defender.saves++
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${this.shotStr - this.saveStr})
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
               `)
           }
         }

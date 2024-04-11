@@ -9,7 +9,7 @@ season<template>
     </div>
     <div class="matchdays">
       <div v-for="matchday in schedule.matchdayList">
-        <SimulateMatchday :matchday="matchday" :simulatePara="simulatePara" :simulateSequDayNr="simulateSequDayNr" @matchdayFinished="handlefinishedMatchdays"/>
+        <SimulateMatchday :matchday :simulatePara :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
       </div>
     </div>
   </div>

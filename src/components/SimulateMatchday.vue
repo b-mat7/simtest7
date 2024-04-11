@@ -7,7 +7,7 @@
     </div>
     <div class="matches">
       <div v-for="match in matchday.matches">
-        <SimulateMatch :match="match" :matchdayOngoing="matchdayOngoing" @matchFinished="handleFinishedMatches"/>
+        <SimulateMatch :match :matchdayOngoing @matchFinished="handleFinishedMatches"/>
       </div>
     </div>
   </div>
