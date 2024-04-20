@@ -80,5 +80,11 @@ export default {
     display: flex;
     column-gap: 4px;
   }
+
+  .matches {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+  }
 }
 </style>

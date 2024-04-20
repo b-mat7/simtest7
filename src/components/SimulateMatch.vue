@@ -19,8 +19,8 @@
           <div class="possession">
             <div class="entry">
               <label>Mom, ø</label>
-              <label>{{ homeMomentum }} {{ parseFloat((homeMomentumSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ awayMomentum }} {{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ homeMomentum }} | {{ parseFloat((homeMomentumSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ awayMomentum }} | {{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>OP%</label>
@@ -52,8 +52,8 @@
             </div>
             <div class="entry">
               <label>Sh, %</label>
-              <label>{{ homeShots }} {{ parseFloat((homeGoals / homeShots * 100).toFixed()) }}</label>
-              <label>{{ awayShots }} {{ parseFloat((awayGoals / awayShots * 100).toFixed()) }}</label>
+              <label>{{ homeShots }} | {{ parseFloat((homeGoals / homeShots * 100).toFixed()) }}</label>
+              <label>{{ awayShots }} | {{ parseFloat((awayGoals / awayShots * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="defend">
@@ -69,8 +69,8 @@
             </div>
             <div class="entry">
               <label>Sa, %</label>
-              <label>{{ homeSaves }} {{ parseFloat((homeSaves / awayShots * 100).toFixed()) }}</label>
-              <label>{{ awaySaves }} {{ parseFloat((awaySaves / homeShots * 100).toFixed()) }}</label>
+              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / awayShots * 100).toFixed()) }}</label>
+              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / homeShots * 100).toFixed()) }}</label>
             </div>
           </div>
         </div>
@@ -331,9 +331,9 @@ export default {
         // >--< >--< >--< HANDLE THIRD-BREAKS >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // stop the match after every third and each overtime
-        // this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
-        //   ? this.stopSimulateMatch()
-        //   : null
+        this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
+          ? this.stopSimulateMatch()
+          : null
 
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
@@ -474,11 +474,12 @@ export default {
     }
 
     .details {
-      width: 22.5rem;   // check with size of each entry
+      width: 20.5rem;   // check with size of each entry
       font-size: 0.5rem;
 
       .stats {
         display: flex;
+        column-gap: 2px;
         text-align: center;
 
         .possession,
@@ -487,20 +488,23 @@ export default {
         .defend {
           display: flex;
           border-radius: 4px;
+          background-color: cadetblue;
           
           .entry {
             display: flex;
             flex-direction: column;
-            width: 2.25rem;
+            width: 2rem;
           }
         }
       }
-
+      
       .ticker {
         height: 2.25rem;
         overflow-x: scroll;
         text-align: start;
         list-style: none;
+        border-radius: 4px;
+        background-color: cadetblue;
       }
     }
 
