@@ -157,24 +157,69 @@ const updatePoints = (comp, home, away) => {
   comp.lastIntervalTrailer = trailer
 }
 
-const updateMorale = (comp, home, away) => {
+const updateFormData = (comp, home, away) => {
   // determine winner & loser
   const [winner, loser] = comp.homeGoals >= comp.awayGoals
   ? [home, away]
   : [away, home]
 
-  // update morale
-  winner.morale += 0.02
-  loser.morale -= 0.03
+  winner.formData.push({
+    'points': comp.matchTime === 60 ? 3 : 2,
+    'position': winner === home ? away.positionMatchday : home.positionMatchday
+  })
 
-  // ensure morale boundaries
-  winner.morale > 1.1 ? winner.morale = 1.1 : null
-  loser.morale < 0.9 ? loser.morale = 0.9 : null
+  loser.formData.push({
+    'points': comp.matchTime === 60 ? 0 : 1, 
+    'position': loser === home ? away.positionMatchday : home.positionMatchday
+  })
 }
 
-const shuffleClubs = (clubsArr) => {
+const updateForm = (team) => {
+  const last5Games = team.formData.slice(-5).reverse()
+
+  let sum = 0
+  let form = 0
+
+  for (let i = 0, m = 1; i < last5Games.length; i++, m -= 0.1) {
+    let result = m * last5Games[i]['points'] * (1 - (2 * last5Games[i]['position'] / 100))
+    sum = sum + result
+    form = sum / (i + 1)
+  }
+  team.form = form
+}
+
+// table generator (sorting: seed, then topic/default + add club.entryName)
+const updatePosition = (clubs, sortTopic, entryName) => {
+  const sortedClubs = clubs.sort((a,b) => {
+    if (a.matchesPlayed === 0 && b.matchesPlayed === 0) {
+      return b.seed() - a.seed()
+    }
+
+    if (sortTopic) {
+      return typeof a[sortTopic] === 'function'
+      ? b[sortTopic]() - a[sortTopic]()
+      : b[sortTopic] - a[sortTopic]
+    } else {
+      return (
+        b.points - a.points ||
+        b.goalsDiff() - a.goalsDiff() ||
+        b.goals - a.goals
+      )
+    }
+  })
+
+  if (entryName) {
+    sortedClubs.forEach((entry, index) => {
+      entry[entryName] = index + 1
+    })
+    return sortedClubs
+  }
+  return sortedClubs
+}
+
+const shuffleClubs = (clubs) => {
   // Create shallow copy
-  const shuffledClubs = [...clubsArr]
+  const shuffledClubs = [...clubs]
 
   // Apply Fisher-Yates shuffle algorithm
   for (let i = shuffledClubs.length - 1; i > 0; i--) {
@@ -188,11 +233,11 @@ const shuffleClubs = (clubsArr) => {
   return shuffledClubs;
 }
 
-const createSchedule = (clubsArr) => {
-  const numClubs = clubsArr.length;
+const createSchedule = (clubs) => {
+  const numClubs = clubs.length;
   const numMatchdays = (numClubs - 1) * 2; // Two halves
 
-  const shuffledClubs = shuffleClubs(clubsArr)
+  const shuffledClubs = shuffleClubs(clubs)
 
   // Initialize schedule object
   // const schedule = Array.from({ length: numMatchdays }, () => []);   // as Array
@@ -263,38 +308,144 @@ const createSchedule = (clubsArr) => {
   return schedule;
 }
 
-// sort for points -> goals_diff -> goals
-const updateLiveTable = (clubsArr) => {
-  // return [...clubsArr].map((club) => {
-  //   club.goals_diff = club.goals_diff()
-  //   club.points_per_match = club.points_per_match()
-  //   club.goals_per_match = club.goals_per_match()
-  //   club.goals_against_per_match = club.goals_against_per_match()
-  //   return club
-  // }).sort((a, b) => {
-  //   return (
-  //     b.points - a.points ||
-  //     b.goals_diff() - a.goals_diff() ||
-  //     b.goals - a.goals
-  //   )
-  // })
 
-  const sortedArray = clubsArr.sort((a, b) => {
-    if (a.matchesPlayed === 0 && b.matchesPlayed === 0) {
-      return b.seedStrength() - a.seedStrength()
+
+const updateMorale = (comp, home, away) => {
+  // determine winner & loser
+  const [winner, loser] = comp.homeGoals >= comp.awayGoals
+  ? [home, away]
+  : [away, home]
+
+  let roleExpectWinnerEffect = 1
+  let roleExpectLoserEffect = 1
+  let positionExpectWinnerEffect = 1
+  let positionExpectLoserEffect = 1
+  let winnerBonus = 0
+  let loserPenalty = 0
+
+  console.log("winner:", winner.initials, winner.role, winner.positionMatchday);
+  console.log("loser:", loser.initials, loser.role, loser.positionMatchday)
+
+  // always: determine role expectation effect if any
+  // TitleCanditate: bei loss gg Mid2, RelC -> * 1.3, 1.5
+  // RelCanditate: bei win gg Cont1, TitleC -> * 1.3, 1.5
+  if (winner.role === 'RelCandidate' && loser.role === 'Contender1') {
+    roleExpectWinnerEffect = 1.3
+    console.log("ROLE-expect-WINNER trig", roleExpectWinnerEffect);
+  }
+  if (winner.role === 'RelCandidate' && loser.role === 'TitleCandidate') {
+    roleExpectWinnerEffect = 1.5
+    console.log("ROLE-expect-WINNER trig", roleExpectWinnerEffect);
+  }
+  if (loser.role === 'TitleCandidate' && winner.role === 'Midfielder2') {
+    roleExpectLoserEffect = 1.3
+    console.log("ROLE-expect-LOSER trig", roleExpectLoserEffect);
+  }
+  if (loser.role === 'TitleCandidate' && winner.role === 'RelCandidate') {
+    roleExpectLoserEffect = 1.5
+    console.log("ROLE-expect-LOSER trig", roleExpectLoserEffect);
+  }
+
+  // after matchday 10: determine position effect if any
+  // Pos 1-3: bei loss gg Mid2, RelC -> * 1.3, 1.5
+  // Pos 12-14: bei win gg Cont1, TitleC -> * 1.3, 1.5
+  if (winner.matchesPlayed > 10) {
+    if (winner.positionMatchday > 11 && loser.positionMatchday < 6) {
+      positionExpectWinnerEffect = loser.positionMatchday < 4 ? 1.5 : 1.3
+      console.log("POSITION-expect-WINNER trig", positionExpectWinnerEffect);
     }
-    return (
-      b.points - a.points ||
-      b.goalsDiff() - a.goalsDiff() ||
-      b.goals - a.goals
-    )
+    if (loser.positionMatchday < 4 && winner.positionMatchday > 9) {
+      positionExpectLoserEffect = winner.positionMatchday > 11 ? 1.5 : 1.3
+      console.log("POSITION-expect-LOSER trig", positionExpectLoserEffect);
+    }
+  }
+
+  // update morale: matchday 1-4: use standard values, afterwards use opponent form within limits
+  // winner --> 0.025 * form      min/max: 0.01  (= <0.4 form) <- bis -> 0.045 (= >1.8)
+  // loser  --> 0.03 * (2.2-form) min/max: 0.015 (= >1.7 form) <- bis -> 0.05  (= <0.53)
+  if (winner.matchesPlayed < 5) {
+    winnerBonus = 0.02 * roleExpectWinnerEffect * positionExpectWinnerEffect
+    loserPenalty = 0.03 * roleExpectLoserEffect * positionExpectLoserEffect
+  } else {
+    winnerBonus = 0.025 * loser.form * roleExpectWinnerEffect * positionExpectWinnerEffect
+    loserPenalty = 0.03 * (2.2 - winner.form) * roleExpectLoserEffect * positionExpectLoserEffect
+  }
+
+  // ensure morale change min/max limits for certain roles
+  if (winnerBonus < 0.01) {
+    winnerBonus = 0.01
+  } else if (winnerBonus > 0.045 && (winner.role === 'TitleCandidate' || winner.role === 'Contender1' || winner.role === 'Contender2' || winner.role === 'Midfielder1')) {
+    console.log("winnerBonus role limit trig:", winnerBonus);
+    winnerBonus = 0.045
+  } 
+  
+  if (loserPenalty < 0.015) {
+    loserPenalty = 0.015
+  } else if (loserPenalty > 0.05 && (loser.role === 'RelCandidate' || loser.role === 'Midfielder2' || loser.role === 'Midfielder1' || loser.role === 'Contender2')) {
+    console.log("loserPenalty role limit trig:", loserPenalty);
+    loserPenalty = 0.05
+  } 
+
+  console.log("winnerbonus", winnerBonus);
+  console.log("loserpenalty", loserPenalty);
+  winner.morale += winnerBonus
+  loser.morale -= loserPenalty
+
+  // ensure morale total min/max limits for all roles
+  if (winner.morale > 1.1 && (winner.role === 'TitleCandidate' || winner.role === 'Contender1' || winner.role === 'Contender2' || winner.role === 'Midfielder1')) {
+    winner.morale = 1.1
+  } else if (winner.morale > 1.25 && (winner.role === 'Midfielder2' || winner.role === 'RelCandidate')) {
+    winner.morale = 1.25
+  }
+
+  if (loser.morale < 0.9 && (loser.role === 'RelCandidate' || loser.role === 'Midfielder2' || loser.role === 'Midfielder1' || loser.role === 'Contender2')) {
+    loser.morale = 0.9
+  } else if (loser.morale < 0.75 && (loser.role === 'Contender1' || loser.role === 'TitleCandidate') ) {
+    loser.morale = 0.75
+  }
+}
+
+const prepareRole = (clubs) => {
+  const roles = {
+    1: 'TitleCandidate',
+    2: 'TitleCandidate',
+    3: 'TitleCandidate',
+    4: 'Contender1',
+    5: 'Contender1',
+    6: 'Contender2',
+    7: 'Contender2',
+    8: 'Midfielder1',
+    9: 'Midfielder1',
+    10: 'Midfielder2',
+    11: 'Midfielder2',
+    12: 'RelCandidate',
+    13: 'RelCandidate',
+    14: 'RelCandidate',
+  }
+
+  //  +++ ++ + 0 - -- --- / * 0.05, 0.1, 0.2 | nach Spieltag 8
+
+  // rTarget: NACH 8, MODIFIER
+  // club.positionMatchday
+  // club.roleTarget
+
+  const roleTargets = {
+    'TitleCandidate': {'name': 'Title', 'position': [1, 2]},
+    'Contender1': {'name': 'Playoffs', 'position': [3, 4, 5, 6]},
+    'Contender2': {'name': 'Playoffs', 'position': [3, 4, 5, 6]},
+    'Midfielder1': {'name': 'Comfort', 'position': [7, 8, 9, 10]},
+    'Midfielder2': {'name': 'Comfort', 'position': [7, 8, 9, 10]},
+    'RelCandidate': {'name': 'Survival', 'position': [11, 12, 13, 14]},
+  }
+
+  const sortedClubs = updatePosition(clubs, 'positionSeed')
+
+  sortedClubs.forEach((entry, index) => {
+    entry.role = roles[index + 1]
+    entry.roleTarget = roleTargets[entry.role]
   })
 
-  sortedArray.forEach((entry, index) => {
-    entry.tablePosition = index + 1
-  })
-
-  return sortedArray
+  return sortedClubs
 }
 
 export {
@@ -306,8 +457,12 @@ export {
   calcSaveStr,
   updateTeam,
   updatePoints,
-  updateMorale,
+  updateFormData,
+  updateForm,
+  updatePosition,
   shuffleClubs,
   createSchedule,
-  updateLiveTable,
+  
+  updateMorale,
+  prepareRole
 }
