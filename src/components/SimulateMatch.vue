@@ -84,7 +84,6 @@
       <div class="controls">
         <button v-if="!matchOngoing" @click="simulateMatch">Anpfiff</button>
         <button v-else @click="stopSimulateMatch">Auszeit</button>
-        <!-- <button @click="resetMatch">Reset</button> -->
       </div>
     </div>
   </div>
@@ -394,50 +393,7 @@ export default {
     stopSimulateMatch() {
       clearInterval(this.simulateMatchIntervall)
       this.matchOngoing = false
-    },
-    resetMatch() {
-      this.matchTime = 0
-      this.matchLength = 60
-        this.initMatchesPlayedUpdated = false // reset funzt net richtig weil müsste alles (goals, shots...) wieder rausrechnen statt nur matches -1
-        this.home.matchesPlayed -= 1
-        this.away.matchesPlayed -= 1
-      this.stopSimulateMatch()
-      this.initPointsSet = false,
-      this.lastIntervalLeader = '',
-      this.lastIntervalTrailer = '',
-      // + reset points: club.points === homePointsInit (util)
-      this.homeMomentum = 1
-      this.awayMomentum = 1
-      this.homeMomentumSum = 0
-      this.awayMomentumSum = 0
-      this.attackerBuff = 1
-      this.defenderBuff = 1
-      this.homeBuffSum = 0
-      this.awayBuffSum = 0
-      this.attackStr = 0,
-      this.defendStr = 0,
-      this.homeAttackStrSum = 0
-      this.awayAttackStrSum = 0
-      this.homeDefendStrSum = 0
-      this.awayDefendStrSum = 0
-      this.shotStr = 0
-      this.saveStr = 0
-      this.homeShotStrSum = 0
-      this.awayShotStrSum = 0
-      this.homeSaveStrSum = 0
-      this.awaySaveStrSum = 0
-      this.homeAttacks = 0
-      this.awayAttacks = 0
-      this.homeDefends = 0
-      this.awayDefends = 0
-      this.homeShots = 0
-      this.awayShots = 0
-      this.homeSaves = 0
-      this.awaySaves = 0
-      this.homeGoals = 0
-      this.awayGoals = 0
-      this.liveTicker = []
-    },
+    }
   },
   watch: {   //xday
     matchdayOngoing() {

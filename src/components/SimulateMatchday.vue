@@ -41,7 +41,7 @@ export default {
     toggleMatchdayOngoing() {
       this.matchdayOngoing = !this.matchdayOngoing
     },
-    handleFinishedMatches(matchNr) {  // für reset() müsste überabeitet werden
+    handleFinishedMatches(matchNr) {  // für resetMatch() müsste überabeitet werden
       this.finishedMatches.push(matchNr)
       if (this.matchday.matches.length === this.finishedMatches.length) {
         this.$emit('matchdayFinished', this.matchday.dayNr)
