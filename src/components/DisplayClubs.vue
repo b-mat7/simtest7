@@ -3,12 +3,11 @@
     <div v-for="(club, index) in sortedClubs" :key=index class="club">
       <div class="header">
         <label>{{ club.initials }}</label>
-        <label>{{ club.seedStrength() }} / {{ club.positionSeed }}.</label>
+        <label>{{ club.seed() }} / {{ club.positionSeed }}.</label>
         <label>{{ club.role }}</label>
         <!-- <label>( Diff zu RoleTargetPosition )</label> -->
       </div>
       <div class="results">
-        <label>Fo: {{ parseFloat((club.form).toFixed(2)) }}</label>
         <!-- <label>L5:</label> -->
         <label>{{ club.wins }}-{{ club.winsOvertime }}-{{ club.lossesOvertime }}-{{ club.losses }}</label>
       </div>
@@ -32,6 +31,10 @@
         <div class="seed-entry">
           <label>Mm</label>
           <label>{{ parseFloat((club.momentum).toFixed(2)) }}</label>
+        </div>
+        <div class="seed-entry">
+          <label>Fo</label>
+          <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
         </div>
         <div class="seed-entry">
           <label>Mr</label>
@@ -131,7 +134,7 @@ export default {
     }
   },
   mounted() {
-    this.sortedClubs = [...this.clubs].sort((a, b) => b.seedStrength() - a.seedStrength())
+    this.sortedClubs = [...this.clubs].sort((a, b) => b.seed() - a.seed())
   }
 }
 </script>
@@ -158,13 +161,13 @@ export default {
     
     .seed-stats {
       display: flex;
-      justify-content: space-between;
+      column-gap: 0.25rem;
       text-align: center;
       
       .seed-entry {
         display: flex;
         flex-direction: column;
-        width: 2.25rem;
+        width: 2rem;
       }
     }
     

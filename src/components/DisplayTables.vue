@@ -21,20 +21,26 @@
         <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' }" @click="setSortTopic('goalsDiff')" v-if="showTable">
           <label>Dif</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')">
           <label>P</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="showDetails">
           <label>P/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="showDetails">
           <label>G/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="showDetails">
           <label>GA/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="showDetails">
           <label>Dif/M</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="showTable">
+          <label>Fo</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="showTable">
+          <label>Mr</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' }" @click="setSortTopic('shotsPercentage')" v-if="showTable">
           <label>Sh%</label>
@@ -84,14 +90,20 @@
         <div class="column" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="showDetails">
           <label>L</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'seedStrength' }" @click="setSortTopic('seedStrength')" v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="showTable">
           <label>Seed</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'positionSeed' }" @click="setSortTopic('positionSeed')" v-if="showTable">
+          <label>SPos</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" @click="setSortTopic('positionMatchday')" v-if="showTable">
+          <label>MdPos</label>
         </div>
       </div>
       <div class="body">
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
           <div class="column sticky-left-0">
-            <label>{{ club.tablePosition }}</label>
+            <label>{{ club.positionLive }}</label>
           </div>
           <div class="column sticky-left-1">
             <label>{{ club.initials }}</label>
@@ -108,20 +120,26 @@
           <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' }" v-if="showTable">
             <label>{{ club.goalsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }">
             <label>{{ club.points }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" v-if="showDetails">
             <label>{{ club.pointsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" v-if="showDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" v-if="showDetails">
             <label>{{ club.goalsAgainstPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" v-if="showDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'form' }" v-if="showTable">
+            <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'morale' }" v-if="showTable">
+            <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' }" v-if="showTable">
             <label>{{ club.shotsPercentage() }}</label>
@@ -171,8 +189,14 @@
           <div class="column" :class="{ 'bold': sortTopic === 'losses' }" v-if="showDetails">
             <label>{{ club.losses }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'seedStrength' }" v-if="showTable">
-            <label>{{ club.seedStrength() }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'seed' }" v-if="showTable">
+            <label>{{ club.seed() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'positionSeed' }" v-if="showTable">
+            <label>{{ club.positionSeed }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" v-if="showTable">
+            <label>{{ club.positionMatchday }}</label>
           </div>
         </li>
       </div>
@@ -181,7 +205,7 @@
 </template>
 
 <script>
-import { updateLiveTable } from '../lib/util.js'
+import { updatePosition } from '../lib/util.js'
 
 export default {
   name: 'DisplayTables',
@@ -200,8 +224,8 @@ export default {
     }
   },
   methods: {
-    createLiveTable(clubs) {
-      this.liveTable = updateLiveTable(clubs).sort((a, b) => {
+    createLiveTable(clubs, sortTopic, entryName) {
+      this.liveTable = updatePosition(clubs, sortTopic, entryName).sort((a, b) => {
         return typeof a[this.sortTopic] === 'function'
           ? b[this.sortTopic]() - a[this.sortTopic]()
           : b[this.sortTopic] - a[this.sortTopic]
@@ -215,13 +239,10 @@ export default {
   watch: {
     clubs: {
       handler(newClubs, oldClubs) {
-        this.createLiveTable([...newClubs])
+        this.createLiveTable([...newClubs], null, 'positionLive')
       },
       deep: true
     }
-  },
-  mounted() {
-    this.createLiveTable([...this.clubs])
   }
 }
 </script>

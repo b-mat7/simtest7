@@ -22,11 +22,15 @@ const clubsData = [
     'defend': 2,
     'save': 1.5,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -45,7 +49,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -82,11 +86,15 @@ const clubsData = [
     'defend': 3,
     'save': 1,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -105,7 +113,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -142,11 +150,15 @@ const clubsData = [
     'defend': 2,
     'save': 3,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -165,7 +177,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -202,11 +214,15 @@ const clubsData = [
     'defend': 2,
     'save': 1,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -225,7 +241,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -262,11 +278,15 @@ const clubsData = [
     'defend': 2.5,
     'save': 2,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -285,7 +305,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -322,11 +342,15 @@ const clubsData = [
     'defend': 2,
     'save': 1,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -345,7 +369,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -382,11 +406,15 @@ const clubsData = [
     'defend': 2,
     'save': 2,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -405,7 +433,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -442,11 +470,15 @@ const clubsData = [
     'defend': 3,
     'save': 2,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -465,7 +497,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -502,11 +534,15 @@ const clubsData = [
     'defend': 4,
     'save': 2,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -525,7 +561,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -562,11 +598,15 @@ const clubsData = [
     'defend': 1,
     'save': 3,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -585,7 +625,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -622,11 +662,15 @@ const clubsData = [
     'defend': 2,
     'save': 2,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -645,7 +689,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -682,11 +726,15 @@ const clubsData = [
     'defend': 2.5,
     'save': 1,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -705,7 +753,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -742,11 +790,15 @@ const clubsData = [
     'defend': 2,
     'save': 1,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -765,7 +817,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
@@ -802,11 +854,15 @@ const clubsData = [
     'defend': 2,
     'save': 3,
     'momentum': 1,
+    'form': 0,
     'morale': 1,
 
+    'role': '',
+    'roleTarget': {},
     'matchesPlayed': 0,
     'intervalsPlayed': 0,
     'momentumSum': 0,
+    'formData': [],
     'buffSum': 0,
     'attackStrSum': 0,
     'defendStrSum': 0,
@@ -825,7 +881,7 @@ const clubsData = [
     'losses': 0,
     'lossesOvertime': 0,
 
-    'seedStrength': function () { return this.attack + this.shoot + this.defend + this.save },
+    'seed': function () { return this.attack + this.shoot + this.defend + this.save },
     'playsDiff': function () { return this.attacks - this.defends },
     'goalsDiff': function () { return this.goals - this.goalsAgainst },
 
