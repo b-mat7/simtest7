@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateMorale} from '../lib/util.js';
+import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateFormData, updateForm, updateMorale} from '../lib/util.js';
 
 export default {
   emits: ['matchFinished'],
@@ -109,7 +109,7 @@ export default {
     return {
       matchTime: 0,
       matchLength: 60,
-      matchesPlayedUpdated: false,
+      initMatchesPlayedUpdated: false,
       matchOngoing: false,
       simulateMatchIntervall: null,
       initPointsSet: false,
@@ -163,8 +163,7 @@ export default {
     },
     simulateMatch() {
       // update matches_played one-time
-      !this.matchesPlayedUpdated ? (this.home.matchesPlayed++, this.away.matchesPlayed++) : null
-      this.matchesPlayedUpdated = true
+      !this.initMatchesPlayedUpdated ? (this.home.matchesPlayed++, this.away.matchesPlayed++, this.initMatchesPlayedUpdated = true) : null
       
 
       // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
@@ -284,7 +283,7 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< HANDLE INTERVALL-END >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // reset & update attacker with its play-stats
+        // update attacker with intervall-stats
         updateTeam(
           attacker === this.home ? this.home : this.away,
           team => {
@@ -294,7 +293,7 @@ export default {
           }
         )
 
-        // reset & update defender with its play-stats
+        // update defender with intervall-stats
         updateTeam(
           defender === this.home ? this.home : this.away,
           team => {
@@ -304,7 +303,7 @@ export default {
           }
         )
 
-        // reset & update home with its play-stats
+        // update home with intervall-stats
         updateTeam(
           this.home,
           team => {
@@ -312,7 +311,7 @@ export default {
           }
         )
 
-        // reset & update away with its play-stats
+        // update away with intervall-stats
         updateTeam(
           this.away,
           team => {
@@ -350,7 +349,7 @@ export default {
           else {
             this.stopSimulateMatch()
 
-            // update winner
+            // update winner with match-stats
             updateTeam(
               this.homeGoals > this.awayGoals ? this.home : this.away,
               team => {
@@ -359,7 +358,7 @@ export default {
               }
             )
 
-            // update loser
+            // update loser with match-stats
             updateTeam(
               this.homeGoals < this.awayGoals ? this.home : this.away,
               team => {
@@ -368,7 +367,14 @@ export default {
               }
             )
 
-            // update morale (depends on current table positions / form)
+            // update formData (based on opponent tablePosition)
+            updateFormData(this, this.home, this.away)
+
+            // update form (based on last 5 formData items)
+            updateForm(this.home)
+            updateForm(this.away)
+
+            // update morale (based on opponent form)
             updateMorale(this, this.home, this.away)
 
             this.liveTicker.push(`${this.matchTime}.: End of the game`)
@@ -392,7 +398,7 @@ export default {
     resetMatch() {
       this.matchTime = 0
       this.matchLength = 60
-        this.matchesPlayedUpdated = false // reset funzt net richtig weil müsste alles (goals, shots...) wieder rausrechnen statt nur matches -1
+        this.initMatchesPlayedUpdated = false // reset funzt net richtig weil müsste alles (goals, shots...) wieder rausrechnen statt nur matches -1
         this.home.matchesPlayed -= 1
         this.away.matchesPlayed -= 1
       this.stopSimulateMatch()

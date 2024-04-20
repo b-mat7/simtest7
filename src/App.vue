@@ -3,12 +3,11 @@
     <!-- comp loaded before App has loaded clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
     <DisplayClubs :clubs/>
   </div>
-  <div v-if="clubs.length > 0" class="tables-container">
-    <!-- comp loaded before App has loaded clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
+  <div class="tables-container">
     <DisplayTables :clubs/>
   </div>
-  <div class="season-container">
-    <SimulateSeason :schedule/>
+  <div v-if="clubs.length > 0" class="season-container">
+    <SimulateSeason :clubs :schedule/>
   </div>
 </template>
 
@@ -74,7 +73,7 @@ body {
   padding: 0.5rem;
   
   .clubs-container {
-    max-height: 312px;
+    max-height: 333px;
     overflow-y: scroll;
   }
   

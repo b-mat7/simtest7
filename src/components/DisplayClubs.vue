@@ -3,7 +3,13 @@
     <div v-for="(club, index) in sortedClubs" :key=index class="club">
       <div class="header">
         <label>{{ club.initials }}</label>
-        <label>({{ club.seedStrength() }})</label>
+        <label>{{ club.seedStrength() }} / {{ club.positionSeed }}.</label>
+        <label>{{ club.role }}</label>
+        <!-- <label>( Diff zu RoleTargetPosition )</label> -->
+      </div>
+      <div class="results">
+        <label>Fo: {{ parseFloat((club.form).toFixed(2)) }}</label>
+        <!-- <label>L5:</label> -->
         <label>{{ club.wins }}-{{ club.winsOvertime }}-{{ club.lossesOvertime }}-{{ club.losses }}</label>
       </div>
       <div class="seed-stats">
@@ -144,7 +150,8 @@ export default {
     border: 1px solid;
     border-radius: 8px;
 
-    .header {
+    .header,
+    .results {
       display: flex;
       column-gap: 1rem;
     }
