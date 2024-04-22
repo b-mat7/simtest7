@@ -330,9 +330,9 @@ export default {
         // >--< >--< >--< HANDLE THIRD-BREAKS >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // stop the match after every third and each overtime
-        this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
-          ? this.stopSimulateMatch()
-          : null
+        // this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
+        //   ? this.stopSimulateMatch()
+        //   : null
 
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<

@@ -248,7 +248,8 @@ const createSchedule = (clubs) => {
   };
 
   // Generate first half of the schedule using modified round-robin algorithm
-  for (let day = 0; day < numClubs - 1; day++) {
+  for (let day = 0; day < 4 * (numClubs - 1); day++) {
+  // for (let day = 0; day < numClubs - 1; day++) {
     schedule.matchdayList[day] = {
       dayNr: day + 1,
       date: 'Date{}',
@@ -265,7 +266,7 @@ const createSchedule = (clubs) => {
           'home': awayClub, 
           'away': homeClub, 
           'matchReport': {} 
-        })
+        })      
       } else {
         schedule.matchdayList[day].matches.push({ 
           'dayNr': day + 1,
