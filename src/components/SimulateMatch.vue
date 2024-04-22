@@ -19,8 +19,8 @@
           <div class="possession">
             <div class="entry">
               <label>Mom, ø</label>
-              <label>{{ homeMomentum }} | {{ parseFloat((homeMomentumSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ awayMomentum }} | {{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ homeMomentum }}|{{ parseFloat((homeMomentumSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ awayMomentum }}|{{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>OP%</label>
