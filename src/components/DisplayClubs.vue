@@ -41,11 +41,19 @@
           <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
         </div>
       </div>
+      <div class="tweak-stats">
+        <div class="tweak-entry">
+          <label>Mmø</label><label>{{ club.momentumAverage() }}</label>
+        </div>
+        <div class="tweak-entry">
+          <label>Foø</label><label>{{ club.formAverage() }}</label>
+        </div>
+        <div class="tweak-entry">
+          <label>Buø</label><label>{{ club.buffAverage() }}</label>
+        </div>
+      </div>
       <div class="play-stats">
         <div class="column">
-          <div class="play-entry">
-            <label>Momø</label><label>{{ club.momentumAverage() }}</label>
-          </div>
           <div class="play-entry">
             <label>Atø</label><label>{{ club.attackStrAverage() }}</label>
           </div>
@@ -79,9 +87,6 @@
         </div>
 
         <div class="column">
-          <div class="play-entry">
-            <label>Bufø</label><label>{{ club.buffAverage() }}</label>
-          </div>
           <div class="play-entry">
             <label>AtDø</label><label>{{ club.attackStrDiceAverage() }}</label>
           </div>
@@ -168,6 +173,17 @@ export default {
         display: flex;
         flex-direction: column;
         width: 2rem;
+      }
+    }
+
+    .tweak-stats {
+      display: flex;
+      justify-content: space-between;
+
+      .tweak-entry {
+        width: 4.5rem;
+        display: flex;
+        justify-content: space-around;
       }
     }
     

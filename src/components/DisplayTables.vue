@@ -39,8 +39,14 @@
         <div class="column" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="showTable">
           <label>Fo</label>
         </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'formAverage' }" @click="setSortTopic('formAverage')" v-if="showTable">
+          <label>Foø</label>
+        </div>
         <div class="column" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="showTable">
           <label>Mr</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'buffAverage' }" @click="setSortTopic('buffAverage')" v-if="showTable">
+          <label>Buø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' }" @click="setSortTopic('shotsPercentage')" v-if="showTable">
           <label>Sh%</label>
@@ -99,6 +105,9 @@
         <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" @click="setSortTopic('positionMatchday')" v-if="showTable">
           <label>MdPos</label>
         </div>
+        <div class="column" v-if="showTable">
+          <label>Role</label>
+        </div>
       </div>
       <div class="body">
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
@@ -138,8 +147,14 @@
           <div class="column" :class="{ 'bold': sortTopic === 'form' }" v-if="showTable">
             <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
           </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'formAverage' }" v-if="showTable">
+            <label>{{ (club.formAverage()) }}</label>
+          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'morale' }" v-if="showTable">
             <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'buffAverage' }" v-if="showTable">
+            <label>{{ (club.buffAverage()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' }" v-if="showTable">
             <label>{{ club.shotsPercentage() }}</label>
@@ -197,6 +212,9 @@
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" v-if="showTable">
             <label>{{ club.positionMatchday }}</label>
+          </div>
+          <div class="column" v-if="showTable">
+            <label>{{ club.role }}</label>
           </div>
         </li>
       </div>

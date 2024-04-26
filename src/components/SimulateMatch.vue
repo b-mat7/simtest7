@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, updateTeam, updatePoints, updateFormData, updateForm, updateMorale} from '../lib/util.js';
+import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js';
 
 export default {
   emits: ['matchFinished'],
@@ -219,7 +219,7 @@ export default {
           ? (this.homeBuffSum += this.attackerBuff, this.awayBuffSum += this.defenderBuff)
           : (this.homeBuffSum += this.defenderBuff, this.awayBuffSum += this.attackerBuff)
 
-        // calc playStr
+        // calc attackStr + defendStr
         this.attackStr = calcAttackStr(attacker, this.attackerBuff, 10)
         this.defendStr = calcDefendStr(defender, this.defenderBuff, 10)
         attacker === this.home
@@ -227,7 +227,7 @@ export default {
           : (this.homeDefendStrSum += this.defendStr, this.awayAttackStrSum += this.attackStr)
 
         // if attackStr > defendStr => get Shot on goal
-        if (this.attackStr - this.defendStr > 1.5) {
+        if (this.attackStr > this.defendStr) {
           attacker === this.home ? this.homeShots++ : this.awayShots++
           attacker.shots++;
           defender.shotsAgainst++;
@@ -244,20 +244,20 @@ export default {
           // >--< >--< >--< HANDLE SHOT >--< >--< >--<
           // >--< >--< >--< >--< >--< >--< >--< >--< >--<
           // calc Scoring- & SaveStr
-          this.shotStr = calcShotStr(attacker, this.attackerBuff, 10)
-          this.saveStr = calcSaveStr(defender, this.defenderBuff, 10)
+          this.shotStr = calcShotStr(attacker, 10)
+          this.saveStr = calcSaveStr(defender, 10)
           attacker === this.home
             ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
             : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
 
           // if ScoreChance > SaveChance => Score goal
-          if (this.shotStr - this.saveStr > 3.5) {                // (1.5) + 2,5 nur dice = 25%D-Range = 3,7-4 T
+          if (this.shotStr > this.saveStr && checkShot(attacker, this.attackerBuff, defender, this.defenderBuff)) {
             attacker === this.home ? this.homeGoals++ : this.awayGoals++
             attacker.goals++
             defender.goalsAgainst++
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals}:${this.awayGoals}
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
               `)
 
             updateTeam(

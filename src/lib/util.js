@@ -72,7 +72,8 @@ const calcAttackStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.attack * teamBuffValue)
     + diceMaxInt(dice)
-  ).toFixed(1)
+    + team.form
+  ).toFixed(3)
 
   return returnVal
 }
@@ -81,27 +82,39 @@ const calcDefendStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.defend * teamBuffValue)
     + diceMaxInt(dice)
-  ).toFixed(1)
+    + team.form
+  ).toFixed(3)
 
   return returnVal
 }
 
-const calcShotStr = (team, teamBuffValue, dice) => {
+const calcShotStr = (team, dice) => {
   const returnVal = +(
-    (team.shoot * teamBuffValue)
+    team.shoot
     + diceMaxInt(dice)
-  ).toFixed(1)
+  ).toFixed(3)
 
   return returnVal
 }
 
-const calcSaveStr = (team, teamBuffValue, dice) => {
+const calcSaveStr = (team, dice) => {
   const returnVal = +(
-    (team.save * teamBuffValue)
+    team.save
     + diceMaxInt(dice)
-  ).toFixed(1)
+  ).toFixed(3)
 
   return returnVal
+}
+
+// handle greater diff in attack vs defend str: greater diff -> more trys -> here: increase required value to keep all within 3-4 goals/match
+// if negative (defend > attack): required value will also be lower
+// could also use team.morale instead of ...Buff, but buff will be enhanced with more items which also change within interval
+const checkShot = (attacker, attackerBuff, defender, defenderBuff) => {
+  const diff = Math.round(attacker.attack * attackerBuff + attacker.form) - (defender.defend * defenderBuff + defender.form)
+  const minRequired = 5
+  const adjustedRequired = minRequired + (Math.round(diff / 2))
+
+  return diceMaxInt(10) > Math.min(7, adjustedRequired)
 }
 
 const updateTeam = (team, ...updateCallbacks) => {
@@ -185,7 +198,11 @@ const updateForm = (team) => {
     sum = sum + result
     form = sum / (i + 1)
   }
+  // ensure form total limits
+  form = form < 0.3 ? 0.3 : form
+
   team.form = form
+  team.formSum += form
 }
 
 // table generator (sorting: seed, then topic/default + add club.entryName)
@@ -317,92 +334,139 @@ const updateMorale = (comp, home, away) => {
   ? [home, away]
   : [away, home]
 
-  let roleExpectWinnerEffect = 1
-  let roleExpectLoserEffect = 1
-  let positionExpectWinnerEffect = 1
-  let positionExpectLoserEffect = 1
+  let roleExpectWinEffect = 1
+  let roleExpectLoseEffect = 1
+  let posExpectWinEffect = 1
+  let posExpectLoseEffect = 1
+  let sixPointsWinEffect = 1
+  let sixPointsLoseEffect = 1
   let winnerBonus = 0
   let loserPenalty = 0
 
-  console.log("winner:", winner.initials, winner.role, winner.positionMatchday);
-  console.log("loser:", loser.initials, loser.role, loser.positionMatchday)
+  // console.log("winner:", winner.initials, winner.role, winner.positionMatchday);
+  // console.log("loser:", loser.initials, loser.role, loser.positionMatchday)
 
-  // always: determine role expectation effect if any
-  // TitleCanditate: bei loss gg Mid2, RelC -> * 1.3, 1.5
-  // RelCanditate: bei win gg Cont1, TitleC -> * 1.3, 1.5
+  // Role Expectaion Effect (always):
+  // TitleCanditate: bei loss gg Mid2, RelC
+  // RelCanditate: bei win gg Cont1, TitleC
   if (winner.role === 'RelCandidate' && loser.role === 'Contender1') {
-    roleExpectWinnerEffect = 1.3
-    console.log("ROLE-expect-WINNER trig", roleExpectWinnerEffect);
+    roleExpectWinEffect = 1.3
+    // console.log("ROLE-expect-WINNER trig", roleExpectWinEffect);
   }
   if (winner.role === 'RelCandidate' && loser.role === 'TitleCandidate') {
-    roleExpectWinnerEffect = 1.5
-    console.log("ROLE-expect-WINNER trig", roleExpectWinnerEffect);
+    roleExpectWinEffect = 1.618
+    // console.log("ROLE-expect-WINNER trig", roleExpectWinEffect);
   }
   if (loser.role === 'TitleCandidate' && winner.role === 'Midfielder2') {
-    roleExpectLoserEffect = 1.3
-    console.log("ROLE-expect-LOSER trig", roleExpectLoserEffect);
+    roleExpectLoseEffect = 1.3
+    // console.log("ROLE-expect-LOSER trig", roleExpectLoseEffect);
   }
   if (loser.role === 'TitleCandidate' && winner.role === 'RelCandidate') {
-    roleExpectLoserEffect = 1.5
-    console.log("ROLE-expect-LOSER trig", roleExpectLoserEffect);
+    roleExpectLoseEffect = 1.618
+    // console.log("ROLE-expect-LOSER trig", roleExpectLoseEffect);
   }
 
-  // after matchday 10: determine position effect if any
-  // Pos 1-3: bei loss gg Mid2, RelC -> * 1.3, 1.5
-  // Pos 12-14: bei win gg Cont1, TitleC -> * 1.3, 1.5
+  // Position Expectation Effect (> matchday 10):
+  // Pos 1-3: bei loss gg pos > 9, 11
+  // Pos 12-14: bei win gg pos < 6, 4
   if (winner.matchesPlayed > 10) {
     if (winner.positionMatchday > 11 && loser.positionMatchday < 6) {
-      positionExpectWinnerEffect = loser.positionMatchday < 4 ? 1.5 : 1.3
-      console.log("POSITION-expect-WINNER trig", positionExpectWinnerEffect);
+      posExpectWinEffect = loser.positionMatchday < 4 ? 1.618 : 1.3
+      // console.log("POSITION-expect-WINNER trig", posExpectWinEffect);
     }
     if (loser.positionMatchday < 4 && winner.positionMatchday > 9) {
-      positionExpectLoserEffect = winner.positionMatchday > 11 ? 1.5 : 1.3
-      console.log("POSITION-expect-LOSER trig", positionExpectLoserEffect);
+      posExpectLoseEffect = winner.positionMatchday > 11 ? 1.618 : 1.3
+      // console.log("POSITION-expect-LOSER trig", posExpectLoseEffect);
+    }
+  }
+  
+  // SixPoints-Match Effect (towards season end):
+  // win/loss against liveTable neighbour, last 30%, 15% of season
+  if (winner.matchesPlayed >= 36) {
+    if (loser.positionMatchday === winner.positionMatchday + 1 || loser.positionMatchday === winner.positionMatchday - 1) {
+      sixPointsWinEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
+      sixPointsLoseEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
+      // console.log("SIXPOINTS-match trig", sixPointsWinEffect, sixPointsLoseEffect);
     }
   }
 
   // update morale: matchday 1-4: use standard values, afterwards use opponent form within limits
-  // winner --> 0.025 * form      min/max: 0.01  (= <0.4 form) <- bis -> 0.045 (= >1.8)
-  // loser  --> 0.03 * (2.2-form) min/max: 0.015 (= >1.7 form) <- bis -> 0.05  (= <0.53)
+  // /old: winner --> 0.025 * form      min/max: 0.01  (= <0.4 form) <- bis -> 0.045 (= >1.8)
+  // /old: loser  --> 0.03 * (2.2-form) min/max: 0.015 (= >1.7 form) <- bis -> 0.05  (= <0.53)
+  const bonus = {
+    'TitleCandidate': {'pre5': 0.015, 'post5': 0.02},
+    'Contender1': {'pre5': 0.0175, 'post5': 0.0225},
+    'Contender2': {'pre5': 0.02, 'post5': 0.025},
+    'Midfielder1': {'pre5': 0.02, 'post5': 0.025},
+    'Midfielder2': {'pre5': 0.0225, 'post5': 0.0275},
+    'RelCandidate': {'pre5': 0.025, 'post5': 0.03}
+  }
+  const penalty = {
+    'TitleCandidate': {'pre5': 0.025, 'post5': 0.03},
+    'Contender1': {'pre5': 0.0225, 'post5': 0.0275},
+    'Contender2': {'pre5': 0.02, 'post5': 0.025},
+    'Midfielder1': {'pre5': 0.02, 'post5': 0.025},
+    'Midfielder2': {'pre5': 0.0175, 'post5': 0.0225},
+    'RelCandidate': {'pre5': 0.015, 'post5': 0.02}
+  }
   if (winner.matchesPlayed < 5) {
-    winnerBonus = 0.02 * roleExpectWinnerEffect * positionExpectWinnerEffect
-    loserPenalty = 0.03 * roleExpectLoserEffect * positionExpectLoserEffect
+    winnerBonus = bonus[winner.role].pre5 * roleExpectWinEffect * posExpectWinEffect
+    // console.log("CALC WIN:", bonus[winner.role].pre5, roleExpectWinEffect, posExpectWinEffect);
+    loserPenalty = penalty[loser.role].pre5 * roleExpectLoseEffect * posExpectLoseEffect
+    // console.log("CALC LOSE:", penalty[loser.role].pre5, roleExpectLoseEffect, posExpectLoseEffect);
   } else {
-    winnerBonus = 0.025 * loser.form * roleExpectWinnerEffect * positionExpectWinnerEffect
-    loserPenalty = 0.03 * (2.2 - winner.form) * roleExpectLoserEffect * positionExpectLoserEffect
+    winnerBonus = bonus[winner.role].post5 * loser.form * roleExpectWinEffect * posExpectWinEffect * sixPointsWinEffect
+    // console.log("CALC WIN:", bonus[winner.role].post5, roleExpectWinEffect, posExpectWinEffect, sixPointsWinEffect);
+    loserPenalty = penalty[loser.role].post5 * (2.2 - winner.form) * roleExpectLoseEffect * posExpectLoseEffect * sixPointsLoseEffect
+    // console.log("CALC LOSE:", penalty[loser.role].post5, roleExpectLoseEffect, posExpectLoseEffect, sixPointsLoseEffect);
   }
 
-  // ensure morale change min/max limits for certain roles
-  if (winnerBonus < 0.01) {
-    winnerBonus = 0.01
-  } else if (winnerBonus > 0.045 && (winner.role === 'TitleCandidate' || winner.role === 'Contender1' || winner.role === 'Contender2' || winner.role === 'Midfielder1')) {
-    console.log("winnerBonus role limit trig:", winnerBonus);
-    winnerBonus = 0.045
-  } 
-  
-  if (loserPenalty < 0.015) {
-    loserPenalty = 0.015
-  } else if (loserPenalty > 0.05 && (loser.role === 'RelCandidate' || loser.role === 'Midfielder2' || loser.role === 'Midfielder1' || loser.role === 'Contender2')) {
-    console.log("loserPenalty role limit trig:", loserPenalty);
-    loserPenalty = 0.05
-  } 
+  // ensure morale intervall change limits
+  const minMaxIntervallLimits = {
+    'TitleCandidate': {'min': 0.01, 'max': 0.05},
+    'Contender1': {'min': 0.01, 'max': 0.05},
+    'Contender2': {'min': 0.01, 'max': 0.05},
+    'Midfielder1': {'min': 0.01, 'max': 0.05},
+    'Midfielder2': {'min': 0.01, 'max': 0.05},
+    'RelCandidate': {'min': 0.01, 'max': 0.05}
+  }
+  if (winnerBonus < minMaxIntervallLimits[winner.role].min) {
+    // console.log("winnerBonus role limit MIN trig:", winnerBonus);
+    winnerBonus = minMaxIntervallLimits[winner.role].min
+  } else if (winnerBonus > minMaxIntervallLimits[winner.role].max && (winner.role === 'TitleCandidate' || winner.role === 'Contender1' || winner.role === 'Contender2' || winner.role === 'Midfielder1')) {
+    // console.log("winnerBonus role limit MAX trig:", winnerBonus);
+    winnerBonus = minMaxIntervallLimits[winner.role].max
+  }
+  if (loserPenalty < minMaxIntervallLimits[loser.role].min) {
+    // console.log("loserPenalty role limit MIN trig:", loserPenalty);
+    loserPenalty = minMaxIntervallLimits[loser.role].min
+  } else if (loserPenalty > minMaxIntervallLimits[loser.role].max && (loser.role === 'RelCandidate' || loser.role === 'Midfielder2' || loser.role === 'Midfielder1' || loser.role === 'Contender2')) {
+    // console.log("loserPenalty role limit MAX trig:", loserPenalty);
+    loserPenalty = minMaxIntervallLimits[loser.role].max
+  }
 
-  console.log("winnerbonus", winnerBonus);
-  console.log("loserpenalty", loserPenalty);
+  // console.log("winnerbonus", winnerBonus);
+  // console.log("loserpenalty", loserPenalty);
   winner.morale += winnerBonus
   loser.morale -= loserPenalty
 
-  // ensure morale total min/max limits for all roles
-  if (winner.morale > 1.1 && (winner.role === 'TitleCandidate' || winner.role === 'Contender1' || winner.role === 'Contender2' || winner.role === 'Midfielder1')) {
-    winner.morale = 1.1
-  } else if (winner.morale > 1.25 && (winner.role === 'Midfielder2' || winner.role === 'RelCandidate')) {
-    winner.morale = 1.25
+  // ensure morale total limits
+  const minMaxTotalLimits = {
+    'TitleCandidate': {'min': 0.825, 'max': 1.075},
+    'Contender1': {'min': 0.85, 'max': 1.1},
+    'Contender2': {'min': 0.875, 'max': 1.125},
+    'Midfielder1': {'min': 0.9, 'max': 1.15},
+    'Midfielder2': {'min': 0.925, 'max': 1.175},
+    'RelCandidate': {'min': 0.95, 'max': 1.2}
   }
-
-  if (loser.morale < 0.9 && (loser.role === 'RelCandidate' || loser.role === 'Midfielder2' || loser.role === 'Midfielder1' || loser.role === 'Contender2')) {
-    loser.morale = 0.9
-  } else if (loser.morale < 0.75 && (loser.role === 'Contender1' || loser.role === 'TitleCandidate') ) {
-    loser.morale = 0.75
+  if (winner.morale > minMaxTotalLimits[winner.role].max) {
+    // console.log("WINNERMORALE MAX trigger", winner.morale, " -> ", minMaxTotalLimits[winner.role].max);
+    winner.morale = minMaxTotalLimits[winner.role].max
+  }
+  
+  if (loser.morale < minMaxTotalLimits[loser.role].min) {
+    // console.log("LOSERMORALE MIN trigger", loser.morale, " -> ", minMaxTotalLimits[loser.role].min);
+    loser.morale = minMaxTotalLimits[loser.role].min
   }
 }
 
@@ -422,6 +486,35 @@ const prepareRole = (clubs) => {
     12: 'RelCandidate',
     13: 'RelCandidate',
     14: 'RelCandidate',
+
+    // 1: 'TitleCandidate',
+    // 2: 'TitleCandidate',
+    // 3: 'TitleCandidate',
+    // 4: 'TitleCandidate',
+    // 5: 'TitleCandidate',
+    // 6: 'TitleCandidate',
+    // 7: 'Contender1',
+    // 8: 'Contender1',
+    // 9: 'Contender1',
+    // 10: 'Contender1',
+    // 11: 'Contender2',
+    // 12: 'Contender2',
+    // 13: 'Contender2',
+    // 14: 'Contender2',
+    // 15: 'Midfielder1',
+    // 16: 'Midfielder1',
+    // 17: 'Midfielder1',
+    // 18: 'Midfielder1',
+    // 19: 'Midfielder2',
+    // 20: 'Midfielder2',
+    // 21: 'Midfielder2',
+    // 22: 'Midfielder2',
+    // 23: 'RelCandidate',
+    // 24: 'RelCandidate',
+    // 25: 'RelCandidate',
+    // 26: 'RelCandidate',
+    // 27: 'RelCandidate',
+    // 28: 'RelCandidate',
   }
 
   //  +++ ++ + 0 - -- --- / * 0.05, 0.1, 0.2 | nach Spieltag 8
@@ -456,6 +549,7 @@ export {
   calcDefendStr,
   calcShotStr,
   calcSaveStr,
+  checkShot,
   updateTeam,
   updatePoints,
   updateFormData,
@@ -465,5 +559,5 @@ export {
   createSchedule,
   
   updateMorale,
-  prepareRole
+  prepareRole,
 }
