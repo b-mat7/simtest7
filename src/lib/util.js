@@ -106,7 +106,7 @@ const calcSaveStr = (team, dice) => {
   return returnVal
 }
 
-// handle greater diff in attack vs defend str: greater diff -> more trys -> here: increase required value to keep all within 3-4 goals/match
+// Handle greater diff in attack vs defend str: greater diff -> more trys -> here: increase required value to keep all within 3-4 goals/match
 // if negative (defend > attack): required value will also be lower
 // could also use team.morale instead of ...Buff, but buff will be enhanced with more items which also change within interval
 const checkShot = (attacker, attackerBuff, defender, defenderBuff) => {
