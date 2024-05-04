@@ -36,6 +36,9 @@
         <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="showDetails">
           <label>Dif/M</label>
         </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Average' }" @click="setSortTopic('resultsL5Average')" v-if="showTable">
+          <label>R5ø</label>
+        </div>
         <div class="column" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="showTable">
           <label>Fo</label>
         </div>
@@ -60,25 +63,25 @@
         <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' }" @click="setSortTopic('playsDiff')" v-if="showDetails">
           <label>Pl</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" @click="setSortTopic('attackStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" @click="setSortTopic('attackStrAverage')" v-if="showDetails">
           <label>Atø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' }" @click="setSortTopic('attackStrDiceAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' }" @click="setSortTopic('attackStrDiceAverage')" v-if="showDetails">
           <label>AtDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" @click="setSortTopic('defendStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" @click="setSortTopic('defendStrAverage')" v-if="showDetails">
           <label>Deø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' }" @click="setSortTopic('defendStrDiceAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' }" @click="setSortTopic('defendStrDiceAverage')" v-if="showDetails">
           <label>DeDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' }" @click="setSortTopic('shotStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' }" @click="setSortTopic('shotStrAverage')" v-if="showDetails">
           <label>Shø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' }" @click="setSortTopic('shotStrDiceAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' }" @click="setSortTopic('shotStrDiceAverage')" v-if="showDetails">
           <label>ShDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' }" @click="setSortTopic('saveStrAverage')"v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' }" @click="setSortTopic('saveStrAverage')" v-if="showDetails">
           <label>Saø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAverage' }" @click="setSortTopic('saveStrDiceAverage')" v-if="showDetails">
@@ -104,6 +107,10 @@
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" @click="setSortTopic('positionMatchday')" v-if="showTable">
           <label>MdPos</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')"
+          v-if="showTable">
+          <label>RDiff</label>
         </div>
         <div class="column" v-if="showTable">
           <label>Role</label>
@@ -143,6 +150,9 @@
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" v-if="showDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Average' }" v-if="showTable">
+            <label>{{ club.resultsL5Average() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'form' }" v-if="showTable">
             <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
@@ -193,16 +203,16 @@
             <label>{{ club.saveStrDiceAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'wins' }" v-if="showDetails">
-            <label>{{ club.wins }}</label>
+            <label>{{ club.wins() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' }" v-if="showDetails">
-            <label>{{ club.winsOvertime }}</label>
+            <label>{{ club.winsOvertime() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' }" v-if="showDetails">
-            <label>{{ club.lossesOvertime }}</label>
+            <label>{{ club.lossesOvertime() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'losses' }" v-if="showDetails">
-            <label>{{ club.losses }}</label>
+            <label>{{ club.losses() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'seed' }" v-if="showTable">
             <label>{{ club.seed() }}</label>
@@ -213,8 +223,11 @@
           <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" v-if="showTable">
             <label>{{ club.positionMatchday }}</label>
           </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" v-if="showTable">
+            <label>{{ club.roleDiff }}</label>
+          </div>
           <div class="column" v-if="showTable">
-            <label>{{ club.role }}</label>
+            <label>{{ club.role.slice(0, 5) }}</label>
           </div>
         </li>
       </div>

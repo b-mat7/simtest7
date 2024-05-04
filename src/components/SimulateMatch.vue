@@ -353,7 +353,7 @@ export default {
               this.homeGoals > this.awayGoals ? this.home : this.away,
               team => {
                 team.momentum = 1
-                this.matchTime === 60 ? team.wins++ : team.winsOvertime++
+                this.matchTime === 60 ? team.results.push(3) : team.results.push(2)
               }
             )
 
@@ -362,7 +362,7 @@ export default {
               this.homeGoals < this.awayGoals ? this.home : this.away,
               team => {
                 team.momentum = 1
-                this.matchTime === 60 ? team.losses++ : team.lossesOvertime++
+                this.matchTime === 60 ? team.results.push(0) : team.results.push(1)
               }
             )
 

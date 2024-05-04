@@ -18,7 +18,7 @@ season<template>
 <script>
 import SimulateMatchday from './SimulateMatchday.vue'
 
-import { updatePosition, prepareRole } from '../lib/util.js'
+import { updatePosition, prepareRole, updateRoleDiff } from '../lib/util.js'
 
 export default {
   name: 'SimulateSeason',
@@ -80,6 +80,7 @@ export default {
       this.finishedMatchdays.push(dayNr)
       
       updatePosition(this.clubs, null, 'positionMatchday')
+      updateRoleDiff(this.clubs)
     }
   },
   mounted() {
