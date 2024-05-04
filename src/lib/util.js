@@ -259,8 +259,8 @@ const updateMorale = (comp, home, away) => {
     }
   }
   
-  // SixPoints-Match Effect (towards season end):
-  // win/loss against liveTable neighbour, last 30%, 15% of season
+  // SixPoints-Match Effect (last 30%, 15% of season):
+  // win/loss against liveTable neighbour
   if (winner.matchesPlayed >= 36) {
     if (loser.positionMatchday === winner.positionMatchday + 1 || loser.positionMatchday === winner.positionMatchday - 1) {
       sixPointsWinEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
