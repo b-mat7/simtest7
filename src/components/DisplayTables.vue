@@ -118,115 +118,115 @@
       </div>
       <div class="body">
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
-          <div class="column sticky-left-0">
+          <div class="column sticky-left-0" :class="{ 'bold': focusClub === club.initials}">
             <label>{{ club.rankLive }}</label>
           </div>
-          <div class="column sticky-left-1">
+          <div class="column sticky-left-1" :class="{ 'bold': focusClub === club.initials}" @click="setFocusClub(club)">
             <label>{{ club.initials }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.matchesPlayed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goals' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goals' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.goals }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.goalsAgainst }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.goalsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }">
+          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || focusClub === club.initials}">
             <label>{{ club.points }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.pointsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.goalsAgainstPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Average' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Average' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.resultsL5Average() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'form' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClub === club.initials}" v-if="showTable">
             <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'formAverage' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'formAverage' || focusClub === club.initials}" v-if="showTable">
             <label>{{ (club.formAverage()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'morale' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClub === club.initials}" v-if="showTable">
             <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'buffAverage' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'buffAverage' || focusClub === club.initials}" v-if="showTable">
             <label>{{ (club.buffAverage()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsPercentage' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.shotsPercentage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'savesPercentage' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'savesPercentage' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.savesPercentage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesPercentage' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesPercentage' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.shotsSavesPercentage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.playsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.attackStrAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.attackStrDiceAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.defendStrAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.defendStrDiceAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.shotStrAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.shotStrDiceAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.saveStrAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAverage' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.saveStrDiceAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'wins' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'wins' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.wins() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.winsOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.lossesOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'losses' }" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.losses() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'seed' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'seed' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.seed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.rankSeed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.rankMatchday }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" v-if="showTable">
+          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" v-if="showTable">
+          <div class="column" :class="{ 'bold': focusClub === club.initials}"v-if="showTable">
             <label>{{ club.role.slice(0, 5) }}</label>
           </div>
         </li>
@@ -251,7 +251,8 @@ export default {
       showTable: true,
       showDetails: false,
       liveTable: [],
-      sortTopic: ''
+      sortTopic: '',
+      focusClub: 'FRB'
     }
   },
   methods: {
@@ -265,6 +266,9 @@ export default {
     setSortTopic(topic) {
       this.sortTopic = topic
       this.createLiveTable([...this.clubs])
+    },
+    setFocusClub(club) {
+      this.focusClub != club.initials ? this.focusClub = club.initials : this.focusClub = ''
     }
   },
   watch: {
