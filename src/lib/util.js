@@ -92,6 +92,7 @@ const calcShotStr = (team, dice) => {
   const returnVal = +(
     team.shoot
     + diceMaxInt(dice)
+    + team.form / 2
   ).toFixed(3)
 
   return returnVal
@@ -101,6 +102,7 @@ const calcSaveStr = (team, dice) => {
   const returnVal = +(
     team.save
     + diceMaxInt(dice)
+    + team.form / 2
   ).toFixed(3)
 
   return returnVal
@@ -170,7 +172,7 @@ const updatePoints = (comp, home, away) => {
   comp.lastIntervalTrailer = trailer
 }
 
-// Update formData (based on opp' matchday position) for form calc
+// Update formData (based on opp' matchday rank) for form calc
 const updateFormData = (comp, home, away) => {
   // determine winner & loser
   const [winner, loser] = comp.homeGoals >= comp.awayGoals
@@ -179,12 +181,12 @@ const updateFormData = (comp, home, away) => {
 
   winner.formData.push({
     'points': comp.matchTime === 60 ? 3 : 2,
-    'position': winner === home ? away.positionMatchday : home.positionMatchday
+    'rank': winner === home ? away.rankMatchday : home.rankMatchday
   })
 
   loser.formData.push({
     'points': comp.matchTime === 60 ? 0 : 1, 
-    'position': loser === home ? away.positionMatchday : home.positionMatchday
+    'rank': loser === home ? away.rankMatchday : home.rankMatchday
   })
 }
 
@@ -196,7 +198,7 @@ const updateForm = (team) => {
   let form = 0
 
   for (let i = 0, m = 1; i < last5Games.length; i++, m -= 0.1) {
-    let result = m * last5Games[i]['points'] * (1 - (2 * last5Games[i]['position'] / 100))
+    let result = m * last5Games[i]['points'] * (1 - (2 * last5Games[i]['rank'] / 100))
     sum = sum + result
     form = sum / (i + 1)
   }
@@ -216,15 +218,15 @@ const updateMorale = (comp, home, away) => {
 
   let roleExpectWinEffect = 1
   let roleExpectLoseEffect = 1
-  let posExpectWinEffect = 1
-  let posExpectLoseEffect = 1
+  let rankExpectWinEffect = 1
+  let rankExpectLoseEffect = 1
   let sixPointsWinEffect = 1
   let sixPointsLoseEffect = 1
   let winnerBonus = 0
   let loserPenalty = 0
 
-  // console.log("winner:", winner.initials, winner.role, winner.positionMatchday);
-  // console.log("loser:", loser.initials, loser.role, loser.positionMatchday)
+  // console.log("winner:", winner.initials, winner.role, winner.rankMatchday);
+  // console.log("loser:", loser.initials, loser.role, loser.rankMatchday)
 
   // Role Expectaion Effect (always):
   // Title- & RelCandidates win/loss against bottom/top teams
@@ -245,24 +247,24 @@ const updateMorale = (comp, home, away) => {
     // console.log("ROLE-expect-LOSE:", roleExpectLoseEffect);
   }
 
-  // Position Expectation Effect (> matchday 10):
-  // Pos 1-3: bei loss gg pos > 9, 11
-  // Pos 12-14: bei win gg pos < 6, 4
+  // Rank Expectation Effect (> matchday 10):
+  // Rank 1-3: bei loss gg rank > 9, 11
+  // Rank 12-14: bei win gg rank < 6, 4
   if (winner.matchesPlayed > 10) {
-    if (winner.positionMatchday > 11 && loser.positionMatchday < 6) {
-      posExpectWinEffect = loser.positionMatchday < 4 ? 1.618 : 1.3
-      // console.log("POSITION-expect-WIN:", posExpectWinEffect);
+    if (winner.rankMatchday > 11 && loser.rankMatchday < 6) {
+      rankExpectWinEffect = loser.rankMatchday < 4 ? 1.618 : 1.3
+      // console.log("RANK-expect-WIN:", rankExpectWinEffect);
     }
-    if (loser.positionMatchday < 4 && winner.positionMatchday > 9) {
-      posExpectLoseEffect = winner.positionMatchday > 11 ? 1.618 : 1.3
-      // console.log("POSITION-expect-LOSE:", posExpectLoseEffect);
+    if (loser.rankMatchday < 4 && winner.rankMatchday > 9) {
+      rankExpectLoseEffect = winner.rankMatchday > 11 ? 1.618 : 1.3
+      // console.log("RANK-expect-LOSE:", rankExpectLoseEffect);
     }
   }
   
   // SixPoints-Match Effect (last 30%, 15% of season):
-  // win/loss against liveTable neighbour
+  // win/loss against matchdayTable neighbour
   if (winner.matchesPlayed >= 36) {
-    if (loser.positionMatchday === winner.positionMatchday + 1 || loser.positionMatchday === winner.positionMatchday - 1) {
+    if (loser.rankMatchday === winner.rankMatchday + 1 || loser.rankMatchday === winner.rankMatchday - 1) {
       sixPointsWinEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
       sixPointsLoseEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
       // console.log("SIXPOINTS-match:", sixPointsWinEffect, sixPointsLoseEffect);
@@ -289,15 +291,15 @@ const updateMorale = (comp, home, away) => {
     'RelCandidate':    {'pre5': 0.015,  'post5': 0.02}
   }
   if (winner.matchesPlayed < 5) {
-    winnerBonus = bonus[winner.role].pre5 * roleExpectWinEffect * posExpectWinEffect
-    // console.log("CALC WIN:", bonus[winner.role].pre5, roleExpectWinEffect, posExpectWinEffect, " -> ", winnerBonus);
-    loserPenalty = penalty[loser.role].pre5 * roleExpectLoseEffect * posExpectLoseEffect
-    // console.log("CALC LOSE:", penalty[loser.role].pre5, roleExpectLoseEffect, posExpectLoseEffect, " -> ", loserPenalty);
+    winnerBonus = bonus[winner.role].pre5 * roleExpectWinEffect * rankExpectWinEffect
+    // console.log("CALC WIN:", bonus[winner.role].pre5, roleExpectWinEffect, rankExpectWinEffect, " -> ", winnerBonus);
+    loserPenalty = penalty[loser.role].pre5 * roleExpectLoseEffect * rankExpectLoseEffect
+    // console.log("CALC LOSE:", penalty[loser.role].pre5, roleExpectLoseEffect, rankExpectLoseEffect, " -> ", loserPenalty);
   } else {
-    winnerBonus = bonus[winner.role].post5 * loser.form * roleExpectWinEffect * posExpectWinEffect * sixPointsWinEffect
-    // console.log("CALC WIN:", bonus[winner.role].post5, roleExpectWinEffect, posExpectWinEffect, sixPointsWinEffect, " -> ", winnerBonus);
-    loserPenalty = penalty[loser.role].post5 * (2.2 - winner.form) * roleExpectLoseEffect * posExpectLoseEffect * sixPointsLoseEffect
-    // console.log("CALC LOSE:", penalty[loser.role].post5, roleExpectLoseEffect, posExpectLoseEffect, sixPointsLoseEffect, " -> ", loserPenalty);
+    winnerBonus = bonus[winner.role].post5 * loser.form * roleExpectWinEffect * rankExpectWinEffect * sixPointsWinEffect
+    // console.log("CALC WIN:", bonus[winner.role].post5, roleExpectWinEffect, rankExpectWinEffect, sixPointsWinEffect, " -> ", winnerBonus);
+    loserPenalty = penalty[loser.role].post5 * (2.2 - winner.form) * roleExpectLoseEffect * rankExpectLoseEffect * sixPointsLoseEffect
+    // console.log("CALC LOSE:", penalty[loser.role].post5, roleExpectLoseEffect, rankExpectLoseEffect, sixPointsLoseEffect, " -> ", loserPenalty);
   }
 
   // ensure limits: morale change per intervall
@@ -350,7 +352,7 @@ const updateMorale = (comp, home, away) => {
 }
 
 // Table generator (sorting: seed, then topic/default + add club.entryName)
-const updatePosition = (clubs, sortTopic, entryName) => {
+const updateRank = (clubs, sortTopic, entryName) => {
   const sortedClubs = clubs.sort((a,b) => {
     if (a.matchesPlayed === 0 && b.matchesPlayed === 0) {
       return b.seed() - a.seed()
@@ -378,17 +380,17 @@ const updatePosition = (clubs, sortTopic, entryName) => {
   return sortedClubs
 }
 
-// Calc deviation from roleTarget position
+// Calc deviation from roleTarget rank
 const updateRoleDiff = (clubs) => {
   clubs.forEach(club => {
-    const minPosition = Math.min(...club.roleTarget.position);
-    const maxPosition = Math.max(...club.roleTarget.position);
-    const matchdayPosition = club.positionMatchday;
+    const minRank = Math.min(...club.roleTarget.rank);
+    const maxRank = Math.max(...club.roleTarget.rank);
+    const rankMatchday = club.rankMatchday;
 
-    club.roleDiff = matchdayPosition < minPosition
-      ? minPosition - matchdayPosition
-      : matchdayPosition > maxPosition
-        ? maxPosition - matchdayPosition
+    club.roleDiff = rankMatchday < minRank
+      ? minRank - rankMatchday
+      : rankMatchday > maxRank
+        ? maxRank - rankMatchday
         : 0
   })
 }
@@ -537,15 +539,15 @@ const prepareRole = (clubs) => {
   // rTarget: NACH 8, MODIFIER
 
   const roleTargets = {
-    'TitleCandidate':  {'name': 'Title',    'position': [1, 2]},
-    'Contender':       {'name': 'Playoffs', 'position': [3, 4, 5, 6]},
-    'UpperMidfielder': {'name': 'Playoffs', 'position': [5, 6, 7, 8]},
-    'LowerMidfielder': {'name': 'Comfort',  'position': [7, 8, 9, 10]},
-    'Survivalist':     {'name': 'Comfort',  'position': [8, 10, 11, 12]},
-    'RelCandidate':    {'name': 'Survival', 'position': [11, 12, 13, 14]},
+    'TitleCandidate':  {'name': 'Title',    'rank': [1, 2]},
+    'Contender':       {'name': 'Playoffs', 'rank': [3, 4, 5, 6]},
+    'UpperMidfielder': {'name': 'Playoffs', 'rank': [5, 6, 7, 8]},
+    'LowerMidfielder': {'name': 'Comfort',  'rank': [7, 8, 9, 10]},
+    'Survivalist':     {'name': 'Comfort',  'rank': [9, 10, 11, 12]},
+    'RelCandidate':    {'name': 'Survival', 'rank': [11, 12, 13]},
   }
 
-  const sortedClubs = updatePosition(clubs, 'positionSeed')
+  const sortedClubs = updateRank(clubs, 'rankSeed')
 
   sortedClubs.forEach((entry, index) => {
     entry.role = roles[index + 1]
@@ -568,7 +570,7 @@ export {
   updateFormData,
   updateForm,
   updateMorale,
-  updatePosition,
+  updateRank,
   updateRoleDiff,
   shuffleClubs,
   createSchedule,

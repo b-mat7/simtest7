@@ -3,8 +3,8 @@
     <div v-for="(club, index) in sortedClubs" :key=index class="club">
       <div class="header">
         <label>{{ club.initials }}</label>
-        <label>{{ club.seed() }}/{{ club.positionSeed }}.</label>
-        <label>{{ club.role }}/{{ club.roleDiff }}</label>
+        <label>{{ club.seed() }} ({{ club.rankSeed }}.)</label>
+        <label>{{ club.role }} ({{ club.roleDiff }})</label>
       </div>
       <div class="results">
         <label>Re {{ club.results.slice(-5).reverse() }} ({{ club.resultsL5Average() }})</label>
@@ -150,7 +150,7 @@ export default {
   gap: 0.5rem;
 
   .club {
-    width: 232px;
+    width: 248px;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -159,12 +159,13 @@ export default {
 
     .header {
       display: flex;
-      column-gap: 1rem;
+      justify-content: space-between
     }
-
+    
     .results {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px dashed white;
     }
     
     .seed-stats {
@@ -178,10 +179,11 @@ export default {
         width: 2rem;
       }
     }
-
+    
     .tweak-stats {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px dashed white;
 
       .tweak-entry {
         width: 4.5rem;
@@ -195,7 +197,7 @@ export default {
       justify-content: space-between;
       
       .play-entry {
-        width: 108px;
+        width: 7rem;
         display: flex;
         justify-content: space-between;
       }

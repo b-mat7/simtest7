@@ -18,7 +18,7 @@ season<template>
 <script>
 import SimulateMatchday from './SimulateMatchday.vue'
 
-import { updatePosition, prepareRole, updateRoleDiff } from '../lib/util.js'
+import { updateRank, prepareRole, updateRoleDiff } from '../lib/util.js'
 
 export default {
   name: 'SimulateSeason',
@@ -72,14 +72,14 @@ export default {
       }
     },
     prepareSeason() {
-      updatePosition(this.clubs, null, 'positionSeed')
-      updatePosition(this.clubs, null, 'positionMatchday')
+      updateRank(this.clubs, null, 'rankSeed')
+      updateRank(this.clubs, null, 'rankMatchday')
       prepareRole(this.clubs)
     },
     handlefinishedMatchdays(dayNr) {  // für resetMatch() müsste überabeitet werden
       this.finishedMatchdays.push(dayNr)
       
-      updatePosition(this.clubs, null, 'positionMatchday')
+      updateRank(this.clubs, null, 'rankMatchday')
       updateRoleDiff(this.clubs)
     }
   },

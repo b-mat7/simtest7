@@ -4,7 +4,7 @@
       <div class="header">
         <div class="column sticky-left-0 split">
           <label @click="showTable = !showTable">Live</label>
-          <label @click="setSortTopic('')">Pos</label>
+          <label @click="setSortTopic('')">Rank</label>
         </div>
         <div class="column sticky-left-1" @click="showDetails = !showDetails">
           <label>+++</label>
@@ -102,11 +102,11 @@
         <div class="column" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="showTable">
           <label>Seed</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'positionSeed' }" @click="setSortTopic('positionSeed')" v-if="showTable">
-          <label>SPos</label>
+        <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="showTable">
+          <label>SRa</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" @click="setSortTopic('positionMatchday')" v-if="showTable">
-          <label>MdPos</label>
+        <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="showTable">
+          <label>DRa</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')"
           v-if="showTable">
@@ -119,7 +119,7 @@
       <div class="body">
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
           <div class="column sticky-left-0">
-            <label>{{ club.positionLive }}</label>
+            <label>{{ club.rankLive }}</label>
           </div>
           <div class="column sticky-left-1">
             <label>{{ club.initials }}</label>
@@ -217,11 +217,11 @@
           <div class="column" :class="{ 'bold': sortTopic === 'seed' }" v-if="showTable">
             <label>{{ club.seed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'positionSeed' }" v-if="showTable">
-            <label>{{ club.positionSeed }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' }" v-if="showTable">
+            <label>{{ club.rankSeed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'positionMatchday' }" v-if="showTable">
-            <label>{{ club.positionMatchday }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' }" v-if="showTable">
+            <label>{{ club.rankMatchday }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" v-if="showTable">
             <label>{{ club.roleDiff }}</label>
@@ -236,7 +236,7 @@
 </template>
 
 <script>
-import { updatePosition } from '../lib/util.js'
+import { updateRank } from '../lib/util.js'
 
 export default {
   name: 'DisplayTables',
@@ -256,7 +256,7 @@ export default {
   },
   methods: {
     createLiveTable(clubs, sortTopic, entryName) {
-      this.liveTable = updatePosition(clubs, sortTopic, entryName).sort((a, b) => {
+      this.liveTable = updateRank(clubs, sortTopic, entryName).sort((a, b) => {
         return typeof a[this.sortTopic] === 'function'
           ? b[this.sortTopic]() - a[this.sortTopic]()
           : b[this.sortTopic] - a[this.sortTopic]
@@ -270,7 +270,7 @@ export default {
   watch: {
     clubs: {
       handler(newClubs, oldClubs) {
-        this.createLiveTable([...newClubs], null, 'positionLive')
+        this.createLiveTable([...newClubs], null, 'rankLive')
       },
       deep: true
     }
