@@ -4,7 +4,7 @@
       <div class="header">
         <label>{{ club.initials }}</label>
         <label>{{ club.seed() }} ({{ club.rankSeed }}.)</label>
-        <label>{{ club.role }} ({{ club.roleDiff }})</label>
+        <label>{{ club.role }} ({{ club.rankMatchday }}. {{ club.roleDiff }})</label>
       </div>
       <div class="results">
         <label>Re {{ club.results.slice(-5).reverse() }} ({{ club.resultsL5Average() }})</label>
@@ -66,10 +66,10 @@
             <label>Saø</label><label>{{ club.saveStrAverage() }}</label>
           </div>
           <div class="play-entry">
-            <label>Pl</label><label>{{ club.attacks }}:{{ club.defends }}</label>
+            <label>Pl</label><label>{{ club.attacks }} : {{ club.defends }}</label>
           </div>
           <div class="play-entry">
-            <label>Sh</label><label>{{ club.shots }}:{{ club.shotsAgainst }}</label>
+            <label>Sh</label><label>{{ club.shots }} : {{ club.shotsAgainst }}</label>
           </div>
           <div class="play-entry">
             <label>Sa</label><label>{{ club.saves }}</label>
@@ -78,7 +78,7 @@
             <label>P</label><label>{{ club.points }}</label>
           </div>
           <div class="play-entry">
-            <label>G</label><label>{{ club.goals }}:{{ club.goalsAgainst }}</label>
+            <label>G</label><label>{{ club.goals }} : {{ club.goalsAgainst }}</label>
           </div>
           <div class="play-entry">
             <label>Dif</label><label>{{ club.goalsDiff() }}</label>
