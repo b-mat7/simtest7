@@ -7,7 +7,7 @@
         <label>{{ club.role }} ({{ club.rankMatchday }}. {{ club.roleDiff }})</label>
       </div>
       <div class="results">
-        <label>Re {{ club.results.slice(-5).reverse() }} ({{ club.resultsL5Average() }})</label>
+        <label>Re {{ club.results.slice(-5) }} ({{ club.resultsL5Average() }})</label>
         <label>{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{ club.losses() }}</label>
       </div>
       <div class="seed-stats">
@@ -197,7 +197,7 @@ export default {
       justify-content: space-between;
       
       .play-entry {
-        width: 7rem;
+        width: 7.25rem;
         display: flex;
         justify-content: space-between;
       }
