@@ -36,26 +36,69 @@ const simulateGameSpeed = {
     // brauch das? oder macht einfach "simulate until Date.now()"?
 }
 
-const calcMomentum = (team) => {
-  // Decrease momentum for both, attacker keeps some from last play/goal
-  // ZAHLEN ÜBERARBEITEN, dice zu viel bzw momentum zu schwach
-  // home steigt schneller + fällt langsamer
-  if (team.momentum > 1) {
-    if (team.momentum > 1.45){
-      if (team.momentum > 1.55) {
-        team.momentum -= 0.2
-      }
-      team.momentum -= 0.15
-    }
-    team.momentum -= 0.1;
-    if (team.momentum < 1) {
-      team.momentum = 1;
-    }
+const calcMomentum = (comp, home, away, dice) => {
+  // calc home play momentum: better curve (=^ home bonus) (increase faster, decrease slower)
+  const x = comp.homePlayMomentum
+  switch (true) {
+    case (x > 1.8):
+      comp.homePlayMomentum -= 0.15
+      break;
+    case (x > 1.5):
+      comp.homePlayMomentum -= 0.1
+      break;
+    case (x > 1):
+      comp.homePlayMomentum -= 0.05
+      break;
   }
 
-  const returnVal = parseFloat((diceMaxInt(6) * team.momentum).toFixed(3))
+  // calc away play momentum: worse curve (increase slower, decrease faster)
+  const y = comp.awayPlayMomentum
+  switch (true) {
+    case (y > 1.8):
+      comp.awayPlayMomentum -= 0.225
+      break;
+    case (y > 1.5):
+      comp.awayPlayMomentum -= 0.15
+      break;
+    case (y > 1):
+      comp.awayPlayMomentum -= 0.075
+      break;
+  }
 
-  return returnVal
+  // ensure play momentum min/max limits
+  if(comp.homePlayMomentum < 1) {
+    comp.homePlayMomentum = 1
+  }
+  if(comp.awayPlayMomentum < 1) {
+    comp.awayPlayMomentum = 1
+  }
+  if(comp.homePlayMomentum > 2) {
+    comp.homePlayMomentum = 2
+  }
+  if(comp.awayPlayMomentum > 2) {
+    comp.awayPlayMomentum = 2
+  }
+
+  // calc team.momentum x playMomentum and write to team
+  const homePlayMomStr = parseFloat((home.momentum * comp.homePlayMomentum * 1.3).toFixed(2))
+  const awayPlayMomStr = parseFloat((away.momentum * comp.awayPlayMomentum * 1.3).toFixed(2))
+
+  home.playMomStrSum += homePlayMomStr
+  away.playMomStrSum += awayPlayMomStr
+
+  // calc final momentum
+  const homeMomentumStr = homePlayMomStr + diceMaxInt(dice)
+  const awayMomentumStr = awayPlayMomStr + diceMaxInt(dice)
+
+  // write to comp and team
+  comp.homeMomentumStr = homeMomentumStr
+  comp.awayMomentumStr = awayMomentumStr
+
+  comp.homeMomentumStrSum += homeMomentumStr
+  comp.awayMomentumStrSum += awayMomentumStr
+
+  home.momentumStrSum += homeMomentumStr
+  away.momentumStrSum += awayMomentumStr
 }
 
 const calcTeamBuff = (team) => {
@@ -71,8 +114,8 @@ const calcTeamBuff = (team) => {
 const calcAttackStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.attack * teamBuffValue)
-    + diceMaxInt(dice)
     + team.form
+    + diceMaxInt(dice)
   ).toFixed(3)
 
   return returnVal
@@ -81,8 +124,8 @@ const calcAttackStr = (team, teamBuffValue, dice) => {
 const calcDefendStr = (team, teamBuffValue, dice) => {
   const returnVal = +(
     (team.defend * teamBuffValue)
-    + diceMaxInt(dice)
     + team.form
+    + diceMaxInt(dice)
   ).toFixed(3)
 
   return returnVal
@@ -91,8 +134,8 @@ const calcDefendStr = (team, teamBuffValue, dice) => {
 const calcShotStr = (team, dice) => {
   const returnVal = +(
     team.shoot
-    + diceMaxInt(dice)
     + team.form / 2
+    + diceMaxInt(dice)
   ).toFixed(3)
 
   return returnVal
@@ -101,8 +144,8 @@ const calcShotStr = (team, dice) => {
 const calcSaveStr = (team, dice) => {
   const returnVal = +(
     team.save
-    + diceMaxInt(dice)
     + team.form / 2
+    + diceMaxInt(dice)
   ).toFixed(3)
 
   return returnVal
@@ -574,5 +617,5 @@ export {
   updateRoleDiff,
   shuffleClubs,
   createSchedule,
-  prepareRole,
+  prepareRole
 }

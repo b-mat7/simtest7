@@ -19,8 +19,8 @@
           <div class="possession">
             <div class="entry">
               <label>Mom, ø</label>
-              <label>{{ homeMomentum }}|{{ parseFloat((homeMomentumSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ awayMomentum }}|{{ parseFloat((awayMomentumSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ homeMomentumStr }}|{{ parseFloat((homeMomentumStrSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ awayMomentumStr }}|{{ parseFloat((awayMomentumStrSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>OP%</label>
@@ -122,10 +122,12 @@ export default {
       away: this.match.away,
 
       // if JS/BE: can be const vars outside simMatch() und als args übergeben
-      homeMomentum: 1,
-      awayMomentum: 1,
-      homeMomentumSum: 0,
-      awayMomentumSum: 0,
+      homePlayMomentum: 1,
+      awayPlayMomentum: 1,
+      homeMomentumStr: 1,
+      awayMomentumStr: 1,
+      homeMomentumStrSum: 0,
+      awayMomentumStrSum: 0,
       attackerBuff: 1,
       defenderBuff: 1,
       homeBuffSum: 0,
@@ -186,15 +188,12 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< DETERMINE ATTACKER >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // calc teamMomentum
-        this.homeMomentum = calcMomentum(this.home)
-        this.awayMomentum = calcMomentum(this.away)
-        this.homeMomentumSum += this.homeMomentum
-        this.awayMomentumSum += this.awayMomentum
+        // calc both teams' momentumStr
+        calcMomentum(this, this.home, this.away, 10)
 
         // determine attacker based on momentum
         // BULLYS: bullyStr(bestPlayer) + dice + momentum
-        const [attacker, defender] = this.homeMomentum >= this.awayMomentum
+        const [attacker, defender] = this.homeMomentumStr >= this.awayMomentumStr
           ? [this.home, this.away]
           : [this.away, this.home]
 
@@ -228,16 +227,10 @@ export default {
 
         // if attackStr > defendStr => get Shot on goal
         if (this.attackStr > this.defendStr) {
+          attacker === this.home ? this.homePlayMomentum += 0.35 : this.awayPlayMomentum += 0.3
           attacker === this.home ? this.homeShots++ : this.awayShots++
           attacker.shots++;
           defender.shotsAgainst++;
-
-          updateTeam(
-            attacker,
-            team => {
-              team.momentum += 0.15
-            }
-          )
 
 
           // >--< >--< >--< >--< >--< >--< >--< >--< >--< 
@@ -247,11 +240,12 @@ export default {
           this.shotStr = calcShotStr(attacker, 10)
           this.saveStr = calcSaveStr(defender, 10)
           attacker === this.home
-            ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
-            : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
+          ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
+          : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
 
           // if ScoreChance > SaveChance => Score goal
           if (this.shotStr > this.saveStr && checkShot(attacker, this.attackerBuff, defender, this.defenderBuff)) {
+            attacker === this.home ? this.homePlayMomentum += 0.5 : this.awayPlayMomentum += 0.4
             attacker === this.home ? this.homeGoals++ : this.awayGoals++
             attacker.goals++
             defender.goalsAgainst++
@@ -259,13 +253,6 @@ export default {
             this.liveTicker.push(`
                 ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
               `)
-
-            updateTeam(
-              attacker,
-              team => {
-                team.momentum += 0.2
-              }
-            )
 
           // if ScoreChance < SaveChance => miss goal
           } else {
@@ -303,20 +290,16 @@ export default {
         )
 
         // update home with intervall-stats
-        updateTeam(
-          this.home,
-          team => {
-            team.momentumSum += this.homeMomentum
-          }
-        )
+        // updateTeam(
+        //   this.home,
+        //   team => {}
+        // )
 
         // update away with intervall-stats
-        updateTeam(
-          this.away,
-          team => {
-            team.momentumSum += this.awayMomentum
-          }
-        )
+        // updateTeam(
+        //   this.away,
+        //   team => {}
+        // )
 
         // update club points per current standing
         updatePoints(this, this.home, this.away)
@@ -329,10 +312,11 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< HANDLE THIRD-BREAKS >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // stop the match after every third and each overtime
-        // this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
-        //   ? this.stopSimulateMatch()
-        //   : null
+        // stop the match (and reset momentum) after every third and each overtime
+        this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
+          ? (this.homePlayMomentum = 1, this.awayPlayMomentum = 1)
+          : null
+        // + this.stopSimulateMatch()
 
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
@@ -352,7 +336,6 @@ export default {
             updateTeam(
               this.homeGoals > this.awayGoals ? this.home : this.away,
               team => {
-                team.momentum = 1
                 this.matchTime === 60 ? team.results.push(3) : team.results.push(2)
               }
             )
@@ -361,7 +344,6 @@ export default {
             updateTeam(
               this.homeGoals < this.awayGoals ? this.home : this.away,
               team => {
-                team.momentum = 1
                 this.matchTime === 60 ? team.results.push(0) : team.results.push(1)
               }
             )
@@ -373,7 +355,7 @@ export default {
             updateForm(this.home)
             updateForm(this.away)
 
-            // update morale (based on opponent form)
+            // update morale (based on own+opponent form, role, rank)
             updateMorale(this, this.home, this.away)
 
             this.liveTicker.push(`${this.matchTime}.: End of the game`)

@@ -63,23 +63,29 @@
         <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' }" @click="setSortTopic('playsDiff')" v-if="showDetails">
           <label>Pl</label>
         </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAverage' }" @click="setSortTopic('momentumStrAverage')" v-if="showDetails">
+          <label>Mmø</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'momentumStrDiceAverage' }" @click="setSortTopic('momentumStrDiceAverage')" v-if="showDetails">
+          <label>MmDø</label>
+        </div>
         <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' }" @click="setSortTopic('attackStrAverage')" v-if="showDetails">
           <label>Atø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' }" @click="setSortTopic('attackStrDiceAverage')" v-if="showDetails">
           <label>AtDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" @click="setSortTopic('defendStrAverage')" v-if="showDetails">
-          <label>Deø</label>
-        </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' }" @click="setSortTopic('defendStrDiceAverage')" v-if="showDetails">
-          <label>DeDø</label>
-        </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' }" @click="setSortTopic('shotStrAverage')" v-if="showDetails">
           <label>Shø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' }" @click="setSortTopic('shotStrDiceAverage')" v-if="showDetails">
           <label>ShDø</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' }" @click="setSortTopic('defendStrAverage')" v-if="showDetails">
+          <label>Deø</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' }" @click="setSortTopic('defendStrDiceAverage')" v-if="showDetails">
+          <label>DeDø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' }" @click="setSortTopic('saveStrAverage')" v-if="showDetails">
           <label>Saø</label>
@@ -178,23 +184,29 @@
           <div class="column" :class="{ 'bold': sortTopic === 'playsDiff' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.playsDiff() }}</label>
           </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAverage' || focusClub === club.initials}" v-if="showDetails">
+            <label>{{ club.momentumStrAverage() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
+            <label>{{ club.momentumStrDiceAverage() }}</label>
+          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'attackStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.attackStrAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.attackStrDiceAverage() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' || focusClub === club.initials}" v-if="showDetails">
-            <label>{{ club.defendStrAverage() }}</label>
-          </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
-            <label>{{ club.defendStrDiceAverage() }}</label>
-          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.shotStrAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.shotStrDiceAverage() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAverage' || focusClub === club.initials}" v-if="showDetails">
+            <label>{{ club.defendStrAverage() }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAverage' || focusClub === club.initials}" v-if="showDetails">
+            <label>{{ club.defendStrDiceAverage() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'saveStrAverage' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.saveStrAverage() }}</label>

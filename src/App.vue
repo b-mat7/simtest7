@@ -73,7 +73,7 @@ body {
   padding: 0.5rem;
   
   .clubs-container {
-    max-height: 335px;
+    max-height: 356px;
     overflow-y: scroll;
   }
   
