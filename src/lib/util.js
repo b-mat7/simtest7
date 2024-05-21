@@ -79,16 +79,13 @@ const calcMomentum = (comp, home, away, dice) => {
     comp.awayPlayMomentum = 2
   }
 
-  // calc team.momentum x playMomentum and write to team
-  const homePlayMomStr = parseFloat((home.momentum * comp.homePlayMomentum * 1.3).toFixed(2))
-  const awayPlayMomStr = parseFloat((away.momentum * comp.awayPlayMomentum * 1.3).toFixed(2))
+  // write play momentum to team
+  home.playMomSum += comp.homePlayMomentum
+  away.playMomSum += comp.awayPlayMomentum
 
-  home.playMomStrSum += homePlayMomStr
-  away.playMomStrSum += awayPlayMomStr
-
-  // calc final momentum
-  const homeMomentumStr = homePlayMomStr + diceMaxInt(dice)
-  const awayMomentumStr = awayPlayMomStr + diceMaxInt(dice)
+  // calc momentum
+  const homeMomentumStr = parseFloat((home.initiative * comp.homePlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  const awayMomentumStr = parseFloat((away.initiative * comp.awayPlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
 
   // write to comp and team
   comp.homeMomentumStr = homeMomentumStr

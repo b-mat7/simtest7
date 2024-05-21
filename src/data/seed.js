@@ -4,7 +4,7 @@ const clubsData = [
     'name': 'EHC Freiburg',
     'initials': "FRB",
     'colorPrim': null,
-    'momentum': 1,
+    'initiative': 1,
     'attack': 3,
     'shoot': 3,
     'defend': 2,

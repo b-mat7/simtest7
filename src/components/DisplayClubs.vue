@@ -12,8 +12,8 @@
       </div>
       <div class="seed-stats">
         <div class="seed-entry">
-          <label>Mm</label>
-          <label>{{ parseFloat((club.momentum).toFixed(2)) }}</label>
+          <label>In</label>
+          <label>{{ club.initiative }}</label>
         </div>
         <div class="seed-entry">
           <label>At</label>
@@ -51,7 +51,7 @@
       <div class="play-stats">
         <div class="column">
           <div class="play-entry">
-            <label>Mmø</label><label>({{ parseFloat((club.playMomStrAverage() / club.momentum / 1.3).toFixed(2)) }}) {{ club.momentumStrAverage() }}</label>
+            <label>Mmø</label><label>({{ club.playMomAverage() }}) {{ club.momentumStrAverage() }}</label>
           </div>
           <div class="play-entry">
             <label>Atø</label><label>{{ club.attackStrAverage() }}</label>
