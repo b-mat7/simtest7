@@ -61,7 +61,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -132,7 +132,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -203,7 +203,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -274,7 +274,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -345,7 +345,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -416,7 +416,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -487,7 +487,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -558,7 +558,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -629,7 +629,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -700,7 +700,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -771,7 +771,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -842,7 +842,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -913,7 +913,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
@@ -984,7 +984,7 @@ const clubsData = [
     'defendStrAverage': function () { return this.matchesPlayed   > 0 ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) : 0 },
     'shotStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / this.shots).toFixed(2)) : 0 },
     'saveStrAverage': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / this.shotsAgainst).toFixed(2)) : 0 },
-    'formAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.formSum / this.matchesPlayed).toFixed(2)) : 0 },
+    'formAverage': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 },
     'buffAverage': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
     'resultsL5Average': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
