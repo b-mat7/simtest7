@@ -230,8 +230,10 @@ const updateFormData = (comp, home, away) => {
   })
 }
 
-// Calc form (based on formData)
+// Calc form (based on formData), done only after matchday 5
 const updateForm = (team) => {
+  if (team.matchesPlayed < 5) return
+
   const last5Games = team.formData.slice(-5).reverse()
 
   let sum = 0
