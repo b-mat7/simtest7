@@ -1,6 +1,5 @@
 <template>
   <div v-if="clubs.length > 0" class="clubs-container">
-    <!-- comp loaded before App has loaded clubs ?! (wenn in comp kein mounted() verwende gehts ?!) -->
     <DisplayClubs :clubs/>
   </div>
   <div class="tables-container">

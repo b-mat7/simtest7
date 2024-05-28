@@ -37,58 +37,58 @@ const simulateGameSpeed = {
 }
 
 const calcMomentum = (comp, home, away) => {
-  // calc home play momentum: better curve (=^ home bonus) (increase faster, decrease slower)
-  const x = comp.homePlayMomentum
+  // calc home momentum: better curve (=^ home bonus) (increase faster, decrease slower)
+  const x = comp.homeMomentum
   switch (true) {
     case (x > 1.8):
-      comp.homePlayMomentum -= 0.15
+      comp.homeMomentum -= 0.15
       break;
     case (x > 1.5):
-      comp.homePlayMomentum -= 0.1
+      comp.homeMomentum -= 0.1
       break;
     case (x > 1):
-      comp.homePlayMomentum -= 0.05
+      comp.homeMomentum -= 0.05
       break;
   }
 
-  // calc away play momentum: worse curve (increase slower, decrease faster)
-  const y = comp.awayPlayMomentum
+  // calc away momentum: worse curve (increase slower, decrease faster)
+  const y = comp.awayMomentum
   switch (true) {
     case (y > 1.8):
-      comp.awayPlayMomentum -= 0.225
+      comp.awayMomentum -= 0.225
       break;
     case (y > 1.5):
-      comp.awayPlayMomentum -= 0.15
+      comp.awayMomentum -= 0.15
       break;
     case (y > 1):
-      comp.awayPlayMomentum -= 0.075
+      comp.awayMomentum -= 0.075
       break;
   }
 
-  // ensure play momentum min/max limits
-  if(comp.homePlayMomentum < 1) {
-    comp.homePlayMomentum = 1
+  // ensure momentum min/max limits
+  if(comp.homeMomentum < 1) {
+    comp.homeMomentum = 1
   }
-  if(comp.awayPlayMomentum < 1) {
-    comp.awayPlayMomentum = 1
+  if(comp.awayMomentum < 1) {
+    comp.awayMomentum = 1
   }
-  if(comp.homePlayMomentum > 2) {
-    comp.homePlayMomentum = 2
+  if(comp.homeMomentum > 2) {
+    comp.homeMomentum = 2
   }
-  if(comp.awayPlayMomentum > 2) {
-    comp.awayPlayMomentum = 2
+  if(comp.awayMomentum > 2) {
+    comp.awayMomentum = 2
   }
 
-  // write play momentum to team
-  home.playMomSum += comp.homePlayMomentum
-  away.playMomSum += comp.awayPlayMomentum
+  // write momentum to club
+  home.momentumSum += comp.homeMomentum
+  away.momentumSum += comp.awayMomentum
 }
 
 const calcInitiative = (comp, home, away, dice) => {
-  const homeInitiativeStr = parseFloat((home.initiative * comp.homePlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-  const awayInitiativeStr = parseFloat((away.initiative * comp.awayPlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  const homeInitiativeStr = parseFloat((home.initiative * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  const awayInitiativeStr = parseFloat((away.initiative * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
 
-  // write to comp and team
+  // write to simMatch and club
   comp.homeInitiativeStr = homeInitiativeStr
   comp.awayInitiativeStr = awayInitiativeStr
 

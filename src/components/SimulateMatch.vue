@@ -122,8 +122,8 @@ export default {
       away: this.match.away,
 
       // if JS/BE: can be const vars outside simMatch() und als args übergeben
-      homePlayMomentum: 1,
-      awayPlayMomentum: 1,
+      homeMomentum: 1,
+      awayMomentum: 1,
       homeInitiativeStr: 1,
       awayInitiativeStr: 1,
       homeInitiativeStrSum: 0,
@@ -230,7 +230,7 @@ export default {
 
         // if attackStr > defendStr => get Shot on goal
         if (this.attackStr > this.defendStr) {
-          attacker === this.home ? this.homePlayMomentum += 0.35 : this.awayPlayMomentum += 0.3
+          attacker === this.home ? this.homeMomentum += 0.35 : this.awayMomentum += 0.3
           attacker === this.home ? this.homeShots++ : this.awayShots++
           attacker.shots++;
           defender.shotsAgainst++;
@@ -248,7 +248,7 @@ export default {
 
           // if ScoreChance > SaveChance => Score goal
           if (this.shotStr > this.saveStr && checkShot(attacker, this.attackerBuff, defender, this.defenderBuff)) {
-            attacker === this.home ? this.homePlayMomentum += 0.5 : this.awayPlayMomentum += 0.4
+            attacker === this.home ? this.homeMomentum += 0.5 : this.awayMomentum += 0.4
             attacker === this.home ? this.homeGoals++ : this.awayGoals++
             attacker.goals++
             defender.goalsAgainst++
@@ -317,7 +317,7 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // stop the match (and reset momentum) after every third and each overtime
         this.matchTime === this.matchLength / 3 || this.matchTime === this.matchLength / 3 * 2 || this.matchTime === this.matchLength
-          ? (this.homePlayMomentum = 1, this.awayPlayMomentum = 1)
+          ? (this.homeMomentum = 1, this.awayMomentum = 1)
           : null
         // + this.stopSimulateMatch()
 
