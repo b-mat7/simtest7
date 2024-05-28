@@ -18,9 +18,9 @@
         <div v-if="showStats" @click="showStats = !showStats" class="stats">
           <div class="possession">
             <div class="entry">
-              <label>Mom, ø</label>
-              <label>{{ homeMomentumStr }}|{{ parseFloat((homeMomentumStrSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ awayMomentumStr }}|{{ parseFloat((awayMomentumStrSum / matchTime).toFixed(1)) }}</label>
+              <label>In, ø</label>
+              <label>{{ parseFloat(homeInitiativeStr) }}|{{ parseFloat((homeInitiativeStrSum / matchTime).toFixed(1)) }}</label>
+              <label>{{ parseFloat(awayInitiativeStr) }}|{{ parseFloat((awayInitiativeStrSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>OP%</label>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js';
+import { calcMomentum, calcInitiative, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js';
 
 export default {
   emits: ['matchFinished'],
@@ -124,10 +124,10 @@ export default {
       // if JS/BE: can be const vars outside simMatch() und als args übergeben
       homePlayMomentum: 1,
       awayPlayMomentum: 1,
-      homeMomentumStr: 1,
-      awayMomentumStr: 1,
-      homeMomentumStrSum: 0,
-      awayMomentumStrSum: 0,
+      homeInitiativeStr: 1,
+      awayInitiativeStr: 1,
+      homeInitiativeStrSum: 0,
+      awayInitiativeStrSum: 0,
       attackerBuff: 1,
       defenderBuff: 1,
       homeBuffSum: 0,
@@ -188,12 +188,15 @@ export default {
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // >--< >--< >--< DETERMINE ATTACKER >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // calc both teams' momentumStr
-        calcMomentum(this, this.home, this.away, 10)
+        // calc both teams' play momentum
+        calcMomentum(this, this.home, this.away)
 
-        // determine attacker based on momentum
+        // calc both teams' initiativeStr
+        calcInitiative(this, this.home, this.away, 10)
+
+        // determine attacker based on initiative
         // BULLYS: bullyStr(bestPlayer) + dice + momentum
-        const [attacker, defender] = this.homeMomentumStr >= this.awayMomentumStr
+        let [attacker, defender] = this.homeInitiativeStr >= this.awayInitiativeStr
           ? [this.home, this.away]
           : [this.away, this.home]
 

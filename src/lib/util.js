@@ -36,7 +36,7 @@ const simulateGameSpeed = {
     // brauch das? oder macht einfach "simulate until Date.now()"?
 }
 
-const calcMomentum = (comp, home, away, dice) => {
+const calcMomentum = (comp, home, away) => {
   // calc home play momentum: better curve (=^ home bonus) (increase faster, decrease slower)
   const x = comp.homePlayMomentum
   switch (true) {
@@ -82,20 +82,21 @@ const calcMomentum = (comp, home, away, dice) => {
   // write play momentum to team
   home.playMomSum += comp.homePlayMomentum
   away.playMomSum += comp.awayPlayMomentum
+}
 
-  // calc momentum
-  const homeMomentumStr = parseFloat((home.initiative * comp.homePlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-  const awayMomentumStr = parseFloat((away.initiative * comp.awayPlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+const calcInitiative = (comp, home, away, dice) => {
+  const homeInitiativeStr = parseFloat((home.initiative * comp.homePlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  const awayInitiativeStr = parseFloat((away.initiative * comp.awayPlayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
 
   // write to comp and team
-  comp.homeMomentumStr = homeMomentumStr
-  comp.awayMomentumStr = awayMomentumStr
+  comp.homeInitiativeStr = homeInitiativeStr
+  comp.awayInitiativeStr = awayInitiativeStr
 
-  comp.homeMomentumStrSum += homeMomentumStr
-  comp.awayMomentumStrSum += awayMomentumStr
+  comp.homeInitiativeStrSum += homeInitiativeStr
+  comp.awayInitiativeStrSum += awayInitiativeStr
 
-  home.momentumStrSum += homeMomentumStr
-  away.momentumStrSum += awayMomentumStr
+  home.initiativeStrSum += homeInitiativeStr
+  away.initiativeStrSum += awayInitiativeStr
 }
 
 const calcTeamBuff = (team) => {
@@ -601,6 +602,7 @@ const prepareRole = (clubs) => {
 
 export {
   calcMomentum,
+  calcInitiative,
   calcTeamBuff,
   calcAttackStr,
   calcDefendStr,

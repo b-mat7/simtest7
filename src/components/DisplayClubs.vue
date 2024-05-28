@@ -51,7 +51,7 @@
       <div class="play-stats">
         <div class="column">
           <div class="play-entry">
-            <label>Mmø</label><label>({{ club.playMomAverage() }}) {{ club.momentumStrAverage() }}</label>
+            <label>Inø</label><label>({{ club.playMomAverage() }}) {{ club.initiativeStrAverage() }}</label>
           </div>
           <div class="play-entry">
             <label>Atø</label><label>{{ club.attackStrAverage() }}</label>
@@ -87,7 +87,7 @@
 
         <div class="column">
           <div class="play-entry">
-            <label>MmDø</label><label>{{ club.momentumStrDiceAverage() }}</label>
+            <label>InDø</label><label>{{ club.initiativeStrDiceAverage() }}</label>
           </div>
           <div class="play-entry">
             <label>AtDø</label><label>{{ club.attackStrDiceAverage() }}</label>
