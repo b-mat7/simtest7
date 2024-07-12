@@ -2,10 +2,10 @@ season<template>
   <div class="simulate-season-wrapper">
     <div class="controls">
       <label>Season-Control:</label>
-      <button v-if="!simulatePara" @click="toggleSimulatePara">SimPara</button>
-      <button v-else @click="toggleSimulatePara">! SimPara</button>
       <button v-if="!simulateSequ" @click="toggleSimulateSequ">SimSequ</button>
       <button v-else @click="toggleSimulateSequ">! SimSequ</button>
+      <button v-if="!simulatePara" @click="toggleSimulatePara">SimPara</button>
+      <button v-else @click="toggleSimulatePara">! SimPara</button>
     </div>
     <div class="matchdays">
       <div v-for="matchday in schedule.matchdayList">

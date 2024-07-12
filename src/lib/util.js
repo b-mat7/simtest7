@@ -42,13 +42,13 @@ const calcMomentum = (comp, home, away) => {
   switch (true) {
     case (x > 1.8):
       comp.homeMomentum -= 0.15
-      break;
+      break
     case (x > 1.5):
       comp.homeMomentum -= 0.1
-      break;
+      break
     case (x > 1):
       comp.homeMomentum -= 0.05
-      break;
+      break
   }
 
   // calc away momentum: worse curve (increase slower, decrease faster)
@@ -56,13 +56,13 @@ const calcMomentum = (comp, home, away) => {
   switch (true) {
     case (y > 1.8):
       comp.awayMomentum -= 0.225
-      break;
+      break
     case (y > 1.5):
       comp.awayMomentum -= 0.15
-      break;
+      break
     case (y > 1):
       comp.awayMomentum -= 0.075
-      break;
+      break
   }
 
   // ensure momentum min/max limits
@@ -85,8 +85,23 @@ const calcMomentum = (comp, home, away) => {
 }
 
 const calcInitiative = (comp, home, away, dice) => {
-  const homeInitiativeStr = parseFloat((home.initiative * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-  const awayInitiativeStr = parseFloat((away.initiative * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  // const homeInitiativeStr = parseFloat((homeInitFactor + home.initiative * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  // const awayInitiativeStr = parseFloat((awayInitFactor + away.initiative * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+
+  const homeInitFactor = parseFloat((home.initiative - home.transition).toFixed(2))
+  const awayInitFactor = parseFloat((away.initiative - away.transition).toFixed(2))
+
+  const homeInitMom = Number((homeInitFactor + home.initiative * comp.homeMomentum * 1.3).toFixed(2))
+  const awayInitMom = Number((awayInitFactor + away.initiative * comp.awayMomentum * 1.3).toFixed(2))
+
+  const homeDice = diceMaxInt(dice)
+  const awayDice = diceMaxInt(dice)
+
+  const homeInitiativeStr = parseFloat(homeInitMom + homeDice)
+  const awayInitiativeStr = parseFloat(awayInitMom + awayDice)
+
+  console.log("H:", home.initials, "| home-initStr: ", "initFactor ", homeInitFactor, " + home.init ", home.initiative, "* mom: ", comp.homeMomentum, "*1.3 = ", homeInitMom, "+dice ", homeDice, " = ", homeInitiativeStr)
+  console.log("A:", away.initials, "| away-initStr: ", "initFactor ", awayInitFactor, " + away.init ", away.initiative, "* mom: ", comp.awayMomentum, "*1.3 = ", awayInitMom, "+dice ", awayDice, " = ", awayInitiativeStr)
 
   // write to simMatch and club
   comp.homeInitiativeStr = homeInitiativeStr
@@ -97,6 +112,36 @@ const calcInitiative = (comp, home, away, dice) => {
 
   home.initiativeStrSum += homeInitiativeStr
   away.initiativeStrSum += awayInitiativeStr
+}
+
+const calcTransition = (comp, home, away, dice) => {
+  // const homeTransitionStr = parseFloat((homeTransFactor + home.transition * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+  // const awayTransitionStr = parseFloat((awayTransFactor + away.transition * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
+
+  const homeTransFactor = parseFloat((home.transition - home.initiative).toFixed(2))
+  const awayTransFactor = parseFloat((away.transition - away.initiative).toFixed(2))
+
+  const homeTransMom = Number((homeTransFactor + home.transition * comp.homeMomentum * 1.3).toFixed(2))
+  const awayTransMom = Number((awayTransFactor + away.transition * comp.awayMomentum * 1.3).toFixed(2))
+
+  const homeDice = diceMaxInt(dice)
+  const awayDice = diceMaxInt(dice)
+
+  const homeTransitionStr = parseFloat(homeTransMom + homeDice)
+  const awayTransitionStr = parseFloat(awayTransMom + awayDice)
+
+  console.log("H:", home.initials, "| home-transStr: ", "transFactor ", homeTransFactor, " + home.trans ", home.transition, "* mom: ", comp.homeMomentum, "*1.3 = ", homeTransMom, "+dice ", homeDice, " = ", homeTransitionStr)
+  console.log("A:", away.initials, "| away-transStr: ", "transFactor ", awayTransFactor, " + away.trans ", away.transition, "* mom: ", comp.awayMomentum, "*1.3 = ", awayTransMom, "+dice ", awayDice, " = ", awayTransitionStr)
+
+  // write to simMatch and club
+  comp.homeTransitionStr = homeTransitionStr
+  comp.awayTransitionStr = awayTransitionStr
+
+  comp.homeTransitionStrSum += homeTransitionStr
+  comp.awayTransitionStrSum += awayTransitionStr
+
+  home.transitionStrSum += homeTransitionStr
+  away.transitionStrSum += awayTransitionStr
 }
 
 const calcTeamBuff = (team) => {
@@ -268,26 +313,26 @@ const updateMorale = (comp, home, away) => {
   let winnerBonus = 0
   let loserPenalty = 0
 
-  // console.log("winner:", winner.initials, winner.role, winner.rankMatchday);
+  // console.log("winner:", winner.initials, winner.role, winner.rankMatchday)
   // console.log("loser:", loser.initials, loser.role, loser.rankMatchday)
 
   // Role Expectaion Effect (always):
   // Title- & RelCandidates win/loss against bottom/top teams
   if (winner.role === 'RelCandidate' && loser.role === 'Contender') {
     roleExpectWinEffect = 1.3
-    // console.log("ROLE-expect-WIN:", roleExpectWinEffect);
+    // console.log("ROLE-expect-WIN:", roleExpectWinEffect)
   }
   if (winner.role === 'RelCandidate' && loser.role === 'TitleCandidate') {
     roleExpectWinEffect = 1.618
-    // console.log("ROLE-expect-WIN:", roleExpectWinEffect);
+    // console.log("ROLE-expect-WIN:", roleExpectWinEffect)
   }
   if (loser.role === 'TitleCandidate' && winner.role === 'Survivalist') {
     roleExpectLoseEffect = 1.3
-    // console.log("ROLE-expect-LOSE:", roleExpectLoseEffect);
+    // console.log("ROLE-expect-LOSE:", roleExpectLoseEffect)
   }
   if (loser.role === 'TitleCandidate' && winner.role === 'RelCandidate') {
     roleExpectLoseEffect = 1.618
-    // console.log("ROLE-expect-LOSE:", roleExpectLoseEffect);
+    // console.log("ROLE-expect-LOSE:", roleExpectLoseEffect)
   }
 
   // Rank Expectation Effect (> matchday 10):
@@ -296,11 +341,11 @@ const updateMorale = (comp, home, away) => {
   if (winner.matchesPlayed > 10) {
     if (winner.rankMatchday > 11 && loser.rankMatchday < 6) {
       rankExpectWinEffect = loser.rankMatchday < 4 ? 1.618 : 1.3
-      // console.log("RANK-expect-WIN:", rankExpectWinEffect);
+      // console.log("RANK-expect-WIN:", rankExpectWinEffect)
     }
     if (loser.rankMatchday < 4 && winner.rankMatchday > 9) {
       rankExpectLoseEffect = winner.rankMatchday > 11 ? 1.618 : 1.3
-      // console.log("RANK-expect-LOSE:", rankExpectLoseEffect);
+      // console.log("RANK-expect-LOSE:", rankExpectLoseEffect)
     }
   }
   
@@ -310,7 +355,7 @@ const updateMorale = (comp, home, away) => {
     if (loser.rankMatchday === winner.rankMatchday + 1 || loser.rankMatchday === winner.rankMatchday - 1) {
       sixPointsWinEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
       sixPointsLoseEffect = winner.matchesPlayed > 44 ? 1.618 : 1.3
-      // console.log("SIXPOINTS-match:", sixPointsWinEffect, sixPointsLoseEffect);
+      // console.log("SIXPOINTS-match:", sixPointsWinEffect, sixPointsLoseEffect)
     }
   }
 
@@ -335,14 +380,14 @@ const updateMorale = (comp, home, away) => {
   }
   if (winner.matchesPlayed < 5) {
     winnerBonus = bonus[winner.role].pre5 * roleExpectWinEffect * rankExpectWinEffect
-    // console.log("CALC WIN:", bonus[winner.role].pre5, roleExpectWinEffect, rankExpectWinEffect, " -> ", winnerBonus);
+    // console.log("CALC WIN:", bonus[winner.role].pre5, roleExpectWinEffect, rankExpectWinEffect, " -> ", winnerBonus)
     loserPenalty = penalty[loser.role].pre5 * roleExpectLoseEffect * rankExpectLoseEffect
-    // console.log("CALC LOSE:", penalty[loser.role].pre5, roleExpectLoseEffect, rankExpectLoseEffect, " -> ", loserPenalty);
+    // console.log("CALC LOSE:", penalty[loser.role].pre5, roleExpectLoseEffect, rankExpectLoseEffect, " -> ", loserPenalty)
   } else {
     winnerBonus = bonus[winner.role].post5 * loser.form * roleExpectWinEffect * rankExpectWinEffect * sixPointsWinEffect
-    // console.log("CALC WIN:", bonus[winner.role].post5, roleExpectWinEffect, rankExpectWinEffect, sixPointsWinEffect, " -> ", winnerBonus);
+    // console.log("CALC WIN:", bonus[winner.role].post5, roleExpectWinEffect, rankExpectWinEffect, sixPointsWinEffect, " -> ", winnerBonus)
     loserPenalty = penalty[loser.role].post5 * (2.2 - winner.form) * roleExpectLoseEffect * rankExpectLoseEffect * sixPointsLoseEffect
-    // console.log("CALC LOSE:", penalty[loser.role].post5, roleExpectLoseEffect, rankExpectLoseEffect, sixPointsLoseEffect, " -> ", loserPenalty);
+    // console.log("CALC LOSE:", penalty[loser.role].post5, roleExpectLoseEffect, rankExpectLoseEffect, sixPointsLoseEffect, " -> ", loserPenalty)
   }
 
   // ensure limits: morale change per intervall
@@ -371,8 +416,8 @@ const updateMorale = (comp, home, away) => {
 
   winner.morale += winnerBonus
   loser.morale -= loserPenalty
-  // console.log("winnerbonus", winnerBonus, winner.initials);
-  // console.log("loserpenalty", loserPenalty, loser.initials);
+  // console.log("winnerbonus", winnerBonus, winner.initials)
+  // console.log("loserpenalty", loserPenalty, loser.initials)
 
   // ensure limits: morale total
   const totalLimits = {
@@ -385,12 +430,12 @@ const updateMorale = (comp, home, away) => {
   }
   if (winner.morale > totalLimits[winner.role].max) {
     winner.morale = totalLimits[winner.role].max
-    // console.log("winnerMorale-TOTAL LIMIT MAX:", winner.morale, " -> ", totalLimits[winner.role].max);
+    // console.log("winnerMorale-TOTAL LIMIT MAX:", winner.morale, " -> ", totalLimits[winner.role].max)
   }
   
   if (loser.morale < totalLimits[loser.role].min) {
     loser.morale = totalLimits[loser.role].min
-    // console.log("moserMorale-TOTAL LIMIT MIN:", loser.morale, " -> ", totalLimits[loser.role].min);
+    // console.log("moserMorale-TOTAL LIMIT MIN:", loser.morale, " -> ", totalLimits[loser.role].min)
   }
 }
 
@@ -426,9 +471,9 @@ const updateRank = (clubs, sortTopic, entryName) => {
 // Calc deviation from roleTarget rank
 const updateRoleDiff = (clubs) => {
   clubs.forEach(club => {
-    const minRank = Math.min(...club.roleTarget.rank);
-    const maxRank = Math.max(...club.roleTarget.rank);
-    const rankMatchday = club.rankMatchday;
+    const minRank = Math.min(...club.roleTarget.rank)
+    const maxRank = Math.max(...club.roleTarget.rank)
+    const rankMatchday = club.rankMatchday
 
     club.roleDiff = rankMatchday < minRank
       ? minRank - rankMatchday
@@ -438,6 +483,7 @@ const updateRoleDiff = (clubs) => {
   })
 }
 
+// Shuffle Clubs for schedule generator
 const shuffleClubs = (clubs) => {
   // Create shallow copy
   const shuffledClubs = [...clubs]
@@ -445,28 +491,29 @@ const shuffleClubs = (clubs) => {
   // Apply Fisher-Yates shuffle algorithm
   for (let i = shuffledClubs.length - 1; i > 0; i--) {
     // Generate random index between 0 and i (inclusive)
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1))
     // Swap elements at indices i and j
-    const temp = shuffledClubs[i];
-    shuffledClubs[i] = shuffledClubs[j];
-    shuffledClubs[j] = temp;
+    const temp = shuffledClubs[i]
+    shuffledClubs[i] = shuffledClubs[j]
+    shuffledClubs[j] = temp
   }
-  return shuffledClubs;
+  return shuffledClubs
 }
 
+// Schedule generator
 const createSchedule = (clubs) => {
-  const numClubs = clubs.length;
-  const numMatchdays = (numClubs - 1) * 2; // Two halves
+  const numClubs = clubs.length
+  const numMatchdays = (numClubs - 1) * 2 // Two halves
 
   const shuffledClubs = shuffleClubs(clubs)
 
   // Initialize schedule object
-  // const schedule = Array.from({ length: numMatchdays }, () => []);   // as Array
+  // const schedule = Array.from({ length: numMatchdays }, () => [])   // as Array
   const schedule = {
     season: 2023,
     league: 'DEL2',
     matchdayList: Array.from({ length: numMatchdays }, () => [])
-  };
+  }
 
   // Generate first half of the schedule using modified round-robin algorithm
   for (let day = 0; day < 4 * (numClubs - 1); day++) {
@@ -477,8 +524,8 @@ const createSchedule = (clubs) => {
       matches: [],
     }
     for (let i = 0; i < numClubs / 2; i++) {
-      const homeClub = shuffledClubs[i];
-      const awayClub = shuffledClubs[numClubs - 1 - i];
+      const homeClub = shuffledClubs[i]
+      const awayClub = shuffledClubs[numClubs - 1 - i]
       if (day % 2 === 1) {
         schedule.matchdayList[day].matches.push({ 
           'dayNr': day + 1,
@@ -501,16 +548,16 @@ const createSchedule = (clubs) => {
     }
 
     // Rotate the clubs
-    const temp = shuffledClubs[1];
+    const temp = shuffledClubs[1]
     for (let i = 1; i < numClubs - 1; i++) {
-      shuffledClubs[i] = shuffledClubs[i + 1];
+      shuffledClubs[i] = shuffledClubs[i + 1]
     }
-    shuffledClubs[numClubs - 1] = temp;
+    shuffledClubs[numClubs - 1] = temp
   }
 
   // Generate second half of the schedule by switching home/away
   for (let day = 0; day < numClubs - 1; day++) {
-    const secondHalfDay = day + numClubs - 1;
+    const secondHalfDay = day + numClubs - 1
     schedule.matchdayList[secondHalfDay] = {
       dayNr: secondHalfDay + 1,
       date: 'Date{}',
@@ -527,7 +574,7 @@ const createSchedule = (clubs) => {
       })
     }
   }
-  return schedule;
+  return schedule
 }
 
 // Assign each teams' role & target for the saison (based on seed strength)
@@ -603,6 +650,7 @@ const prepareRole = (clubs) => {
 export {
   calcMomentum,
   calcInitiative,
+  calcTransition,
   calcTeamBuff,
   calcAttackStr,
   calcDefendStr,

@@ -23,16 +23,41 @@
               <label>{{ parseFloat(awayInitiativeStr) }}|{{ parseFloat((awayInitiativeStrSum / matchTime).toFixed(1)) }}</label>
             </div>
             <div class="entry">
-              <label>OP%</label>
+              <label>At%</label>
               <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed()) }}</label>
               <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed()) }}</label>
+            </div>
+            <div class="entry">
+              <label>Tr, ø</label>
+              <label>{{ parseFloat(homeTransitionStr) }}|{{ parseFloat((homeTransitionStrSum / (homeCounters + homeFallbacks)).toFixed(1)) }}</label>
+              <label>{{ parseFloat(awayTransitionStr) }}|{{ parseFloat((awayTransitionStrSum / (awayCounters + awayFallbacks)).toFixed(1)) }}</label>
+            </div>
+            <div class="entry">
+              <label>Co%</label>
+              <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed()) }}</label>
+              <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed()) }}</label>
+            </div>
+            <div class="entry">
+              <label>Fb%</label>
+              <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed()) }}</label>
+              <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="tweaks">
             <div class="entry">
-              <label>Bufø</label>
-              <label>{{ parseFloat((homeBuffSum / matchTime).toFixed(2)) }}</label>
-              <label>{{ parseFloat((awayBuffSum / matchTime).toFixed(2)) }}</label>
+              <label>Mm</label>
+              <label>{{ parseFloat((homeMomentum).toFixed(2))}}</label>
+              <label>{{ parseFloat((awayMomentum).toFixed(2))}}</label>
+            </div>
+            <div class="entry">
+              <label>Fo</label>
+              <label>{{ parseFloat((home.form).toFixed(2))}}</label>
+              <label>{{ parseFloat((away.form).toFixed(2))}}</label>
+            </div>
+            <div class="entry">
+              <label>Bu, ø</label>
+              <label>{{ parseFloat((home.morale).toFixed(2)) }}</label> <!-- comp's homeBuffSum / homeBuffSum not used -->
+              <label>{{ parseFloat((away.morale).toFixed(2)) }}</label>
             </div>
             <div class="entry">
               <label>Mod</label>
@@ -42,35 +67,35 @@
           <div class="attack">
             <div class="entry">
               <label>Atø</label>
-              <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }} {{  }}</label>
-              <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
+              <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>Shø</label>
-              <label>{{ parseFloat((homeShotStrSum / homeShots).toFixed(1)) }} {{  }}</label>
-              <label>{{ parseFloat((awayShotStrSum / awayShots).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((homeShotStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
+              <label>{{ parseFloat((awayShotStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>Sh, %</label>
-              <label>{{ homeShots }} | {{ parseFloat((homeGoals / homeShots * 100).toFixed()) }}</label>
-              <label>{{ awayShots }} | {{ parseFloat((awayGoals / awayShots * 100).toFixed()) }}</label>
+              <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed()) }}</label>
+              <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed()) }}</label>
             </div>
           </div>
           <div class="defend">
             <div class="entry">
               <label>Deø</label>
-              <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }} {{  }}</label>
-              <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }}</label>
+              <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>Saø</label>
-              <label>{{ parseFloat((homeSaveStrSum / awayShots).toFixed(1)) }} {{  }}</label>
-              <label>{{ parseFloat((awaySaveStrSum / homeShots).toFixed(1)) }} {{  }}</label>
+              <label>{{ parseFloat((homeSaveStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
+              <label>{{ parseFloat((awaySaveStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
             </div>
             <div class="entry">
               <label>Sa, %</label>
-              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / awayShots * 100).toFixed()) }}</label>
-              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / homeShots * 100).toFixed()) }}</label>
+              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed()) }}</label>
+              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed()) }}</label>
             </div>
           </div>
         </div>
@@ -90,7 +115,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcInitiative, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js';
+import { calcMomentum, calcInitiative, calcTransition, calcTeamBuff, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js'
 
 export default {
   emits: ['matchFinished'],
@@ -128,6 +153,10 @@ export default {
       awayInitiativeStr: 1,
       homeInitiativeStrSum: 0,
       awayInitiativeStrSum: 0,
+      homeTransitionStr: 1,
+      awayTransitionStr: 1,
+      homeTransitionStrSum: 0,
+      awayTransitionStrSum: 0,
       attackerBuff: 1,
       defenderBuff: 1,
       homeBuffSum: 0,
@@ -149,9 +178,15 @@ export default {
       awayAttacks: 0,
       homeDefends: 0,
       awayDefends: 0,
-      homeShots: 0,
-      awayShots: 0,
-      // no shotsAgainst registered here (using #opponent's shots)
+      homeCounters: 0,
+      awayCounters: 0,
+      homeFallbacks: 0,
+      awayFallbacks: 0,
+      homeAttackShots: 0,
+      awayAttackShots: 0,
+      homeCounterShots: 0,
+      awayCounterShots: 0,
+      // no ...shotsAgainst registered here (using #opponent's shots)
       homeSaves: 0,
       awaySaves: 0,
       homeGoals: 0,
@@ -165,7 +200,7 @@ export default {
     simulateMatch() {
       // update matches_played one-time
       !this.initMatchesPlayedUpdated ? (this.home.matchesPlayed++, this.away.matchesPlayed++, this.initMatchesPlayedUpdated = true) : null
-      
+
 
       // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
       // >--< >--< >--< START MATCH CYCLE >--< >--< >--<
@@ -186,7 +221,7 @@ export default {
 
 
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
-        // >--< >--< >--< DETERMINE ATTACKER >--< >--< >--<
+        // >--< >--< >--< DETERMINE INITIATIVE >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // calc both teams' play momentum
         calcMomentum(this, this.home, this.away)
@@ -231,14 +266,19 @@ export default {
         // if attackStr > defendStr => get Shot on goal
         if (this.attackStr > this.defendStr) {
           attacker === this.home ? this.homeMomentum += 0.35 : this.awayMomentum += 0.3
-          attacker === this.home ? this.homeShots++ : this.awayShots++
-          attacker.shots++;
-          defender.shotsAgainst++;
+          attacker === this.home ? this.homeAttackShots++ : this.awayAttackShots++
+          attacker.attackShots++
+          defender.attackShotsAgainst++
+
+          this.liveTicker.push(`
+              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Attack success ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
+            `)
+          console.log(`${attacker.initials} ATTACK SUCCESS`)
 
 
-          // >--< >--< >--< >--< >--< >--< >--< >--< >--< 
-          // >--< >--< >--< HANDLE SHOT >--< >--< >--<
-          // >--< >--< >--< >--< >--< >--< >--< >--< >--<
+          // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---< 
+          // >--< >--< >---< HANDLE SHOT (attackShot) >--< >--< >---<
+          // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---<
           // calc Scoring- & SaveStr
           this.shotStr = calcShotStr(attacker, 10)
           this.saveStr = calcSaveStr(defender, 10)
@@ -256,6 +296,7 @@ export default {
             this.liveTicker.push(`
                 ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
               `)
+            console.log(`${attacker.initials} >--< >--< >--< ATTACK GOAL - END >--< >--< >--<`)
 
           // if ScoreChance < SaveChance => miss goal
           } else {
@@ -265,6 +306,85 @@ export default {
             this.liveTicker.push(`
                 ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
               `)
+            console.log(`${attacker.initials} >--< >--< >--< ATTACK MISS - END >--< >--< >--<`)
+          }
+        // if attackStr < defendStr -> attack failed, defender gets counter chance based on transitionStr
+        } else {
+
+          this.liveTicker.push(`
+              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Attack fail ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
+            `)
+          console.log(`${attacker.initials} ATTACK FAIL - COUNTER/FB TRIGGERED`)
+
+
+          // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
+          // >--< >--< >--< DETERMINE TRANSITION >--< >--< >--<
+          // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
+          // switch attacker / defender now
+          attacker === this.home 
+          ? (attacker = this.away, defender = this.home) 
+          : (attacker = this.home, defender = this.away)
+
+          // add counter to new attacker / fallback to new defender
+          attacker === this.home 
+          ? (this.homeCounters++, this.awayFallbacks++)
+          : (this.homeFallbacks++, this.awayCounters++) 
+          attacker.counters++
+          defender.fallbacks++
+
+          // calc both teams' transitionStr
+          calcTransition(this, this.home, this.away, 10)
+
+          // determine if counter is successfull based on transition 
+          if((this.homeTransitionStr > this.awayTransitionStr && attacker === this.home) || (this.awayTransitionStr > this.homeTransitionStr && attacker === this.away)) {
+
+            this.liveTicker.push(`
+              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Counter success
+            `)
+            console.log(`${attacker.initials} COUNTER SUCCESS`)
+
+            // add momentum and shots
+            attacker === this.home ? this.homeMomentum += 0.35 : this.awayMomentum += 0.3
+            attacker === this.home ? this.homeCounterShots++ : this.awayCounterShots++
+            attacker.counterShots++
+            defender.counterShotsAgainst++
+
+
+            // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---< 
+            // >--< >--< >---< HANDLE SHOT (counterShot) >--< >--< >---<
+            // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---<
+            // calc Scoring- & SaveStr
+            this.shotStr = calcShotStr(attacker, 10)
+            this.saveStr = calcSaveStr(defender, 10)
+            attacker === this.home
+            ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
+            : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
+
+            // if ScoreChance > SaveChance => Score goal
+            if (this.shotStr > this.saveStr && checkShot(attacker, this.attackerBuff, defender, this.defenderBuff)) {
+              attacker === this.home ? this.homeMomentum += 0.5 : this.awayMomentum += 0.4
+              attacker === this.home ? this.homeGoals++ : this.awayGoals++
+              attacker.goals++
+              defender.goalsAgainst++
+
+              this.liveTicker.push(`
+                  ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
+                `)
+              console.log(`${attacker.initials} >--< >--< >--< COUNTER GOAL - END >--< >--< >--<`)
+
+            // if ScoreChance < SaveChance => miss goal
+            } else {
+              attacker === this.home ? this.awaySaves++ : this.homeSaves++
+              defender.saves++
+
+              this.liveTicker.push(`
+                  ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+                `)
+              console.log(`${attacker.initials} >--< >--< >--< COUNTER MISS - END >--< >--< >--<`)
+            }
+          // if new attackers' transitionStr < new defenders' transitionStr -> counter failed, intervall end
+          } else {
+            console.log(`${attacker.initials} >--< >--< >--< COUNTER FAIL - END >--< >--< >--<`)
           }
         }
 
@@ -291,18 +411,6 @@ export default {
             team.saveStrSum += this.saveStr
           }
         )
-
-        // update home with intervall-stats
-        // updateTeam(
-        //   this.home,
-        //   team => {}
-        // )
-
-        // update away with intervall-stats
-        // updateTeam(
-        //   this.away,
-        //   team => {}
-        // )
 
         // update club points per current standing
         updatePoints(this, this.home, this.away)
@@ -415,7 +523,7 @@ export default {
     }
 
     .details {
-      width: 20.5rem;   // check with size of each entry
+      min-width: 20.5rem;   // check with size of each entry
       font-size: 0.5rem;
 
       .stats {

@@ -7,13 +7,17 @@
         <label>{{ club.role }} ({{ club.rankMatchday }}. {{ club.roleDiff }})</label>
       </div>
       <div class="results">
-        <label>Re {{ club.results.slice(-5) }} ({{ club.resultsL5Average() }})</label>
+        <label>Re {{ club.results.slice(-5) }} ({{ club.resultsL5Avg() }})</label>
         <label>{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{ club.losses() }}</label>
       </div>
       <div class="seed-stats">
         <div class="seed-entry">
           <label>In</label>
           <label>{{ club.initiative }}</label>
+        </div>
+        <div class="seed-entry">
+          <label>Tr</label>
+          <label>{{ club.transition }}</label>
         </div>
         <div class="seed-entry">
           <label>At</label>
@@ -42,40 +46,52 @@
       </div>
       <div class="tweak-stats">
         <div class="tweak-entry">
-          <label>Foø</label><label>{{ club.formAverage() }}</label>
+          <label>Mmø</label><label>{{ club.momentumAvg() }}</label>
         </div>
         <div class="tweak-entry">
-          <label>Buø</label><label>{{ club.buffAverage() }}</label>
+          <label>Foø</label><label>{{ club.formAvg() }}</label>
+        </div>
+        <div class="tweak-entry">
+          <label>Buø</label><label>{{ club.buffAvg() }}</label>
         </div>
       </div>
       <div class="play-stats">
         <div class="column">
-          <div class="play-entry">
-            <label>Inø</label><label>({{ club.momentumAverage() }}) {{ club.initiativeStrAverage() }}</label>
+          <!-- <div class="play-entry">
+            <label>Inø</label><label>{{ club.initiativeStrAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Atø</label><label>{{ club.attackStrAverage() }}</label>
+            <label>Trø</label><label>{{ club.transitionStrAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Shø</label><label>{{ club.shotStrAverage() }}</label>
+            <label>Atø</label><label>{{ club.attackStrAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Deø</label><label>{{ club.defendStrAverage() }}</label>
+            <label>Shø</label><label>{{ club.shotStrAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Saø</label><label>{{ club.saveStrAverage() }}</label>
+            <label>Deø</label><label>{{ club.defendStrAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Pl</label><label>{{ club.attacks }} : {{ club.defends }}</label>
+            <label>Saø</label><label>{{ club.saveStrAvg() }}</label>
+          </div> -->
+          <div class="play-entry">
+            <label>In,%</label><label>{{ club.initiativesDiff() }}</label><label>{{ club.initiativesEff() }}</label>
           </div>
           <div class="play-entry">
-            <label>Sh</label><label>{{ club.shots }} : {{ club.shotsAgainst }}</label>
+            <label>At,%</label><label>{{ club.attacks }}</label><label>{{ club.attacksEff() }}</label>
+          </div>
+          <div class="play-entry">
+            <label>Fb,%</label><label>{{ club.fallbacks }}</label><label>{{ club.fallbacksEff() }}</label>
+          </div>
+          <div class="play-entry">
+            <label>AtSh%</label><label>{{ parseFloat((club.attackShots / (club.attackShots + club.counterShots) * 100).toFixed(1)) }} : {{ parseFloat((club.attackShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100).toFixed(1))}}</label>
+          </div>
+          <div class="play-entry">
+            <label>Sh</label><label>{{ club.attackShots + club.counterShots }} : {{ club.attackShotsAgainst + club.counterShotsAgainst }}</label>
           </div>
           <div class="play-entry">
             <label>Sa</label><label>{{ club.saves }}</label>
-          </div>
-          <div class="play-entry">
-            <label>P</label><label>{{ club.points }}</label>
           </div>
           <div class="play-entry">
             <label>G</label><label>{{ club.goals }} : {{ club.goalsAgainst }}</label>
@@ -83,41 +99,56 @@
           <div class="play-entry">
             <label>Dif</label><label>{{ club.goalsDiff() }}</label>
           </div>
+          <div class="play-entry">
+            <label>P</label><label>{{ club.points }}</label>
+          </div>
         </div>
 
         <div class="column">
-          <div class="play-entry">
-            <label>InDø</label><label>{{ club.initiativeStrDiceAverage() }}</label>
+          <!-- <div class="play-entry">
+            <label>InDø</label><label>{{ club.initiativeStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>AtDø</label><label>{{ club.attackStrDiceAverage() }}</label>
+            <label>TrDø</label><label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>ShDø</label><label>{{ club.shotStrDiceAverage() }}</label>
+            <label>AtDø</label><label>{{ club.attackStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>DeDø</label><label>{{ club.defendStrDiceAverage() }}</label>
+            <label>ShDø</label><label>{{ club.shotStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>SaDø</label><label>{{ club.saveStrDiceAverage() }}</label>
+            <label>DeDø</label><label>{{ club.defendStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
-            <label>Pl%</label><label>{{ club.playsDiff() }}</label><label>{{ club.attacksPercentage() }} : {{ club.defendsPercentage() }}</label>
+            <label>SaDø</label><label>{{ club.saveStrDiceAvg() }}</label>
+          </div> -->
+          <div class="play-entry">
+            <label>Tr,%</label><label>{{ club.transitionsDiff() }}</label><label>{{ club.transitionsEff() }}</label>
           </div>
           <div class="play-entry">
-            <label>Sh%</label><label>{{ club.shotsPercentage() }}</label>
+            <label>De,%</label><label>{{ club.defends }}</label><label>{{ club.defendsEff() }}</label>
           </div>
           <div class="play-entry">
-            <label>Sa%</label><label>{{ club.shotsSavesPercentage() }}</label><label>{{ club.savesPercentage() }}</label>
+            <label>Co,%</label><label>{{ club.counters }}</label><label>{{ club.countersEff() }}</label>
           </div>
           <div class="play-entry">
-            <label>P/M</label><label>{{ club.pointsPerMatch() }}</label>
+            <label>CoSh%</label><label>{{ parseFloat((club.counterShots / (club.attackShots + club.counterShots) * 100).toFixed(1)) }} : {{ parseFloat((club.counterShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100).toFixed(1))}}</label>
+          </div>
+          <div class="play-entry">
+            <label>Sh%</label><label>{{ club.shotsEff() }}</label>
+          </div>
+          <div class="play-entry">
+            <label>Sa%</label><label>{{ club.savesEff() }}</label>
           </div>
           <div class="play-entry">
             <label>G/M</label><label>{{ club.goalsPerMatch() }} : {{ club.goalsAgainstPerMatch() }}</label>
           </div>
           <div class="play-entry">
             <label>Dif/M</label><label>{{ club.goalsDiffPerMatch() }}</label>
+          </div>
+          <div class="play-entry">
+            <label>P/M</label><label>{{ club.pointsPerMatch() }}</label>
           </div>
         </div>
       </div>
@@ -153,7 +184,7 @@ export default {
   gap: 0.5rem;
 
   .club {
-    width: 248px;
+    width: 264px;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -200,7 +231,7 @@ export default {
       justify-content: space-between;
       
       .play-entry {
-        width: 7.25rem;
+        width: 7.5rem;
         display: flex;
         justify-content: space-between;
       }
