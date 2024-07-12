@@ -199,10 +199,10 @@ const calcSaveStr = (team, dice) => {
 // could also use team.morale instead of ...Buff, but buff will be enhanced with more items which also change within interval
 const checkShot = (attacker, attackerBuff, defender, defenderBuff) => {
   const diff = Math.round(attacker.attack * attackerBuff + attacker.form) - (defender.defend * defenderBuff + defender.form)
-  const minRequired = 5
+  const minRequired = 6
   const adjustedRequired = minRequired + (Math.round(diff / 2))
 
-  return diceMaxInt(10) > Math.min(7, adjustedRequired)
+  return diceMaxInt(10) > Math.min(8, adjustedRequired)
 }
 
 const updateTeam = (team, ...updateCallbacks) => {

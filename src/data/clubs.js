@@ -9,6 +9,13 @@
 
 // "league_next": 1, + "league" (=current) // default = same so dass edit nur bei Auf/Ab
 
+// in/tr calc/weight
+// season rewards (per matchday >= target + season-end result)
+// QoL:
+//    buf -> morale
+//    docu
+//    parsefloat als func that returns floated val
+//    clubs -> 1x create instead of 14x einzeln
 
 const clubsData = [
   {
