@@ -1,5 +1,3 @@
-"use strict"
-
 // Dice randomNbr integer between min/max (incl)
 const diceMinMaxInt = (min, max) => {
     return Math.round(Math.random() * (max - min)) + min
@@ -85,9 +83,6 @@ const calcMomentum = (comp, home, away) => {
 }
 
 const calcInitiative = (comp, home, away, dice) => {
-  // const homeInitiativeStr = parseFloat((homeInitFactor + home.initiative * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-  // const awayInitiativeStr = parseFloat((awayInitFactor + away.initiative * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-
   const homeInitFactor = parseFloat((home.initiative - home.transition).toFixed(2))
   const awayInitFactor = parseFloat((away.initiative - away.transition).toFixed(2))
 
@@ -100,8 +95,8 @@ const calcInitiative = (comp, home, away, dice) => {
   const homeInitiativeStr = parseFloat(homeInitMom + homeDice)
   const awayInitiativeStr = parseFloat(awayInitMom + awayDice)
 
-  console.log("H:", home.initials, "| home-initStr: ", "initFactor ", homeInitFactor, " + home.init ", home.initiative, "* mom: ", comp.homeMomentum, "*1.3 = ", homeInitMom, "+dice ", homeDice, " = ", homeInitiativeStr)
-  console.log("A:", away.initials, "| away-initStr: ", "initFactor ", awayInitFactor, " + away.init ", away.initiative, "* mom: ", comp.awayMomentum, "*1.3 = ", awayInitMom, "+dice ", awayDice, " = ", awayInitiativeStr)
+  // console.log("H:", home.initials, "| home-initStr: ", "initFactor ", homeInitFactor, " + home.init ", home.initiative, "* mom: ", comp.homeMomentum, "*1.3 = ", homeInitMom, "+dice ", homeDice, " = ", homeInitiativeStr)
+  // console.log("A:", away.initials, "| away-initStr: ", "initFactor ", awayInitFactor, " + away.init ", away.initiative, "* mom: ", comp.awayMomentum, "*1.3 = ", awayInitMom, "+dice ", awayDice, " = ", awayInitiativeStr)
 
   // write to simMatch and club
   comp.homeInitiativeStr = homeInitiativeStr
@@ -115,9 +110,6 @@ const calcInitiative = (comp, home, away, dice) => {
 }
 
 const calcTransition = (comp, home, away, dice) => {
-  // const homeTransitionStr = parseFloat((homeTransFactor + home.transition * comp.homeMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-  // const awayTransitionStr = parseFloat((awayTransFactor + away.transition * comp.awayMomentum * 1.3).toFixed(2)) + diceMaxInt(dice)
-
   const homeTransFactor = parseFloat((home.transition - home.initiative).toFixed(2))
   const awayTransFactor = parseFloat((away.transition - away.initiative).toFixed(2))
 
@@ -130,8 +122,8 @@ const calcTransition = (comp, home, away, dice) => {
   const homeTransitionStr = parseFloat(homeTransMom + homeDice)
   const awayTransitionStr = parseFloat(awayTransMom + awayDice)
 
-  console.log("H:", home.initials, "| home-transStr: ", "transFactor ", homeTransFactor, " + home.trans ", home.transition, "* mom: ", comp.homeMomentum, "*1.3 = ", homeTransMom, "+dice ", homeDice, " = ", homeTransitionStr)
-  console.log("A:", away.initials, "| away-transStr: ", "transFactor ", awayTransFactor, " + away.trans ", away.transition, "* mom: ", comp.awayMomentum, "*1.3 = ", awayTransMom, "+dice ", awayDice, " = ", awayTransitionStr)
+  // console.log("H:", home.initials, "| home-transStr: ", "transFactor ", homeTransFactor, " + home.trans ", home.transition, "* mom: ", comp.homeMomentum, "*1.3 = ", homeTransMom, "+dice ", homeDice, " = ", homeTransitionStr)
+  // console.log("A:", away.initials, "| away-transStr: ", "transFactor ", awayTransFactor, " + away.trans ", away.transition, "* mom: ", comp.awayMomentum, "*1.3 = ", awayTransMom, "+dice ", awayDice, " = ", awayTransitionStr)
 
   // write to simMatch and club
   comp.homeTransitionStr = homeTransitionStr
@@ -144,19 +136,9 @@ const calcTransition = (comp, home, away, dice) => {
   away.transitionStrSum += awayTransitionStr
 }
 
-const calcTeamBuff = (team) => {
+const calcAttackStr = (team, dice) => {
   const returnVal = +(
-    (1 * team.morale)
-  ).toFixed(2)
-
-  // könnte result auch an team{} zurück dranhängen -> kann darauf zugreifen in anderen ()
-
-  return returnVal
-}
-
-const calcAttackStr = (team, teamBuffValue, dice) => {
-  const returnVal = +(
-    (team.attack * teamBuffValue)
+    (team.attack * team.morale)
     + team.form
     + diceMaxInt(dice)
   ).toFixed(3)
@@ -164,9 +146,9 @@ const calcAttackStr = (team, teamBuffValue, dice) => {
   return returnVal
 }
 
-const calcDefendStr = (team, teamBuffValue, dice) => {
+const calcDefendStr = (team, dice) => {
   const returnVal = +(
-    (team.defend * teamBuffValue)
+    (team.defend * team.morale)
     + team.form
     + diceMaxInt(dice)
   ).toFixed(3)
@@ -197,8 +179,8 @@ const calcSaveStr = (team, dice) => {
 // Handle greater diff in attack vs defend str: greater diff -> more trys -> here: increase required value to keep all within 3-4 goals/match
 // if negative (defend > attack): required value will also be lower
 // could also use team.morale instead of ...Buff, but buff will be enhanced with more items which also change within interval
-const checkShot = (attacker, attackerBuff, defender, defenderBuff) => {
-  const diff = Math.round(attacker.attack * attackerBuff + attacker.form) - (defender.defend * defenderBuff + defender.form)
+const checkShot = (attacker, defender) => {
+  const diff = Math.round(attacker.attack * attacker.morale + attacker.form) - (defender.defend * defender.morale + defender.form)
   const minRequired = 6
   const adjustedRequired = minRequired + (Math.round(diff / 2))
 
@@ -299,11 +281,16 @@ const updateForm = (team) => {
 
 // Update Morale based on results/opponents and other factors
 const updateMorale = (comp, home, away) => {
+  // Update themoraleSum with the morale that was active at this (current) match (-> before match-end's morale re-calculation below)
+  home.moraleSum += home.morale
+  away.moraleSum += away.morale
+
   // determine winner & loser
   const [winner, loser] = comp.homeGoals >= comp.awayGoals
   ? [home, away]
   : [away, home]
 
+  // create vars for morale re-calculation
   let roleExpectWinEffect = 1
   let roleExpectLoseEffect = 1
   let rankExpectWinEffect = 1
@@ -313,8 +300,8 @@ const updateMorale = (comp, home, away) => {
   let winnerBonus = 0
   let loserPenalty = 0
 
-  // console.log("winner:", winner.initials, winner.role, winner.rankMatchday)
-  // console.log("loser:", loser.initials, loser.role, loser.rankMatchday)
+  // console.log("START: winner:", winner.morale, winner.moraleSum, winner.moraleAvg(), winner.initials,)
+  // console.log("START: loser:", loser.morale, loser.moraleSum, loser.moraleAvg(), loser.initials,)
 
   // Role Expectaion Effect (always):
   // Title- & RelCandidates win/loss against bottom/top teams
@@ -437,6 +424,9 @@ const updateMorale = (comp, home, away) => {
     loser.morale = totalLimits[loser.role].min
     // console.log("moserMorale-TOTAL LIMIT MIN:", loser.morale, " -> ", totalLimits[loser.role].min)
   }
+
+  // console.log("END: new winner.morale", winner.morale, "moraleSum/moraleAvg", winner.moraleSum, winner.moraleAvg(), winner.initials,)
+  // console.log("END: new loser.morale", loser.morale, "moraleSum/moraleAvg", loser.moraleSum, loser.moraleAvg(), loser.initials,)
 }
 
 // Table generator (sorting: seed, then topic/default + add club.entryName)
@@ -647,11 +637,12 @@ const prepareRole = (clubs) => {
   return sortedClubs
 }
 
+const formatNum = (num, decimals) => Number(num.toFixed(decimals))
+
 export {
   calcMomentum,
   calcInitiative,
   calcTransition,
-  calcTeamBuff,
   calcAttackStr,
   calcDefendStr,
   calcShotStr,
@@ -666,5 +657,6 @@ export {
   updateRoleDiff,
   shuffleClubs,
   createSchedule,
-  prepareRole
+  prepareRole,
+  formatNum
 }

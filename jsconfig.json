@@ -1,0 +1,35 @@
+// DOKU:
+// https://code.visualstudio.com/docs/languages/jsconfig
+// https://www.typescriptlang.org/tsconfig/#compilerOptions
+
+// Template:
+{
+  "compilerOptions": {
+      "baseUrl": "./",
+      "paths": {
+          // "@routes": ["src/router/routes.js"],
+          // "@middleware-connector": ["src/lib/middleware-connector.js"],
+          // "@injectionKeys": ["src/injectionKeys.js"],
+          // "@components/*": ["src/components/*"],
+          // "@elements/*": ["src/components/elements/*"],
+          // "@plugins/*": ["src/plugins/*"],
+          // "@views/*": ["src/views/*"],
+          // "@lib/*": ["src/lib/*"],
+          // "@img/*": ["src/assets/img/*"],
+          // "@scss/*": ["src/assets/scss/*"],
+          // "@font/*": ["src/assets/font/*"],
+          // "@icons/*": ["src/assets/icons/*"],
+          "@/*": ["src/*"]
+      },
+      "alwaysStrict": true  // adds "use strict" to all .js files, enabling strict parsing
+  },
+  "include": [
+      "**/*.d.ts",          // Typescript definition files
+      "**/*.vue",
+      "**/*.js"
+  ],
+  "exclude": [
+      "node_modules",
+      "dist"
+  ]
+}

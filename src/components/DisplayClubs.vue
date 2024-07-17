@@ -52,7 +52,7 @@
           <label>Foø</label><label>{{ club.formAvg() }}</label>
         </div>
         <div class="tweak-entry">
-          <label>Buø</label><label>{{ club.buffAvg() }}</label>
+          <label>Mrø</label><label>{{ club.moraleAvg() }}</label>
         </div>
       </div>
       <div class="play-stats">

@@ -1,23 +1,4 @@
-// "attack_seed": 2, + "attack" (=current)
-// same für alle seed werte dich sich während Saison ändern können
-
-// "team_streak": false,
-
-// "team_injured": false,
-
-// "keeper_streak": false -> wenn 5 shots am Stück gehalten, kleiner Bonus bis goal
-
-// "league_next": 1, + "league" (=current) // default = same so dass edit nur bei Auf/Ab
-
-// in/tr calc/weight
-// season rewards (per matchday >= target + season-end result)
-// QoL:
-//    buf -> morale
-//    docu
-//    parsefloat als func that returns floated val
-//    clubs -> 1x create instead of 14x einzeln
-
-const clubsData = [
+export const clubAttrData = [
   {
     'uuid': '1',
     'name': 'EHC Freiburg',
@@ -30,7 +11,7 @@ const clubsData = [
     'defend': 2.75,
     'save': 3.11,
     'form': 0,
-    'morale': 1,  // morale unit vs buff als sum + avg ... :/
+    'morale': 1,
 
     'role': '',
     'roleTarget': {},
@@ -45,7 +26,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0, // morale unit vs buff als sum + avg ... :/
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -78,13 +59,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) +  this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -102,8 +83,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '2',
     'name': 'EC Kassel Huskies',
     'initials': 'ECK',
@@ -130,7 +111,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -163,13 +144,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -187,8 +168,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '3',
     'name': 'EV Landshut',
     'initials': 'EVL',
@@ -215,7 +196,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -248,13 +229,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -272,8 +253,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '4',
     'name': 'Ravensburg Towerstars',
     'initials': 'RVT',
@@ -300,7 +281,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -333,13 +314,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -357,8 +338,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '5',
     'name': 'Dresdner Eislöwen',
     'initials': 'DRE',
@@ -385,7 +366,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -418,13 +399,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -442,8 +423,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '6',
     'name': 'Eisbären Regensburg',
     'initials': 'EBR',
@@ -470,7 +451,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -503,13 +484,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -527,8 +508,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '7',
     'name': 'ESV Kaufbeuren',
     'initials': 'ESV',
@@ -555,7 +536,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -588,13 +569,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -612,8 +593,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '8',
     'name': 'Lausitzer Füchse',
     'initials': 'LFX',
@@ -640,7 +621,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -673,13 +654,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -697,8 +678,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '9',
     'name': 'Starbulls Rosenheim',
     'initials': 'SBR',
@@ -725,7 +706,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -758,13 +739,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -782,8 +763,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '10',
     'name': 'Bietigheim Steelers',
     'initials': 'SCB',
@@ -810,7 +791,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -843,13 +824,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -867,8 +848,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '11',
     'name': 'Eispiraten Crimitschau',
     'initials': 'EPC',
@@ -895,7 +876,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -928,13 +909,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -952,8 +933,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '12',
     'name': 'Krefeld Pinguine',
     'initials': 'KEV',
@@ -980,7 +961,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -1013,13 +994,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -1037,8 +1018,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '13',
     'name': 'EC Bad Nauheim',
     'initials': 'ECN',
@@ -1065,7 +1046,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -1098,13 +1079,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -1122,8 +1103,8 @@ const clubsData = [
     'goalsAgainstPerMatch': function () { return this.matchesPlayed > 0 ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) : 0 },
     'goalsDiffPerMatch': function () { return this.matchesPlayed    > 0 ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) : 0 },
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
-  },
-  {
+    },
+    {
     'uuid': '14',
     'name': 'Selber Wölfe',
     'initials': 'SEL',
@@ -1150,7 +1131,7 @@ const clubsData = [
     'saveStrSum': 0,
     'formData': [],
     'formSum': 0,
-    'buffSum': 0,
+    'moraleSum': 0,
 
     'attacks': 0,
     'defends': 0,
@@ -1183,13 +1164,13 @@ const clubsData = [
     'shotStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) : 0 },
     'saveStrAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) : 0 },
     'formAvg': function () { return this.matchesPlayed        > 5 ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) : 0 }, // ab matchday5 (4 is for displaying)
-    'buffAvg': function () { return this.matchesPlayed        > 0 ? parseFloat((this.buffSum / this.intervalsPlayed).toFixed(2)) : 0 },
+    'moraleAvg': function () { return this.matchesPlayed      > 0 ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) : 0 },
     'resultsL5Avg': function () { return this.matchesPlayed   > 0 ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) : 0 },
 
-    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - (this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - (this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
-    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
-    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.buffAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'initiativeStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'transitionStrDiceAvg': function () { return this.matchesPlayed > 0 ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) : 0 },
+    'attackStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
+    'defendStrDiceAvg': function () { return this.matchesPlayed     > 0 ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) : 0 },
     'shotStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) : 0 },
     'saveStrDiceAvg': function () { return this.matchesPlayed       > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) : 0 },
 
@@ -1209,7 +1190,3 @@ const clubsData = [
     'pointsPerMatch': function () { return this.matchesPlayed       > 0 ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) : 0 },
   }
 ]
-
-export {
-  clubsData
-}

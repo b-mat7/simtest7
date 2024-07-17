@@ -15,7 +15,8 @@ import DisplayClubs from './components/DisplayClubs.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
 import DisplayTables from './components/DisplayTables.vue'
 
-import { clubsData } from './data/clubs.js'
+import { Club } from './models/club.js'
+import { clubSeedData } from './data/clubSeed.js'
 import { createSchedule } from './lib/util.js'
 
 export default {
@@ -29,13 +30,14 @@ export default {
     }
   },
   methods: {
-    init() {
-      this.clubs = clubsData
+    init(Club, clubSeedData) {
+      this.clubs = clubSeedData.map(seedData => new Club(seedData))
+
       this.schedule = createSchedule(this.clubs)
     }
   },
   mounted() {
-    this.init()
+    this.init(Club, clubSeedData)
   },
   components: {
     DisplayClubs,
@@ -85,4 +87,4 @@ body {
     overflow-x: scroll;
   }
 }
-</style>
+</style>./data/clubSeed.js/index.js

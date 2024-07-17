@@ -51,8 +51,8 @@
         <div class="column" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="showTable">
           <label>Mr</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'buffAvg' }" @click="setSortTopic('buffAvg')" v-if="showTable">
-          <label>Buø</label>
+        <div class="column" :class="{ 'bold': sortTopic === 'moraleAvg' }" @click="setSortTopic('moraleAvg')" v-if="showTable">
+          <label>Mrø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="showTable">
           <label>Sh%</label>
@@ -192,8 +192,8 @@
           <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClub === club.initials}" v-if="showTable">
             <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'buffAvg' || focusClub === club.initials}" v-if="showTable">
-            <label>{{ (club.buffAvg()) }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'moraleAvg' || focusClub === club.initials}" v-if="showTable">
+            <label>{{ (club.moraleAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.shotsEff() }}</label>
