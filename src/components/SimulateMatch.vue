@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, checkShot, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js'
+import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, calcShotCheck, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js'
 
 export default {
   emits: ['matchFinished'],
@@ -276,7 +276,7 @@ export default {
           : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
 
           // if ScoreChance > SaveChance => Score goal
-          if (this.shotStr > this.saveStr && checkShot(attacker, defender)) {
+          if (this.shotStr > this.saveStr && calcShotCheck(attacker, defender, 'attack')) {
             attacker === this.home ? this.homeMomentum += 0.5 : this.awayMomentum += 0.4
             attacker === this.home ? this.homeGoals++ : this.awayGoals++
             attacker.goals++
@@ -350,7 +350,7 @@ export default {
             : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
 
             // if ScoreChance > SaveChance => Score goal
-            if (this.shotStr > this.saveStr && checkShot(attacker, defender)) {
+            if (this.shotStr > this.saveStr && calcShotCheck(attacker, defender, 'counter')) {
               attacker === this.home ? this.homeMomentum += 0.5 : this.awayMomentum += 0.4
               attacker === this.home ? this.homeGoals++ : this.awayGoals++
               attacker.goals++
@@ -373,6 +373,10 @@ export default {
             }
           // if new attackers' transitionStr < new defenders' transitionStr -> counter failed, intervall end
           } else {
+
+            this.liveTicker.push(`
+                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Counter fail
+              `)
             // console.log(`${attacker.initials} >--< >--< >--< COUNTER FAIL - END >--< >--< >--<`)
           }
         }

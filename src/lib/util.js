@@ -179,12 +179,37 @@ const calcSaveStr = (team, dice) => {
 // Handle greater diff in attack vs defend str: greater diff -> more trys -> here: increase required value to keep all within 3-4 goals/match
 // if negative (defend > attack): required value will also be lower
 // could also use team.morale instead of ...Buff, but buff will be enhanced with more items which also change within interval
-const checkShot = (attacker, defender) => {
-  const diff = Math.round(attacker.attack * attacker.morale + attacker.form) - (defender.defend * defender.morale + defender.form)
+const calcShotCheck = (attacker, defender, type) => {
+  const diff = (attacker.attack * attacker.morale + attacker.form) - (defender.defend * defender.morale + defender.form)
   const minRequired = 6
   const adjustedRequired = minRequired + (Math.round(diff / 2))
 
   return diceMaxInt(10) > Math.min(8, adjustedRequired)
+
+  // B: =====
+
+  // let diff = 0
+  // if (type === 'attack') {
+  //   diff = (attacker.attack * attacker.morale + attacker.form) - (defender.defend * defender.morale + defender.form)
+  // } else if (type === 'counter') {
+  //   diff = (attacker.defend * attacker.morale + attacker.form) - (defender.attack * defender.morale + defender.form)
+  // }
+
+  // const minRequired = 6
+  // const adjustedRequired = minRequired + (Math.round(diff / 2))
+
+  // console.log(`===== ${type} =====`);
+  // console.log(`Att: ${attacker.initials} | ${attacker.attack}*${attacker.morale}+${attacker.form} = ${attacker.attack * attacker.morale + attacker.form}`)
+  // console.log(`Def: ${defender.initials} | ${defender.defend}*${defender.morale}+${defender.form} = ${defender.defend * defender.morale + defender.form}`)
+  // console.log(`diff: ${diff}`)
+  // console.log(`-> adjReq: ${minRequired} + ${(Math.round(diff / 2))} -> ${adjustedRequired}`)
+
+  // const dice = diceMaxInt(10)
+  // console.log(`dice: ${dice} -> ${dice > Math.min(8, adjustedRequired)}`)
+  // console.log("====================================")
+
+  // return dice > Math.min(8, adjustedRequired)
+  // return diceMaxInt(10) > Math.min(8, adjustedRequired)
 }
 
 const updateTeam = (team, ...updateCallbacks) => {
@@ -647,7 +672,7 @@ export {
   calcDefendStr,
   calcShotStr,
   calcSaveStr,
-  checkShot,
+  calcShotCheck,
   updateTeam,
   updatePoints,
   updateFormData,
