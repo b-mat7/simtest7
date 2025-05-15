@@ -31,6 +31,11 @@ export class Club {
     // Initialize other properties
     this.role = ''
     this.roleTarget = {}
+    this.roleDiff = 0
+    this.rankSeed = 0
+    this.rankMatchday = 0
+    this.priceMoney = 0
+
     this.matchesPlayed = 0
     this.intervalsPlayed = 0
     this.momentumSum = 0
@@ -62,8 +67,7 @@ export class Club {
   // Initialize methods
   // General and Diffs
   seed() {
-    return parseFloat((this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save).toFixed(2))
-    // return formatNum(this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save, 2)
+    return formatNum(this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save, 2)
   }
 
   initiativesDiff() {
@@ -97,151 +101,152 @@ export class Club {
   // Averages
   momentumAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.momentumSum / this.intervalsPlayed).toFixed(2)) 
+    ? formatNum(this.momentumSum / this.intervalsPlayed, 2) 
     : 0
   }
   initiativeStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.initiativeStrSum / this.intervalsPlayed).toFixed(2)) 
+    ? formatNum(this.initiativeStrSum / this.intervalsPlayed, 2) 
     : 0 
   }
   transitionStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.transitionStrSum / (this.counters + this.fallbacks)).toFixed(2)) 
+    ? formatNum(this.transitionStrSum / (this.counters + this.fallbacks), 2) 
     : 0
   }
   attackStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.attackStrSum / this.attacks).toFixed(2)) 
+    ? formatNum(this.attackStrSum / this.attacks, 2) 
     : 0
   }
   defendStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.defendStrSum / this.defends).toFixed(2)) 
+    ? formatNum(this.defendStrSum / this.defends, 2) 
     : 0
   }
   shotStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.shotStrSum / (this.attackShots + this.counterShots)).toFixed(2)) 
+    ? formatNum(this.shotStrSum / (this.attackShots + this.counterShots), 2) 
     : 0
   }
   saveStrAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)).toFixed(2)) 
+    ? formatNum(this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst), 2) 
     : 0 
   }
   formAvg() { // ab matchday5 (4 is for displaying)
     return this.matchesPlayed > 5 
-    ? parseFloat((this.formSum / (this.matchesPlayed - 4)).toFixed(2)) 
+    ? formatNum(this.formSum / (this.matchesPlayed - 4), 2) 
     : 0
   }
   moraleAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.moraleSum / this.matchesPlayed).toFixed(2)) 
+    ? formatNum(this.moraleSum / this.matchesPlayed, 2) 
     : 0
   }
   resultsL5Avg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)).toFixed(2)) 
+    ? formatNum((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)), 2) 
     : 0
   }
 
   initiativeStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)).toFixed(2)) 
+    ? formatNum(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3), 2) 
     : 0
   }
   transitionStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? parseFloat((this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)).toFixed(2)) 
+    return this.matchesPlayed > 0  
+    ? formatNum(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3), 2) 
     : 0 
   }
   attackStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())).toFixed(2)) 
+    ? formatNum(this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg()), 2) 
     : 0
   }
   defendStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())).toFixed(2)) 
+    ? formatNum(this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg()), 2) 
     : 0
   }
   shotStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.shotStrAvg() - (this.shoot + this.formAvg() / 2)).toFixed(2)) 
+    ? formatNum(this.shotStrAvg() - (this.shoot + this.formAvg() / 2), 2) 
     : 0
   }
   saveStrDiceAvg() {
-    return this.matchesPlayed > 0 ? parseFloat((this.saveStrAvg() - (this.save + this.formAvg() / 2)).toFixed(2)) 
+    return this.matchesPlayed > 0 
+    ? formatNum(this.saveStrAvg() - (this.save + this.formAvg() / 2), 2) 
     : 0
   }
   
   // Efficiencies ( % )
   initiativesEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.attacks / this.intervalsPlayed * 100).toFixed(1)) 
+    ? formatNum(this.attacks / this.intervalsPlayed * 100, 1) 
     : 0
   }
   transitionsEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat(((this.counterShots + (this.fallbacks - this.counterShotsAgainst)) / (this.counters + this.fallbacks) * 100).toFixed(1)) 
+    ? formatNum(((this.counterShots + (this.fallbacks - this.counterShotsAgainst)) / (this.counters + this.fallbacks) * 100), 1) 
     : 0 
   }
   attacksEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.attackShots / this.attacks * 100).toFixed(1)) 
+    ? formatNum(this.attackShots / this.attacks * 100, 1) 
     : 0 
   }
   defendsEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat(((this.defends - this.attackShotsAgainst) / this.defends * 100).toFixed(1)) 
+    ? formatNum((this.defends - this.attackShotsAgainst) / this.defends * 100, 1) 
     : 0
   }
   countersEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.counterShots / this.counters * 100).toFixed(1)) 
+    ? formatNum(this.counterShots / this.counters * 100, 1) 
     : 0 
   }
   fallbacksEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat(((this.fallbacks - this.counterShotsAgainst) / this.fallbacks * 100).toFixed(1)) 
+    ? formatNum((this.fallbacks - this.counterShotsAgainst) / this.fallbacks * 100, 1) 
     : 0
   }
   shotsEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.goals / (this.attackShots + this.counterShots) * 100).toFixed(1)) 
+    ? formatNum(this.goals / (this.attackShots + this.counterShots) * 100, 1) 
     : 0
   }
   savesEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100).toFixed(1)) 
+    ? formatNum(this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100, 1) 
     : 0
   }
   shotsSavesEff() {
     return this.matchesPlayed > 0 
-    ? parseFloat(((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)).toFixed(1)) 
+    ? formatNum((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100), 1) 
     : 0
   }
 
   // Per Match
   goalsPerMatch() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.goals / this.matchesPlayed).toFixed(1)) 
+    ? formatNum(this.goals / this.matchesPlayed, 1) 
     : 0
   }
   goalsAgainstPerMatch() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.goalsAgainst / this.matchesPlayed).toFixed(1)) 
+    ? formatNum(this.goalsAgainst / this.matchesPlayed, 1) 
     : 0
   }
   goalsDiffPerMatch() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.goalsDiff() / this.matchesPlayed).toFixed(1)) 
+    ? formatNum(this.goalsDiff() / this.matchesPlayed, 1) 
     : 0
   }
   pointsPerMatch() {
     return this.matchesPlayed > 0 
-    ? parseFloat((this.points / this.matchesPlayed).toFixed(2)) 
+    ? formatNum(this.points / this.matchesPlayed, 1) 
     : 0
   }
 }

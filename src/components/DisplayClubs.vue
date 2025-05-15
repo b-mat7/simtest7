@@ -57,7 +57,7 @@
       </div>
       <div class="play-stats">
         <div class="column">
-          <!-- <div class="play-entry">
+          <div class="play-entry">
             <label>Inø</label><label>{{ club.initiativeStrAvg() }}</label>
           </div>
           <div class="play-entry">
@@ -74,7 +74,7 @@
           </div>
           <div class="play-entry">
             <label>Saø</label><label>{{ club.saveStrAvg() }}</label>
-          </div> -->
+          </div>
           <div class="play-entry">
             <label>In,%</label><label>{{ club.initiativesDiff() }}</label><label>{{ club.initiativesEff() }}</label>
           </div>
@@ -105,7 +105,7 @@
         </div>
 
         <div class="column">
-          <!-- <div class="play-entry">
+          <div class="play-entry">
             <label>InDø</label><label>{{ club.initiativeStrDiceAvg() }}</label>
           </div>
           <div class="play-entry">
@@ -122,7 +122,7 @@
           </div>
           <div class="play-entry">
             <label>SaDø</label><label>{{ club.saveStrDiceAvg() }}</label>
-          </div> -->
+          </div>
           <div class="play-entry">
             <label>Tr,%</label><label>{{ club.transitionsDiff() }}</label><label>{{ club.transitionsEff() }}</label>
           </div>

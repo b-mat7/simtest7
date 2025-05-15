@@ -375,20 +375,20 @@ const updateMorale = (comp, home, away) => {
   // /old: winner --> 0.025 * form      min/max: 0.01  (= <0.4 form) <- bis -> 0.045 (= >1.8)
   // /old: loser  --> 0.03 * (2.2-form) min/max: 0.015 (= >1.7 form) <- bis -> 0.05  (= <0.53)
   const bonus = {
-    'TitleCandidate':  {'pre5': 0.015,  'post5': 0.02},
-    'Contender':       {'pre5': 0.0175, 'post5': 0.0225},
+    'TitleCandidate': {'pre5': 0.015,  'post5': 0.02},
+    'Contender':      {'pre5': 0.0175, 'post5': 0.0225},
     'UpperMidfielder': {'pre5': 0.02,   'post5': 0.025},
     'LowerMidfielder': {'pre5': 0.02,   'post5': 0.025},
-    'Survivalist':     {'pre5': 0.0225, 'post5': 0.0275},
-    'RelCandidate':    {'pre5': 0.025,  'post5': 0.03}
+    'Survivalist':    {'pre5': 0.0225, 'post5': 0.0275},
+    'RelCandidate':   {'pre5': 0.025,  'post5': 0.03}
   }
   const penalty = {
-    'TitleCandidate':  {'pre5': 0.025,  'post5': 0.03},
-    'Contender':       {'pre5': 0.0225, 'post5': 0.0275},
+    'TitleCandidate': {'pre5': 0.025,  'post5': 0.03},
+    'Contender':      {'pre5': 0.0225, 'post5': 0.0275},
     'UpperMidfielder': {'pre5': 0.02,   'post5': 0.025},
     'LowerMidfielder': {'pre5': 0.02,   'post5': 0.025},
-    'Survivalist':     {'pre5': 0.0175, 'post5': 0.0225},
-    'RelCandidate':    {'pre5': 0.015,  'post5': 0.02}
+    'Survivalist':    {'pre5': 0.0175, 'post5': 0.0225},
+    'RelCandidate':   {'pre5': 0.015,  'post5': 0.02}
   }
   if (winner.matchesPlayed < 5) {
     winnerBonus = bonus[winner.role].pre5 * roleExpectWinEffect * rankExpectWinEffect
@@ -404,12 +404,12 @@ const updateMorale = (comp, home, away) => {
 
   // ensure limits: morale change per intervall
   const intervallChangeLimits = {
-    'TitleCandidate':  {'min': 0.01, 'max': 0.05},
-    'Contender':       {'min': 0.01, 'max': 0.05},
+    'TitleCandidate': {'min': 0.01, 'max': 0.05},
+    'Contender':      {'min': 0.01, 'max': 0.05},
     'UpperMidfielder': {'min': 0.01, 'max': 0.05},
     'LowerMidfielder': {'min': 0.01, 'max': 0.05},
-    'Survivalist':     {'min': 0.01, 'max': 0.05},
-    'RelCandidate':    {'min': 0.01, 'max': 0.05}
+    'Survivalist':    {'min': 0.01, 'max': 0.05},
+    'RelCandidate':   {'min': 0.01, 'max': 0.05}
   }
   if (winnerBonus < intervallChangeLimits[winner.role].min) {
     winnerBonus = intervallChangeLimits[winner.role].min
@@ -433,12 +433,12 @@ const updateMorale = (comp, home, away) => {
 
   // ensure limits: morale total
   const totalLimits = {
-    'TitleCandidate':  {'min': 0.825, 'max': 1.075},
-    'Contender':       {'min': 0.85,  'max': 1.1},
+    'TitleCandidate': {'min': 0.825, 'max': 1.075},
+    'Contender':      {'min': 0.85,  'max': 1.1},
     'UpperMidfielder': {'min': 0.875, 'max': 1.125},
     'LowerMidfielder': {'min': 0.9,   'max': 1.15},
-    'Survivalist':     {'min': 0.925, 'max': 1.175},
-    'RelCandidate':    {'min': 0.95,  'max': 1.2}
+    'Survivalist':    {'min': 0.925, 'max': 1.175},
+    'RelCandidate':   {'min': 0.95,  'max': 1.2}
   }
   if (winner.morale > totalLimits[winner.role].max) {
     winner.morale = totalLimits[winner.role].max
@@ -592,7 +592,7 @@ const createSchedule = (clubs) => {
   return schedule
 }
 
-// Assign each teams' role & target for the saison (based on seed strength)
+// Assign each teams' role & roleTarget for the saison (based on seed strength)
 const prepareRole = (clubs) => {
   const roles = {
     1: 'TitleCandidate',
@@ -644,12 +644,12 @@ const prepareRole = (clubs) => {
   // rTarget: NACH 8, MODIFIER
 
   const roleTargets = {
-    'TitleCandidate':  {'name': 'Title',    'rank': [1, 2]},
-    'Contender':       {'name': 'Playoffs', 'rank': [3, 4, 5, 6]},
+    'TitleCandidate': {'name': 'Title',    'rank': [1, 2]},
+    'Contender':      {'name': 'Playoffs', 'rank': [3, 4, 5, 6]},
     'UpperMidfielder': {'name': 'Playoffs', 'rank': [5, 6, 7, 8]},
     'LowerMidfielder': {'name': 'Comfort',  'rank': [7, 8, 9, 10]},
-    'Survivalist':     {'name': 'Comfort',  'rank': [9, 10, 11, 12]},
-    'RelCandidate':    {'name': 'Survival', 'rank': [11, 12, 13]},
+    'Survivalist':    {'name': 'Comfort',  'rank': [9, 10, 11, 12]},
+    'RelCandidate':   {'name': 'Survival', 'rank': [11, 12, 13]},
   }
 
   const sortedClubs = updateRank(clubs, 'rankSeed')

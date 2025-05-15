@@ -1,12 +1,12 @@
 <template>
-  <div v-if="clubs.length > 0" class="clubs-container">
-    <DisplayClubs :clubs/>
+  <div v-if="clubs.length > 0" class="season-container">
+    <SimulateSeason :clubs :schedule/>
   </div>
   <div class="tables-container">
     <DisplayTables :clubs/>
   </div>
-  <div v-if="clubs.length > 0" class="season-container">
-    <SimulateSeason :clubs :schedule/>
+  <div v-if="clubs.length > 0" class="clubs-container">
+    <DisplayClubs :clubs/>
   </div>
 </template>
 
@@ -74,7 +74,7 @@ body {
   padding: 0.5rem;
   
   .clubs-container {
-    max-height: 314px;
+    max-height: 440px;
     overflow-y: scroll;
   }
   

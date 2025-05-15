@@ -81,7 +81,7 @@
         <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="showDetails">
           <label>TrDø</label>
         </div>
-        <!-- <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="showDetails">
+        <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="showDetails">
           <label>Atø</label>
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="showDetails">
@@ -116,7 +116,7 @@
         </div>
         <div class="column" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="showDetails">
           <label>L</label>
-        </div> -->
+        </div>
         <div class="column" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="showTable">
           <label>Seed</label>
         </div>
@@ -126,19 +126,19 @@
         <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="showTable">
           <label>DRa</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')"
-          v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="showTable">
           <label>RDiff</label>
         </div>
         <div class="column" v-if="showTable">
           <label>Role</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')"
-          v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="showTable">
+          <label>P$(k)</label>
+        </div>
+        <div class="column" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="showTable">
           <label>In</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')"
-          v-if="showTable">
+        <div class="column" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="showTable">
           <label>Tr</label>
         </div>
       </div>
@@ -222,7 +222,7 @@
           <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
-          <!-- <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || focusClub === club.initials}" v-if="showDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.attackStrAvg() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || focusClub === club.initials}" v-if="showDetails">
@@ -257,7 +257,7 @@
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClub === club.initials}" v-if="showDetails">
             <label>{{ club.losses() }}</label>
-          </div> -->
+          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'seed' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.seed() }}</label>
           </div>
@@ -270,8 +270,11 @@
           <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" :class="{ 'bold': focusClub === club.initials}"v-if="showTable">
+          <div class="column" :class="{ 'bold': focusClub === club.initials} "v-if="showTable">
             <label>{{ club.role.slice(0, 5) }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClub === club.initials}" v-if="showTable">
+            <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'initiative' || focusClub === club.initials}" v-if="showTable">
             <label>{{ club.initiative }}</label>
