@@ -197,7 +197,7 @@ export default {
     display: flex;
     flex-direction: column;
     border: 1px solid #f0275e;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: #3b434c;
 
     .overview {

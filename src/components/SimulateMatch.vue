@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="controls">
-        <button v-if="!matchOngoing" @click="simulateMatch">Anpfiff</button>
-        <button v-else @click="stopSimulateMatch">Auszeit</button>
-        <button v-if="matchTime > 0" @click="showDetails = !showDetails">Details</button>
+        <button v-if="!matchOngoing" class="btn-interact" @click="simulateMatch">Anpfiff</button>
+        <button v-else class="btn-interact" @click="stopSimulateMatch">Auszeit</button>
+        <button v-if="matchTime > 0" class="btn-interact" @click="showDetails = !showDetails">Details</button>
       </div>
     </div>
     <div v-if="showDetails || showMatchdayDetails" class="details">

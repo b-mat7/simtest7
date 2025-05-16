@@ -62,7 +62,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
   
   // min-width: 320px;
   // min-height: 100vh;
@@ -90,17 +89,28 @@ body {
   .interact {
     cursor: pointer;
     transition: all 0.1s ease;
+
+    &:hover {
+      color: #f0275e;
+      font-weight: 800;
+      outline: 1px solid #f0275e;
+      border-radius: 4px;
+
+      & > * {
+        cursor: pointer;
+        // transform: translateY(-4px);
+      }
+    }
   }
 
-  .interact:hover {
-    color: #f0275e;
-    font-weight: 800;
-    outline: 1px solid #f0275e;
-    border-radius: 4px;
+  .btn-interact {
+    cursor: pointer;
 
-    & > * {
+    &:hover {
       cursor: pointer;
-      // transform: translateY(-4px);
+      border: 1px solid #f0275e;
+      border-radius: 4px;
+      // box-shadow: 0 0 8px #f0275e;
     }
   }
 }

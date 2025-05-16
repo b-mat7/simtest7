@@ -2,10 +2,10 @@ season<template>
   <div class="simulate-season-wrapper">
     <div class="controls">
       <label>Season-Control:</label>
-      <button v-if="!simulateSequ" @click="toggleSimulateSequ">SimSequ</button>
-      <button v-else @click="toggleSimulateSequ">! SimSequ</button>
-      <button v-if="!simulatePara" @click="toggleSimulatePara">SimPara</button>
-      <button v-else @click="toggleSimulatePara">! SimPara</button>
+      <button v-if="!simulateSequ" class="btn-size btn-interact" @click="toggleSimulateSequ">SimSequ</button>
+      <button v-else class="btn-size btn-interact" @click="toggleSimulateSequ">Stop</button>
+      <button v-if="!simulatePara" class="btn-size btn-interact" @click="toggleSimulatePara">SimPara</button>
+      <button v-else class="btn-size btn-interact" @click="toggleSimulatePara">Stop</button>
     </div>
     <div class="matchdays">
       <div v-for="matchday in schedule.matchdayList">
@@ -99,9 +99,18 @@ export default {
   row-gap: 4px;
 
   .controls {
+    max-width: fit-content;
     display: flex;
+    font-weight: 700;
     column-gap: 4px;
-    padding: 4px;
+    padding: 4px 8px;
+    border: 1px solid #f0275e;
+    border-radius: 4px;
+    background-color: #3b434c;
+
+    .btn-size {
+      width: 70px;
+    }
   }
 
   .matchdays {
