@@ -189,7 +189,7 @@ export default {
 .display-clubs-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
 
   .club {
     width: 264px;

@@ -32,9 +32,6 @@
 
 
         <!-- Result details -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="resultDetails">
-          <label title="Results (points) last 5 games avg">R5ø</label>
-        </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="resultDetails">
           <label title="Goals per match">G/M</label>
         </div>
@@ -59,9 +56,15 @@
         <div class="column interact" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="resultDetails">
           <label title="Losses">L</label>
         </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="resultDetails">
+          <label title="Price money (in thousand)">Pr$</label>
+        </div>
 
 
         <!-- Performance details -->
+        <div class="column interact" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="perfDetails">
+          <label title="Results (points) last 5 games avg">R5ø</label>
+        </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'momentumAvg' }" @click="setSortTopic('momentumAvg')" v-if="perfDetails">
           <label title="Momentum avg">Mmø</label>
         </div>
@@ -137,23 +140,32 @@
         <div class="column interact" :class="{ 'bold': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="seedDetails">
           <label title="Seed rank">SRa</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="seedDetails">
+        <!-- <div class="column interact" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="seedDetails">
           <label title="Day rank">DRa</label>
-        </div>
+        </div> -->
         <div class="column" v-if="seedDetails">
           <label title="Role">Role</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="seedDetails">
           <label title="Role difference">RDiff</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="seedDetails">
-          <label title="Price money (thousand)">P$(k)</label>
-        </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="seedDetails">
           <label title="Initiative">In</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="seedDetails">
           <label title="Transition">Tr</label>
+        </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'attack' }" @click="setSortTopic('attack')" v-if="seedDetails">
+          <label title="Transition">At</label>
+        </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'shoot' }" @click="setSortTopic('shoot')" v-if="seedDetails">
+          <label title="Transition">Sh</label>
+        </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'defend' }" @click="setSortTopic('defend')" v-if="seedDetails">
+          <label title="Transition">De</label>
+        </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'save' }" @click="setSortTopic('save')" v-if="seedDetails">
+          <label title="Transition">Sa</label>
         </div>
       </div>
 
@@ -186,9 +198,6 @@
 
 
           <!-- Result details -->
-          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClub === club.initials}" v-if="resultDetails">
-            <label>{{ club.resultsL5Avg() }}</label>
-          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || focusClub === club.initials}" v-if="resultDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
@@ -213,9 +222,15 @@
           <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClub === club.initials}" v-if="resultDetails">
             <label>{{ club.losses() }}</label>
           </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClub === club.initials}" v-if="resultDetails">
+            <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
+          </div>
 
 
           <!-- Performance details -->
+          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClub === club.initials}" v-if="perfDetails">
+            <label>{{ club.resultsL5Avg() }}</label>
+          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'momentumAvg' || focusClub === club.initials}" v-if="perfDetails">
             <label>{{ (club.momentumAvg()) }}</label>
           </div>
@@ -291,23 +306,32 @@
           <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || focusClub === club.initials}" v-if="seedDetails">
             <label>{{ club.rankSeed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClub === club.initials}" v-if="seedDetails">
+          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClub === club.initials}" v-if="seedDetails">
             <label>{{ club.rankMatchday }}</label>
-          </div>
+          </div> -->
           <div class="column" :class="{ 'bold': focusClub === club.initials} "v-if="seedDetails">
             <label>{{ club.role.slice(0, 5) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClub === club.initials}" v-if="seedDetails">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClub === club.initials}" v-if="seedDetails">
-            <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
-          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'initiative' || focusClub === club.initials}" v-if="seedDetails">
             <label>{{ club.initiative }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'transition' || focusClub === club.initials}" v-if="seedDetails">
             <label>{{ club.transition }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'attack' || focusClub === club.initials}" v-if="seedDetails">
+            <label>{{ club.attack }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || focusClub === club.initials}" v-if="seedDetails">
+            <label>{{ club.shoot }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'defend' || focusClub === club.initials}" v-if="seedDetails">
+            <label>{{ club.defend }}</label>
+          </div>
+          <div class="column" :class="{ 'bold': sortTopic === 'save' || focusClub === club.initials}" v-if="seedDetails">
+            <label>{{ club.save }}</label>
           </div>
         </li>
       </div>

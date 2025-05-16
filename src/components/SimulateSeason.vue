@@ -96,7 +96,7 @@ export default {
 .simulate-season-wrapper {
   display: flex;
   flex-direction: column;
-  row-gap: 4px;
+  row-gap: 8px;
 
   .controls {
     max-width: fit-content;
@@ -115,7 +115,7 @@ export default {
 
   .matchdays {
     display: flex;
-    column-gap: 4px;
+    column-gap: 8px;
     overflow-x: scroll;
   }
 }

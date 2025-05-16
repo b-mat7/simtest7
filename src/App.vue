@@ -62,6 +62,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  margin: 0 // reset style
   
   // min-width: 320px;
   // min-height: 100vh;
@@ -70,20 +72,22 @@ body {
 #app {
   // max-width: 1280px;
   // margin: 0 auto;
-  padding: 0.5rem;
-  
-  .clubs-container {
-    max-height: 440px;
-    overflow-y: scroll;
-  }
-  
-  .tables-container {
-    padding: 0.5rem 0;
-    overflow-x: scroll;
-  }
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 
   .season-container {
     overflow-x: scroll;
+  }
+  
+  .tables-container {
+    overflow-x: scroll;
+  }
+
+  .clubs-container {
+    max-height: 440px;
+    overflow-y: scroll;
   }
 
   .interact {
