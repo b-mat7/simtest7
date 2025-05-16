@@ -19,97 +19,97 @@
         <button v-else @click="stopSimulateMatch">Auszeit</button>
         <button v-if="matchTime > 0" @click="showDetails = !showDetails">Details</button>
       </div>
-      <div v-if="showDetails" class="details">
-        <div v-if="showStats" @click="showStats = !showStats" class="stats">
-          <div class="possession">
-            <div class="entry">
-              <label>In, ø</label>
-              <label>{{ parseFloat(homeInitiativeStr) }}|{{ parseFloat((homeInitiativeStrSum / matchTime).toFixed(1)) }}</label>
-              <label>{{ parseFloat(awayInitiativeStr) }}|{{ parseFloat((awayInitiativeStrSum / matchTime).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>At%</label>
-              <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed(0)) }}</label>
-              <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed(0)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Tr, ø</label>
-              <label>{{ parseFloat(homeTransitionStr) }}|{{ parseFloat((homeTransitionStrSum / (homeCounters + homeFallbacks)).toFixed(1)) }}</label>
-              <label>{{ parseFloat(awayTransitionStr) }}|{{ parseFloat((awayTransitionStrSum / (awayCounters + awayFallbacks)).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Co%</label>
-              <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed(0)) }}</label>
-              <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed(0)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Fb%</label>
-              <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed(0)) }}</label>
-              <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed(0)) }}</label>
-            </div>
+    </div>
+    <div v-if="showDetails || showMatchdayDetails" class="details">
+      <div v-if="showStats" @click="showStats = !showStats" class="stats">
+        <div class="possession">
+          <div class="entry">
+            <label>In, ø</label>
+            <label>{{ parseFloat(homeInitiativeStr) }}|{{ parseFloat((homeInitiativeStrSum / matchTime).toFixed(1)) }}</label>
+            <label>{{ parseFloat(awayInitiativeStr) }}|{{ parseFloat((awayInitiativeStrSum / matchTime).toFixed(1)) }}</label>
           </div>
-          <div class="tweaks">
-            <div class="entry">
-              <label>Mm</label>
-              <label>{{ parseFloat((homeMomentum).toFixed(2))}}</label>
-              <label>{{ parseFloat((awayMomentum).toFixed(2))}}</label>
-            </div>
-            <div class="entry">
-              <label>Fo</label>
-              <label>{{ parseFloat((home.form).toFixed(2))}}</label>
-              <label>{{ parseFloat((away.form).toFixed(2))}}</label>
-            </div>
-            <div class="entry">
-              <label>Mr</label>
-              <label>{{ parseFloat((home.morale).toFixed(2)) }}</label>
-              <label>{{ parseFloat((away.morale).toFixed(2)) }}</label>
-            </div>
-            <!-- <div class="entry">
-              <label>Mod</label>
-              Analog zu Buffs
-            </div> -->
+          <div class="entry">
+            <label>At%</label>
+            <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed(0)) }}</label>
+            <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed(0)) }}</label>
           </div>
-          <div class="attack">
-            <div class="entry">
-              <label>Atø</label>
-              <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
-              <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Shø</label>
-              <label>{{ parseFloat((homeShotStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
-              <label>{{ parseFloat((awayShotStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Sh, %</label>
-              <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
-              <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
-            </div>
+          <div class="entry">
+            <label>Tr, ø</label>
+            <label>{{ parseFloat(homeTransitionStr) }}|{{ parseFloat((homeTransitionStrSum / (homeCounters + homeFallbacks)).toFixed(1)) }}</label>
+            <label>{{ parseFloat(awayTransitionStr) }}|{{ parseFloat((awayTransitionStrSum / (awayCounters + awayFallbacks)).toFixed(1)) }}</label>
           </div>
-          <div class="defend">
-            <div class="entry">
-              <label>Deø</label>
-              <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }}</label>
-              <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Saø</label>
-              <label>{{ parseFloat((homeSaveStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
-              <label>{{ parseFloat((awaySaveStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
-            </div>
-            <div class="entry">
-              <label>Sa, %</label>
-              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
-              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
-            </div>
+          <div class="entry">
+            <label>Co%</label>
+            <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed(0)) }}</label>
+            <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed(0)) }}</label>
+          </div>
+          <div class="entry">
+            <label>Fb%</label>
+            <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed(0)) }}</label>
+            <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed(0)) }}</label>
           </div>
         </div>
-        <div v-else @click="showStats = !showStats" class="ticker">
-          <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index">
-            {{ tick }}
-          </li>
-          <label>Unser LiveTicker berichtet... live...oO</label>
+        <div class="tweaks">
+          <div class="entry">
+            <label>Mm</label>
+            <label>{{ parseFloat((homeMomentum).toFixed(2))}}</label>
+            <label>{{ parseFloat((awayMomentum).toFixed(2))}}</label>
+          </div>
+          <div class="entry">
+            <label>Fo</label>
+            <label>{{ parseFloat((home.form).toFixed(2))}}</label>
+            <label>{{ parseFloat((away.form).toFixed(2))}}</label>
+          </div>
+          <div class="entry">
+            <label>Mr</label>
+            <label>{{ parseFloat((home.morale).toFixed(2)) }}</label>
+            <label>{{ parseFloat((away.morale).toFixed(2)) }}</label>
+          </div>
+          <!-- <div class="entry">
+            <label>Mod</label>
+            Analog zu Buffs
+          </div> -->
         </div>
+        <div class="attack">
+          <div class="entry">
+            <label>Atø</label>
+            <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
+            <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
+          </div>
+          <div class="entry">
+            <label>Shø</label>
+            <label>{{ parseFloat((homeShotStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
+            <label>{{ parseFloat((awayShotStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
+          </div>
+          <div class="entry">
+            <label>Sh, %</label>
+            <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
+            <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
+          </div>
+        </div>
+        <div class="defend">
+          <div class="entry">
+            <label>Deø</label>
+            <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }}</label>
+            <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }}</label>
+          </div>
+          <div class="entry">
+            <label>Saø</label>
+            <label>{{ parseFloat((homeSaveStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
+            <label>{{ parseFloat((awaySaveStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
+          </div>
+          <div class="entry">
+            <label>Sa, %</label>
+            <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
+            <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
+          </div>
+        </div>
+      </div>
+      <div v-else @click="showStats = !showStats" class="ticker">
+        <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index">
+          {{ tick }}
+        </li>
+        <label>Unser LiveTicker berichtet... live...oO</label>
       </div>
     </div>
   </div>
@@ -127,6 +127,9 @@ export default {
       required: true
     },
     matchdayOngoing: {  //xday
+      type: Boolean
+    },
+    showMatchdayDetails: {
       type: Boolean
     }
   },
@@ -495,11 +498,13 @@ export default {
 <style lang="scss" scoped>
 .simulate-match-wrapper {
   display: flex;
+  column-gap: 8px;
   height: 2.25rem;
 
   .main {
+    min-width: 180px;
     display: flex;
-    column-gap: 4px;
+    justify-content: space-around;
 
     .teams {
       width: 4.5rem;
@@ -514,41 +519,6 @@ export default {
       }
     }
 
-    .details {
-      min-width: 20.5rem;   // check with size of each entry
-      font-size: 0.5rem;
-
-      .stats {
-        display: flex;
-        column-gap: 4px;
-        text-align: center;
-
-        .possession,
-        .tweaks,
-        .attack,
-        .defend {
-          display: flex;
-          border-radius: 4px;
-          border: 1px solid #f0275e;
-          
-          .entry {
-            display: flex;
-            flex-direction: column;
-            width: 2rem;
-          }
-        }
-      }
-      
-      .ticker {
-        height: 2.25rem;
-        overflow-x: scroll;
-        text-align: start;
-        list-style: none;
-        border-radius: 4px;
-        border: 1px solid #f0275e;
-      }
-    }
-
     .controls {
       display: flex;
       flex-direction: column;
@@ -559,6 +529,41 @@ export default {
         font-size: 0.5rem;
         height: calc((2.25rem - 2px) / 2);
       }
+    }
+  }
+
+  .details {
+    min-width: 20.5rem;   // check with size of each entry
+    font-size: 0.5rem;
+
+    .stats {
+      display: flex;
+      column-gap: 4px;
+      text-align: center;
+
+      .possession,
+      .tweaks,
+      .attack,
+      .defend {
+        display: flex;
+        border-radius: 4px;
+        border: 1px solid #f0275e;
+        
+        .entry {
+          display: flex;
+          flex-direction: column;
+          width: 2rem;
+        }
+      }
+    }
+    
+    .ticker {
+      height: 2.25rem;
+      overflow-x: scroll;
+      text-align: start;
+      list-style: none;
+      border-radius: 4px;
+      border: 1px solid #f0275e;
     }
   }
 }

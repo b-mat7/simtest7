@@ -211,7 +211,7 @@ export default {
       justify-content: space-between;
       font-weight: 700;
       padding-bottom: 4px;
-      border-bottom: 1px dashed white;
+      border-bottom: 1px dashed #f0275e;
       margin-bottom: 4px;
     }
     
@@ -231,7 +231,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding-bottom: 4px;
-      border-bottom: 1px dashed white;
+      border-bottom: 1px dashed #f0275e;
       margin-bottom: 4px;
 
       .tweak-entry {

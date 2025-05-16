@@ -381,7 +381,7 @@ export default {
       column-gap: 4px;
       font-weight: 700;
       padding: 4px 8px;
-      border-bottom: 2px dashed;
+      border-bottom: 2px dashed #f0275e;
     }
 
     .body {
@@ -401,7 +401,7 @@ export default {
       padding: 4px 8px;
 
       &:not(:first-of-type) {
-        border-top: 1px dashed #fff;
+        border-top: 1px dashed #f0275e;
       }
     }
 

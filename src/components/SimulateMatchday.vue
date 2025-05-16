@@ -4,10 +4,11 @@
       <label>Day: {{ matchday.dayNr }}</label>
       <button v-if="!matchdayOngoing" @click="toggleMatchdayOngoing">Anpfiff</button>
       <button v-else @click="toggleMatchdayOngoing">Auszeit</button>
+      <button @click="showMatchdayDetails = !showMatchdayDetails">Details</button>
     </div>
     <div class="matches">
       <div v-for="match in matchday.matches">
-        <SimulateMatch :match :matchdayOngoing @matchFinished="handleFinishedMatches"/>
+        <SimulateMatch :match :matchdayOngoing :showMatchdayDetails @matchFinished="handleFinishedMatches"/>
       </div>
     </div>
   </div>
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       matchdayOngoing: false,
-      finishedMatches: []
+      finishedMatches: [],
+      showMatchdayDetails: false
     }
   },
   methods: {
@@ -68,6 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 .simulate-matchday-wrapper {
+  min-width: 180px;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
@@ -77,19 +80,19 @@ export default {
   background-color: #3b434c;
 
   .controls {
+    max-width: 180px;
     display: flex;
-    column-gap: 16px;
+    justify-content: space-between;
     font-weight: 700;
-    padding-left: 16px;
     padding-bottom: 4px;
-    border-bottom: 1px dashed white;
+    border-bottom: 1px dashed #f0275e;
     margin-bottom: 4px;
   }
 
   .matches {
     display: flex;
     flex-direction: column;
-    row-gap: 4px;
+    row-gap: 8px;
   }
 }
 </style>
