@@ -196,18 +196,23 @@ export default {
     padding: 8px;
     display: flex;
     flex-direction: column;
-    border: 1px solid;
+    border: 1px solid #f0275e;
     border-radius: 8px;
+    background-color: #3b434c;
 
     .overview {
       display: flex;
-      justify-content: space-between
+      justify-content: space-between;
+      font-weight: 700;
     }
     
     .results {
       display: flex;
       justify-content: space-between;
+      font-weight: 700;
+      padding-bottom: 4px;
       border-bottom: 1px dashed white;
+      margin-bottom: 4px;
     }
     
     .seed-stats {
@@ -225,7 +230,9 @@ export default {
     .tweak-stats {
       display: flex;
       justify-content: space-between;
+      padding-bottom: 4px;
       border-bottom: 1px dashed white;
+      margin-bottom: 4px;
 
       .tweak-entry {
         width: 4.5rem;

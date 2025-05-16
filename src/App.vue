@@ -93,9 +93,9 @@ body {
   }
 
   .interact:hover {
-    color: darkcyan;
-    font-weight: bold;
-    outline: 1px solid darkcyan;
+    color: #f0275e;
+    font-weight: 800;
+    outline: 1px solid #f0275e;
     border-radius: 4px;
 
     & > * {

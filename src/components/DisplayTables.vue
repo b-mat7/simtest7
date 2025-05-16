@@ -4,155 +4,155 @@
       <div class="header">
         <!-- TABLE HEADER -->
         <div class="column sticky-left-0 split">
-          <label title="View seed & other details" @click="seedDetails = !seedDetails">Seed</label>
-          <label title="Sort for rank" @click="setSortTopic('')">Rank</label>
+          <label title="View seed & other details" class="interact" :class="{ 'bold': seedDetails }" @click="seedDetails = !seedDetails">Seed</label>
+          <label title="Sort for rank" class="interact" @click="setSortTopic('')">Rank</label>
         </div>
 
 
         <!-- Default columns -->
         <div class="column sticky-left-1 split">
-          <label title="View result details" @click="resultDetails = !resultDetails">Result</label>
-          <label title="View performance details" @click="perfDetails = !perfDetails">Perf</label>
+          <label title="View result details" class="interact" :class="{ 'bold': resultDetails }" @click="resultDetails = !resultDetails">Result</label>
+          <label title="View performance details" class="interact" :class="{ 'bold': perfDetails }" @click="perfDetails = !perfDetails">Perf</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
           <label title="Matches played">M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goals' }" @click="setSortTopic('goals')">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goals' }" @click="setSortTopic('goals')">
           <label title="Goals">G</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' }" @click="setSortTopic('goalsAgainst')">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsAgainst' }" @click="setSortTopic('goalsAgainst')">
           <label title="Goals against">GA</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' }" @click="setSortTopic('goalsDiff')">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsDiff' }" @click="setSortTopic('goalsDiff')">
           <label title="Goals difference">Dif</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')">
+        <div class="column interact" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')">
           <label title="Points">P</label>
         </div>
 
 
         <!-- Result details -->
-        <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="resultDetails">
           <label title="Results (points) last 5 games avg">R5ø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="resultDetails">
           <label title="Goals per match">G/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="resultDetails">
           <label title="Goals against per match">GA/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="resultDetails">
           <label title="Goals difference per match">Dif/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="resultDetails">
           <label title="Points per match">P/M</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'wins' }" @click="setSortTopic('wins')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'wins' }" @click="setSortTopic('wins')" v-if="resultDetails">
           <label title="Wins">W</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' }" @click="setSortTopic('winsOvertime')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'winsOvertime' }" @click="setSortTopic('winsOvertime')" v-if="resultDetails">
           <label title="Overtime wins">OTW</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' }" @click="setSortTopic('lossesOvertime')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'lossesOvertime' }" @click="setSortTopic('lossesOvertime')" v-if="resultDetails">
           <label title="Overtime losses">OTL</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="resultDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="resultDetails">
           <label title="Losses">L</label>
         </div>
 
 
         <!-- Performance details -->
-        <div class="column" :class="{ 'bold': sortTopic === 'momentumAvg' }" @click="setSortTopic('momentumAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'momentumAvg' }" @click="setSortTopic('momentumAvg')" v-if="perfDetails">
           <label title="Momentum avg">Mmø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="perfDetails">
           <label title="Form">Fo</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'formAvg' }" @click="setSortTopic('formAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'formAvg' }" @click="setSortTopic('formAvg')" v-if="perfDetails">
           <label title="Form avg">Foø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="perfDetails">
           <label title="Morale">Mr</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'moraleAvg' }" @click="setSortTopic('moraleAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'moraleAvg' }" @click="setSortTopic('moraleAvg')" v-if="perfDetails">
           <label title="Morale avg">Mrø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="perfDetails">
           <label title="Shots efficiency">Sh%</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'savesEff' }" @click="setSortTopic('savesEff')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'savesEff' }" @click="setSortTopic('savesEff')" v-if="perfDetails">
           <label title="Saves efficiency">Sa%</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' }" @click="setSortTopic('shotsSavesEff')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'shotsSavesEff' }" @click="setSortTopic('shotsSavesEff')" v-if="perfDetails">
           <label title="Sum of Shots & Saves efficiency">∑%</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' }" @click="setSortTopic('initiativesDiff')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativesDiff' }" @click="setSortTopic('initiativesDiff')" v-if="perfDetails">
           <label title="Initiatives difference">In#</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' }" @click="setSortTopic('transitionsDiff')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionsDiff' }" @click="setSortTopic('transitionsDiff')" v-if="perfDetails">
           <label title="Transitions difference">Tr#</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="perfDetails">
           <label title="Initiative strength avg">Inø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' }" @click="setSortTopic('initiativeStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' }" @click="setSortTopic('initiativeStrDiceAvg')" v-if="perfDetails">
           <label title="Initiative strength dice avg">InDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' }" @click="setSortTopic('transitionStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionStrAvg' }" @click="setSortTopic('transitionStrAvg')" v-if="perfDetails">
           <label title="Transition strength avg">Trø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="perfDetails">
           <label title="Transition strength dice avg">TrDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="perfDetails">
           <label title="Attack strength avg">Atø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="perfDetails">
           <label title="Attack strength dice avg">AtDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' }" @click="setSortTopic('shotStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'shotStrAvg' }" @click="setSortTopic('shotStrAvg')" v-if="perfDetails">
           <label title="Shot strength avg">Shø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' }" @click="setSortTopic('shotStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' }" @click="setSortTopic('shotStrDiceAvg')" v-if="perfDetails">
           <label title="Shot strength dice avg">ShDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' }" @click="setSortTopic('defendStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'defendStrAvg' }" @click="setSortTopic('defendStrAvg')" v-if="perfDetails">
           <label title="Defend strength avg">Deø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' }" @click="setSortTopic('defendStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' }" @click="setSortTopic('defendStrDiceAvg')" v-if="perfDetails">
           <label title="Defend strength dice avg">DeDø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' }" @click="setSortTopic('saveStrAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'saveStrAvg' }" @click="setSortTopic('saveStrAvg')" v-if="perfDetails">
           <label title="Save strength avg">Saø</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' }" @click="setSortTopic('saveStrDiceAvg')" v-if="perfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' }" @click="setSortTopic('saveStrDiceAvg')" v-if="perfDetails">
           <label title="Save strength dice avg">SaDø</label>
         </div>
         
 
         <!-- Seed & other details -->
-        <div class="column" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="seedDetails">
           <label title="Seed">Seed</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="seedDetails">
           <label title="Seed rank">SRa</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="seedDetails">
           <label title="Day rank">DRa</label>
         </div>
         <div class="column" v-if="seedDetails">
           <label title="Role">Role</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="seedDetails">
           <label title="Role difference">RDiff</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="seedDetails">
           <label title="Price money (thousand)">P$(k)</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="seedDetails">
           <label title="Initiative">In</label>
         </div>
-        <div class="column" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="seedDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="seedDetails">
           <label title="Transition">Tr</label>
         </div>
       </div>
@@ -165,7 +165,7 @@
           <div class="column sticky-left-0" :class="{ 'bold': focusClub === club.initials}">
             <label>{{ club.rankLive }}</label>
           </div>
-          <div class="column sticky-left-1" :class="{ 'bold': focusClub === club.initials}" @click="setFocusClub(club)">
+          <div class="column sticky-left-1 interact" :class="{ 'bold': focusClub === club.initials}" @click="setFocusClub(club)">
             <label>{{ club.initials }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || focusClub === club.initials}">
@@ -371,15 +371,17 @@ export default {
     min-width: fit-content;
     max-width: fit-content;
     list-style: none;
-    border: 1px solid #fff;
+    border: 1px solid #f0275e;
     border-radius: 8px;
+    background-color: #3b434c;
 
     .header {
       display: flex;
       justify-content: flex-end;
       column-gap: 4px;
+      font-weight: 700;
       padding: 4px 8px;
-      border-bottom: 1px solid #fff;
+      border-bottom: 2px dashed;
     }
 
     .body {
@@ -397,24 +399,28 @@ export default {
       justify-content: flex-end;
       column-gap: 4px;
       padding: 4px 8px;
-      border-top: 1px solid #fff;
+
+      &:not(:first-of-type) {
+        border-top: 1px dashed #fff;
+      }
     }
 
     .bold {
-      font-weight: bold;
+      font-weight: 900;
+      color: #f0275e;
     }
 
     .sticky-left-0 {
       position: sticky;
       left: 0;
-      background-color: #242424;
+      background-color: #3b434c;
       // backdrop-filter: blur(20px)
     }
 
     .sticky-left-1 {
       position: sticky;
       left: 2.5rem;
-      background-color: #242424;
+      background-color: #3b434c;
     }
 
     .split {

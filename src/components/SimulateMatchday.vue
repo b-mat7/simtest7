@@ -72,13 +72,14 @@ export default {
   flex-direction: column;
   row-gap: 4px;
   padding: 4px 8px;
-  border: 1px solid #fff;
+  border: 1px solid #f0275e;
   border-radius: 8px;
-  background-color: darkcyan;
+  background-color: #3b434c;
 
   .controls {
     display: flex;
     column-gap: 16px;
+    font-weight: 700;
     padding-left: 16px;
     padding-bottom: 4px;
     border-bottom: 1px dashed white;

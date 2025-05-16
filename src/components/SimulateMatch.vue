@@ -29,8 +29,8 @@
             </div>
             <div class="entry">
               <label>At%</label>
-              <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed()) }}</label>
-              <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed()) }}</label>
+              <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed(0)) }}</label>
+              <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed(0)) }}</label>
             </div>
             <div class="entry">
               <label>Tr, ø</label>
@@ -39,13 +39,13 @@
             </div>
             <div class="entry">
               <label>Co%</label>
-              <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed()) }}</label>
-              <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed()) }}</label>
+              <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed(0)) }}</label>
+              <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed(0)) }}</label>
             </div>
             <div class="entry">
               <label>Fb%</label>
-              <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed()) }}</label>
-              <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed()) }}</label>
+              <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed(0)) }}</label>
+              <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed(0)) }}</label>
             </div>
           </div>
           <div class="tweaks">
@@ -82,8 +82,8 @@
             </div>
             <div class="entry">
               <label>Sh, %</label>
-              <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed()) }}</label>
-              <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed()) }}</label>
+              <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
+              <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
             </div>
           </div>
           <div class="defend">
@@ -99,8 +99,8 @@
             </div>
             <div class="entry">
               <label>Sa, %</label>
-              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed()) }}</label>
-              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed()) }}</label>
+              <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
+              <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
             </div>
           </div>
         </div>
@@ -520,7 +520,7 @@ export default {
 
       .stats {
         display: flex;
-        column-gap: 2px;
+        column-gap: 4px;
         text-align: center;
 
         .possession,
@@ -529,7 +529,7 @@ export default {
         .defend {
           display: flex;
           border-radius: 4px;
-          background-color: cadetblue;
+          border: 1px solid #f0275e;
           
           .entry {
             display: flex;
@@ -545,7 +545,7 @@ export default {
         text-align: start;
         list-style: none;
         border-radius: 4px;
-        background-color: cadetblue;
+        border: 1px solid #f0275e;
       }
     }
 
