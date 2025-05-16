@@ -78,13 +78,17 @@ export default {
 
   .controls {
     display: flex;
-    column-gap: 4px;
+    column-gap: 16px;
+    padding-left: 16px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed white;
+    margin-bottom: 4px;
   }
 
   .matches {
     display: flex;
     flex-direction: column;
-    row-gap: 0.25rem;
+    row-gap: 4px;
   }
 }
 </style>

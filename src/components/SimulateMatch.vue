@@ -6,13 +6,18 @@
         <label> - </label>
         <label>{{ away.initials }}</label>
       </div>
-      <div class="standing" @click="showDetails = !showDetails">
+      <div class="standing">
         <label>{{ homeGoals }}</label>
         <label> : </label>
         <label>{{ awayGoals }}</label>
         <div class="time">
           <label>{{ matchTime }}.</label>
         </div>
+      </div>
+      <div class="controls">
+        <button v-if="!matchOngoing" @click="simulateMatch">Anpfiff</button>
+        <button v-else @click="stopSimulateMatch">Auszeit</button>
+        <button v-if="matchTime > 0" @click="showDetails = !showDetails">Details</button>
       </div>
       <div v-if="showDetails" class="details">
         <div v-if="showStats" @click="showStats = !showStats" class="stats">
@@ -103,12 +108,8 @@
           <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index">
             {{ tick }}
           </li>
-          <label>Unser LiveTicker berichtet live...oO</label>
+          <label>Unser LiveTicker berichtet... live...oO</label>
         </div>
-      </div>
-      <div class="controls">
-        <button v-if="!matchOngoing" @click="simulateMatch">Anpfiff</button>
-        <button v-else @click="stopSimulateMatch">Auszeit</button>
       </div>
     </div>
   </div>

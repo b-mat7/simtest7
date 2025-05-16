@@ -55,8 +55,8 @@ body {
   font-size: 0.875rem;
   
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #dee2e6;
+  background-color: #222629;
   
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -86,5 +86,22 @@ body {
   .season-container {
     overflow-x: scroll;
   }
+
+  .interact {
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .interact:hover {
+    color: darkcyan;
+    font-weight: bold;
+    outline: 1px solid darkcyan;
+    border-radius: 4px;
+
+    & > * {
+      cursor: pointer;
+      // transform: translateY(-4px);
+    }
+  }
 }
-</style>./data/clubSeed.js/index.js
+</style>
