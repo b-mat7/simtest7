@@ -198,7 +198,7 @@ export default {
     flex-direction: column;
     border: 1px solid #f0275e;
     border-radius: 4px;
-    background-color: #3b434c;
+    background-color: #35495e;
 
     .overview {
       display: flex;
@@ -244,11 +244,13 @@ export default {
     .perf-stats {
       display: flex;
       justify-content: space-between;
-      
-      .perf-entry {
-        width: 7.5rem;
-        display: flex;
-        justify-content: space-between;
+
+      .column {
+        .perf-entry {
+          width: 7.5rem;
+          display: flex;
+          justify-content: space-between;
+        }
       }
     }
   }

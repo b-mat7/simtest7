@@ -77,7 +77,7 @@ export default {
   padding: 4px 8px;
   border: 1px solid #f0275e;
   border-radius: 4px;
-  background-color: #3b434c;
+  background-color: #35495e;
 
   .controls {
     max-width: 180px;
