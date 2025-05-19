@@ -1,4 +1,4 @@
-import { formatNum } from "../lib/util.js"
+import { formatD1, formatD2 } from "../lib/util.js"
 
 export class Club {
   constructor(seedData) {
@@ -67,7 +67,7 @@ export class Club {
   // Initialize methods
   // General and Diffs
   seed() {
-    return formatNum(this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save, 2)
+    return formatD2(this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save)
   }
 
   initiativesDiff() {
@@ -101,152 +101,152 @@ export class Club {
   // Averages
   momentumAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.momentumSum / this.intervalsPlayed, 2) 
+    ? formatD2(this.momentumSum / this.intervalsPlayed) 
     : 0
   }
   initiativeStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.initiativeStrSum / this.intervalsPlayed, 2) 
+    ? formatD2(this.initiativeStrSum / this.intervalsPlayed) 
     : 0 
   }
   transitionStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.transitionStrSum / (this.counters + this.fallbacks), 2) 
+    ? formatD2(this.transitionStrSum / (this.counters + this.fallbacks)) 
     : 0
   }
   attackStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.attackStrSum / this.attacks, 2) 
+    ? formatD2(this.attackStrSum / this.attacks) 
     : 0
   }
   defendStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.defendStrSum / this.defends, 2) 
+    ? formatD2(this.defendStrSum / this.defends) 
     : 0
   }
   shotStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.shotStrSum / (this.attackShots + this.counterShots), 2) 
+    ? formatD2(this.shotStrSum / (this.attackShots + this.counterShots)) 
     : 0
   }
   saveStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst), 2) 
+    ? formatD2(this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)) 
     : 0 
   }
   formAvg() { // ab matchday5 (4 is for displaying)
     return this.matchesPlayed > 5 
-    ? formatNum(this.formSum / (this.matchesPlayed - 4), 2) 
+    ? formatD2(this.formSum / (this.matchesPlayed - 4)) 
     : 0
   }
   moraleAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.moraleSum / this.matchesPlayed, 2) 
+    ? formatD2(this.moraleSum / this.matchesPlayed) 
     : 0
   }
   resultsL5Avg() {
     return this.matchesPlayed > 0 
-    ? formatNum((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5)), 2) 
+    ? formatD2((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5))) 
     : 0
   }
 
   initiativeStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3), 2) 
+    ? formatD2(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)) 
     : 0
   }
   transitionStrDiceAvg() {
     return this.matchesPlayed > 0  
-    ? formatNum(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3), 2) 
+    ? formatD2(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)) 
     : 0 
   }
   attackStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg()), 2) 
+    ? formatD2(this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())) 
     : 0
   }
   defendStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg()), 2) 
+    ? formatD2(this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())) 
     : 0
   }
   shotStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.shotStrAvg() - (this.shoot + this.formAvg() / 2), 2) 
+    ? formatD2(this.shotStrAvg() - (this.shoot + this.formAvg() / 2)) 
     : 0
   }
   saveStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.saveStrAvg() - (this.save + this.formAvg() / 2), 2) 
+    ? formatD2(this.saveStrAvg() - (this.save + this.formAvg() / 2)) 
     : 0
   }
   
   // Efficiencies ( % )
   initiativesEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.attacks / this.intervalsPlayed * 100, 1) 
+    ? formatD1(this.attacks / this.intervalsPlayed * 100) 
     : 0
   }
   transitionsEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(((this.counterShots + (this.fallbacks - this.counterShotsAgainst)) / (this.counters + this.fallbacks) * 100), 1) 
+    ? formatD1(((this.counterShots + (this.fallbacks - this.counterShotsAgainst)) / (this.counters + this.fallbacks) * 100)) 
     : 0 
   }
   attacksEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.attackShots / this.attacks * 100, 1) 
+    ? formatD1(this.attackShots / this.attacks * 100) 
     : 0 
   }
   defendsEff() {
     return this.matchesPlayed > 0 
-    ? formatNum((this.defends - this.attackShotsAgainst) / this.defends * 100, 1) 
+    ? formatD1((this.defends - this.attackShotsAgainst) / this.defends * 100) 
     : 0
   }
   countersEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.counterShots / this.counters * 100, 1) 
+    ? formatD1(this.counterShots / this.counters * 100) 
     : 0 
   }
   fallbacksEff() {
     return this.matchesPlayed > 0 
-    ? formatNum((this.fallbacks - this.counterShotsAgainst) / this.fallbacks * 100, 1) 
+    ? formatD1((this.fallbacks - this.counterShotsAgainst) / this.fallbacks * 100) 
     : 0
   }
   shotsEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.goals / (this.attackShots + this.counterShots) * 100, 1) 
+    ? formatD1(this.goals / (this.attackShots + this.counterShots) * 100) 
     : 0
   }
   savesEff() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100, 1) 
+    ? formatD1(this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100) 
     : 0
   }
   shotsSavesEff() {
     return this.matchesPlayed > 0 
-    ? formatNum((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100), 1) 
+    ? formatD1((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)) 
     : 0
   }
 
   // Per Match
   goalsPerMatch() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.goals / this.matchesPlayed, 1) 
+    ? formatD1(this.goals / this.matchesPlayed) 
     : 0
   }
   goalsAgainstPerMatch() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.goalsAgainst / this.matchesPlayed, 1) 
+    ? formatD1(this.goalsAgainst / this.matchesPlayed) 
     : 0
   }
   goalsDiffPerMatch() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.goalsDiff() / this.matchesPlayed, 1) 
+    ? formatD1(this.goalsDiff() / this.matchesPlayed) 
     : 0
   }
   pointsPerMatch() {
     return this.matchesPlayed > 0 
-    ? formatNum(this.points / this.matchesPlayed, 1) 
+    ? formatD1(this.points / this.matchesPlayed) 
     : 0
   }
 }

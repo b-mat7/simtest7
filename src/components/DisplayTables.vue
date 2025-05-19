@@ -235,13 +235,13 @@
             <label>{{ (club.momentumAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClub === club.initials}" v-if="showPerfDetails">
-            <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
+            <label>{{ formatD2(club.form) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'formAvg' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ (club.formAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClub === club.initials}" v-if="showPerfDetails">
-            <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
+            <label>{{ formatD2(club.morale) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'moraleAvg' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ (club.moraleAvg()) }}</label>
@@ -340,7 +340,7 @@
 </template>
 
 <script>
-import { updateRank } from '../lib/util.js'
+import { updateRank, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
   name: 'DisplayTables',
@@ -361,6 +361,8 @@ export default {
     }
   },
   methods: {
+    formatD1, // need to define it here again to be able to use it in template section
+    formatD2,
     createLiveTable(clubs, sortTopic, entryName) {
       this.liveTable = updateRank(clubs, sortTopic, entryName).sort((a, b) => {
         return typeof a[this.sortTopic] === 'function'

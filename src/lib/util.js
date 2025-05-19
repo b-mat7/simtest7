@@ -83,17 +83,17 @@ const calcMomentum = (comp, home, away) => {
 }
 
 const calcInitiative = (comp, home, away, dice) => {
-  const homeInitFactor = parseFloat((home.initiative - home.transition).toFixed(2))
-  const awayInitFactor = parseFloat((away.initiative - away.transition).toFixed(2))
+  const homeInitFactor = formatD2(home.initiative - home.transition)
+  const awayInitFactor = formatD2(away.initiative - away.transition)
 
-  const homeInitMom = Number((homeInitFactor + home.initiative * comp.homeMomentum * 1.3).toFixed(2))
-  const awayInitMom = Number((awayInitFactor + away.initiative * comp.awayMomentum * 1.3).toFixed(2))
+  const homeInitMom = formatD2(homeInitFactor + home.initiative * comp.homeMomentum * 1.3)
+  const awayInitMom = formatD2(awayInitFactor + away.initiative * comp.awayMomentum * 1.3)
 
   const homeDice = diceMaxInt(dice)
   const awayDice = diceMaxInt(dice)
 
-  const homeInitiativeStr = parseFloat(homeInitMom + homeDice)
-  const awayInitiativeStr = parseFloat(awayInitMom + awayDice)
+  const homeInitiativeStr = formatD2(homeInitMom + homeDice)
+  const awayInitiativeStr = formatD2(awayInitMom + awayDice)
 
   // console.log("H:", home.initials, "| home-initStr: ", "initFactor ", homeInitFactor, " + home.init ", home.initiative, "* mom: ", comp.homeMomentum, "*1.3 = ", homeInitMom, "+dice ", homeDice, " = ", homeInitiativeStr)
   // console.log("A:", away.initials, "| away-initStr: ", "initFactor ", awayInitFactor, " + away.init ", away.initiative, "* mom: ", comp.awayMomentum, "*1.3 = ", awayInitMom, "+dice ", awayDice, " = ", awayInitiativeStr)
@@ -110,17 +110,17 @@ const calcInitiative = (comp, home, away, dice) => {
 }
 
 const calcTransition = (comp, home, away, dice) => {
-  const homeTransFactor = parseFloat((home.transition - home.initiative).toFixed(2))
-  const awayTransFactor = parseFloat((away.transition - away.initiative).toFixed(2))
+  const homeTransFactor = formatD2(home.transition - home.initiative)
+  const awayTransFactor = formatD2(away.transition - away.initiative)
 
-  const homeTransMom = Number((homeTransFactor + home.transition * comp.homeMomentum * 1.3).toFixed(2))
-  const awayTransMom = Number((awayTransFactor + away.transition * comp.awayMomentum * 1.3).toFixed(2))
+  const homeTransMom = formatD2(homeTransFactor + home.transition * comp.homeMomentum * 1.3)
+  const awayTransMom = formatD2(awayTransFactor + away.transition * comp.awayMomentum * 1.3)
 
   const homeDice = diceMaxInt(dice)
   const awayDice = diceMaxInt(dice)
 
-  const homeTransitionStr = parseFloat(homeTransMom + homeDice)
-  const awayTransitionStr = parseFloat(awayTransMom + awayDice)
+  const homeTransitionStr = formatD2(homeTransMom + homeDice)
+  const awayTransitionStr = formatD2(awayTransMom + awayDice)
 
   // console.log("H:", home.initials, "| home-transStr: ", "transFactor ", homeTransFactor, " + home.trans ", home.transition, "* mom: ", comp.homeMomentum, "*1.3 = ", homeTransMom, "+dice ", homeDice, " = ", homeTransitionStr)
   // console.log("A:", away.initials, "| away-transStr: ", "transFactor ", awayTransFactor, " + away.trans ", away.transition, "* mom: ", comp.awayMomentum, "*1.3 = ", awayTransMom, "+dice ", awayDice, " = ", awayTransitionStr)
@@ -662,7 +662,9 @@ const prepareRole = (clubs) => {
   return sortedClubs
 }
 
-const formatNum = (num, decimals) => Number(num.toFixed(decimals))
+const formatD0 = (num, decimals = 0) => Number(num.toFixed(decimals))
+const formatD1 = (num, decimals = 1) => Number(num.toFixed(decimals))
+const formatD2 = (num, decimals = 2) => Number(num.toFixed(decimals))
 
 export {
   calcMomentum,
@@ -683,5 +685,7 @@ export {
   shuffleClubs,
   createSchedule,
   prepareRole,
-  formatNum
+  formatD0,
+  formatD1,
+  formatD2,
 }

@@ -42,11 +42,11 @@
         </div>
         <div class="seed-entry" title="Form">
           <label>Fo</label>
-          <label>{{ parseFloat((club.form).toFixed(2)) }}</label>
+          <label>{{ formatD2(club.form) }}</label>
         </div>
         <div class="seed-entry" title="Morale">
           <label>Mr</label>
-          <label>{{ parseFloat((club.morale).toFixed(2)) }}</label>
+          <label>{{ formatD2(club.morale) }}</label>
         </div>
       </div>
 
@@ -98,7 +98,7 @@
               <label>Fb,%</label><label>{{ club.fallbacks }}</label><label>{{ club.fallbacksEff() }}</label>
             </div>
             <div class="perf-entry" title="Attack shots : Attack shots against (percentage from all)">
-              <label>AtSh%</label><label>{{ parseFloat((club.attackShots / (club.attackShots + club.counterShots) * 100).toFixed(1)) }} : {{ parseFloat((club.attackShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100).toFixed(1))}}</label>
+              <label>AtSh%</label><label>{{ formatD1(club.attackShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.attackShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
             </div>
           </div>
 
@@ -154,7 +154,7 @@
               <label>Co,%</label><label>{{ club.counters }}</label><label>{{ club.countersEff() }}</label>
             </div>
             <div class="perf-entry" title="Counter shots : Counter shots against (percentage from all)">
-              <label>CoSh%</label><label>{{ parseFloat((club.counterShots / (club.attackShots + club.counterShots) * 100).toFixed(1)) }} : {{ parseFloat((club.counterShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100).toFixed(1))}}</label>
+              <label>CoSh%</label><label>{{ formatD1(club.counterShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.counterShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
             </div>
           </div>
 
@@ -182,6 +182,8 @@
 </template>
 
 <script>
+import { formatD1, formatD2 } from '../lib/util.js'
+
 export default {
   name: 'DisplayClubs',
   props: {
@@ -194,9 +196,13 @@ export default {
     return {
       sortedClubs: [],
       showPerfAvgDetails: true,
-      showPerfEffDetails: false,
-      showResultDetails: false,
+      showPerfEffDetails: true,
+      showResultDetails: true,
     }
+  },
+  methods: {
+    formatD1, // need to define it here again to be able to use it in template section
+    formatD2
   },
   mounted() {
     this.sortedClubs = [...this.clubs].sort((a, b) => b.seed() - a.seed())

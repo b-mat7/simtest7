@@ -25,45 +25,45 @@
         <div class="possession">
           <div class="entry">
             <label>In, ø</label>
-            <label>{{ parseFloat(homeInitiativeStr) }}|{{ parseFloat((homeInitiativeStrSum / matchTime).toFixed(1)) }}</label>
-            <label>{{ parseFloat(awayInitiativeStr) }}|{{ parseFloat((awayInitiativeStrSum / matchTime).toFixed(1)) }}</label>
+            <label>{{ homeInitiativeStr }}|{{ formatD1(homeInitiativeStrSum / matchTime) }}</label>
+            <label>{{ awayInitiativeStr }}|{{ formatD1(awayInitiativeStrSum / matchTime) }}</label>
           </div>
           <div class="entry">
             <label>At%</label>
-            <label>{{ parseFloat((homeAttacks / matchTime * 100).toFixed(0)) }}</label>
-            <label>{{ parseFloat((awayAttacks / matchTime * 100).toFixed(0)) }}</label>
+            <label>{{ formatD0(homeAttacks / matchTime * 100) }}</label>
+            <label>{{ formatD0(awayAttacks / matchTime * 100) }}</label>
           </div>
           <div class="entry">
             <label>Tr, ø</label>
-            <label>{{ parseFloat(homeTransitionStr) }}|{{ parseFloat((homeTransitionStrSum / (homeCounters + homeFallbacks)).toFixed(1)) }}</label>
-            <label>{{ parseFloat(awayTransitionStr) }}|{{ parseFloat((awayTransitionStrSum / (awayCounters + awayFallbacks)).toFixed(1)) }}</label>
+            <label>{{ homeTransitionStr }}|{{ formatD1(homeTransitionStrSum / (homeCounters + homeFallbacks)) }}</label>
+            <label>{{ awayTransitionStr }}|{{ formatD1(awayTransitionStrSum / (awayCounters + awayFallbacks)) }}</label>
           </div>
           <div class="entry">
             <label>Co%</label>
-            <label>{{ parseFloat((homeCounterShots / homeCounters * 100).toFixed(0)) }}</label>
-            <label>{{ parseFloat((awayCounterShots / awayCounters * 100).toFixed(0)) }}</label>
+            <label>{{ formatD0(homeCounterShots / homeCounters * 100) }}</label>
+            <label>{{ formatD0(awayCounterShots / awayCounters * 100) }}</label>
           </div>
           <div class="entry">
             <label>Fb%</label>
-            <label>{{ parseFloat(((homeFallbacks - awayCounterShots) / homeFallbacks * 100).toFixed(0)) }}</label>
-            <label>{{ parseFloat(((awayFallbacks - homeCounterShots) / awayFallbacks * 100).toFixed(0)) }}</label>
+            <label>{{ formatD0((homeFallbacks - awayCounterShots) / homeFallbacks * 100) }}</label>
+            <label>{{ formatD0((awayFallbacks - homeCounterShots) / awayFallbacks * 100) }}</label>
           </div>
         </div>
         <div class="tweaks">
           <div class="entry">
             <label>Mm</label>
-            <label>{{ parseFloat((homeMomentum).toFixed(2))}}</label>
-            <label>{{ parseFloat((awayMomentum).toFixed(2))}}</label>
+            <label>{{ formatD2(homeMomentum) }}</label>
+            <label>{{ formatD2(awayMomentum) }}</label>
           </div>
           <div class="entry">
             <label>Fo</label>
-            <label>{{ parseFloat((home.form).toFixed(2))}}</label>
-            <label>{{ parseFloat((away.form).toFixed(2))}}</label>
+            <label>{{ formatD2(home.form) }}</label>
+            <label>{{ formatD2(away.form) }}</label>
           </div>
           <div class="entry">
             <label>Mr</label>
-            <label>{{ parseFloat((home.morale).toFixed(2)) }}</label>
-            <label>{{ parseFloat((away.morale).toFixed(2)) }}</label>
+            <label>{{ formatD2(home.morale) }}</label>
+            <label>{{ formatD2(away.morale) }}</label>
           </div>
           <!-- <div class="entry">
             <label>Mod</label>
@@ -73,35 +73,35 @@
         <div class="attack">
           <div class="entry">
             <label>Atø</label>
-            <label>{{ parseFloat((homeAttackStrSum / homeAttacks).toFixed(1)) }}</label>
-            <label>{{ parseFloat((awayAttackStrSum / awayAttacks).toFixed(1)) }}</label>
+            <label>{{ formatD1(homeAttackStrSum / homeAttacks) }}</label>
+            <label>{{ formatD1(awayAttackStrSum / awayAttacks) }}</label>
           </div>
           <div class="entry">
             <label>Shø</label>
-            <label>{{ parseFloat((homeShotStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
-            <label>{{ parseFloat((awayShotStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
+            <label>{{ formatD1(homeShotStrSum / (homeAttackShots + homeCounterShots)) }}</label>
+            <label>{{ formatD1(awayShotStrSum / (awayAttackShots + awayCounterShots)) }}</label>
           </div>
           <div class="entry">
             <label>Sh, %</label>
-            <label>{{ homeAttackShots + homeCounterShots }} | {{ parseFloat((homeGoals / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
-            <label>{{ awayAttackShots + awayCounterShots }} | {{ parseFloat((awayGoals / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
+            <label>{{ homeAttackShots + homeCounterShots }} | {{ formatD0(homeGoals / (homeAttackShots + homeCounterShots) * 100) }}</label>
+            <label>{{ awayAttackShots + awayCounterShots }} | {{ formatD0(awayGoals / (awayAttackShots + awayCounterShots) * 100) }}</label>
           </div>
         </div>
         <div class="defend">
           <div class="entry">
             <label>Deø</label>
-            <label>{{ parseFloat((homeDefendStrSum / homeDefends).toFixed(1)) }}</label>
-            <label>{{ parseFloat((awayDefendStrSum / awayDefends).toFixed(1)) }}</label>
+            <label>{{ formatD1(homeDefendStrSum / homeDefends) }}</label>
+            <label>{{ formatD1(awayDefendStrSum / awayDefends) }}</label>
           </div>
           <div class="entry">
             <label>Saø</label>
-            <label>{{ parseFloat((homeSaveStrSum / (awayAttackShots + awayCounterShots)).toFixed(1)) }}</label>
-            <label>{{ parseFloat((awaySaveStrSum / (homeAttackShots + homeCounterShots)).toFixed(1)) }}</label>
+            <label>{{ formatD1(homeSaveStrSum / (awayAttackShots + awayCounterShots)) }}</label>
+            <label>{{ formatD1(awaySaveStrSum / (homeAttackShots + homeCounterShots)) }}</label>
           </div>
           <div class="entry">
             <label>Sa, %</label>
-            <label>{{ homeSaves }} | {{ parseFloat((homeSaves / (awayAttackShots + awayCounterShots) * 100).toFixed(0)) }}</label>
-            <label>{{ awaySaves }} | {{ parseFloat((awaySaves / (homeAttackShots + homeCounterShots) * 100).toFixed(0)) }}</label>
+            <label>{{ homeSaves }} | {{ formatD0(homeSaves / (awayAttackShots + awayCounterShots) * 100) }}</label>
+            <label>{{ awaySaves }} | {{ formatD0(awaySaves / (homeAttackShots + homeCounterShots) * 100) }}</label>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, calcShotCheck, updateTeam, updatePoints, updateFormData, updateForm, updateMorale } from '../lib/util.js'
+import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, calcShotCheck, updateTeam, updatePoints, updateFormData, updateForm, updateMorale, formatD0, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
   emits: ['matchFinished'],
@@ -195,6 +195,9 @@ export default {
     }
   },
   methods: {
+    formatD0, // need to define it here again to be able to use it in template section
+    formatD1,
+    formatD2,
     startSimulateMatch() {  // xday
     },
     simulateMatch() {
