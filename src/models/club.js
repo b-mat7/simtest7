@@ -38,16 +38,16 @@ export class Club {
 
     this.matchesPlayed = 0
     this.intervalsPlayed = 0
-    this.momentumSum = 0
+    this.momentumStrSum = 0
     this.initiativeStrSum = 0
     this.transitionStrSum = 0
     this.attackStrSum = 0
     this.defendStrSum = 0
     this.shotStrSum = 0
     this.saveStrSum = 0
-    this.formData = []
-    this.formSum = 0
-    this.moraleSum = 0
+    this.formStrData = []
+    this.formStrSum = 0
+    this.moraleStrSum = 0
 
     this.attacks = 0
     this.defends = 0
@@ -99,9 +99,9 @@ export class Club {
   }
 
   // Averages
-  momentumAvg() {
+  momentumStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.momentumSum / this.intervalsPlayed) 
+    ? formatD2(this.momentumStrSum / this.intervalsPlayed) 
     : 0
   }
   initiativeStrAvg() {
@@ -134,14 +134,14 @@ export class Club {
     ? formatD2(this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)) 
     : 0 
   }
-  formAvg() { // ab matchday5 (4 is for displaying)
+  formStrAvg() { // ab matchday5 (4 is for displaying)
     return this.matchesPlayed > 5 
-    ? formatD2(this.formSum / (this.matchesPlayed - 4)) 
+    ? formatD2(this.formStrSum / (this.matchesPlayed - 4)) 
     : 0
   }
-  moraleAvg() {
+  moraleStrAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.moraleSum / this.matchesPlayed) 
+    ? formatD2(this.moraleStrSum / this.matchesPlayed) 
     : 0
   }
   resultsL5Avg() {
@@ -152,32 +152,32 @@ export class Club {
 
   initiativeStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumAvg() * 1.3)) 
+    ? formatD2(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumStrAvg() * 1.3)) 
     : 0
   }
   transitionStrDiceAvg() {
     return this.matchesPlayed > 0  
-    ? formatD2(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumAvg() * 1.3)) 
+    ? formatD2(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumStrAvg() * 1.3)) 
     : 0 
   }
   attackStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.attackStrAvg() - (this.attack * this.moraleAvg() + this.formAvg())) 
+    ? formatD2(this.attackStrAvg() - (this.attack * this.moraleStrAvg() + this.formStrAvg())) 
     : 0
   }
   defendStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.defendStrAvg() - (this.defend * this.moraleAvg() + this.formAvg())) 
+    ? formatD2(this.defendStrAvg() - (this.defend * this.moraleStrAvg() + this.formStrAvg())) 
     : 0
   }
   shotStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.shotStrAvg() - (this.shoot + this.formAvg() / 2)) 
+    ? formatD2(this.shotStrAvg() - (this.shoot + this.formStrAvg() / 2)) 
     : 0
   }
   saveStrDiceAvg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.saveStrAvg() - (this.save + this.formAvg() / 2)) 
+    ? formatD2(this.saveStrAvg() - (this.save + this.formStrAvg() / 2)) 
     : 0
   }
   

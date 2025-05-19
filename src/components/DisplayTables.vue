@@ -65,19 +65,19 @@
         <div class="column interact" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="showPerfDetails">
           <label title="Results (points) last 5 games avg">R5ø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'momentumAvg' }" @click="setSortTopic('momentumAvg')" v-if="showPerfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'momentumStrAvg' }" @click="setSortTopic('momentumStrAvg')" v-if="showPerfDetails">
           <label title="Momentum avg">Mmø</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="showPerfDetails">
           <label title="Form">Fo</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'formAvg' }" @click="setSortTopic('formAvg')" v-if="showPerfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'formStrAvg' }" @click="setSortTopic('formStrAvg')" v-if="showPerfDetails">
           <label title="Form avg">Foø</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="showPerfDetails">
           <label title="Morale">Mr</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'moraleAvg' }" @click="setSortTopic('moraleAvg')" v-if="showPerfDetails">
+        <div class="column interact" :class="{ 'bold': sortTopic === 'moraleStrAvg' }" @click="setSortTopic('moraleStrAvg')" v-if="showPerfDetails">
           <label title="Morale avg">Mrø</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="showPerfDetails">
@@ -231,20 +231,20 @@
           <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ club.resultsL5Avg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'momentumAvg' || focusClub === club.initials}" v-if="showPerfDetails">
-            <label>{{ (club.momentumAvg()) }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+            <label>{{ (club.momentumStrAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ formatD2(club.form) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'formAvg' || focusClub === club.initials}" v-if="showPerfDetails">
-            <label>{{ (club.formAvg()) }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+            <label>{{ (club.formStrAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ formatD2(club.morale) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'moraleAvg' || focusClub === club.initials}" v-if="showPerfDetails">
-            <label>{{ (club.moraleAvg()) }}</label>
+          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+            <label>{{ (club.moraleStrAvg()) }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || focusClub === club.initials}" v-if="showPerfDetails">
             <label>{{ club.shotsEff() }}</label>

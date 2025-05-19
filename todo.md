@@ -1,9 +1,3 @@
-> Rename:
-formSum -> formStrSum + formAvg -> formStrAvg
-moraleSum -> moraleStrSum + moraleAvg -> moraleStrAvg
-momentumSum -> momentumStrSum + momentumAvg -> momentumStrAvg
-
-
 > Einteilung Data-Buckets
 Base / Ability (-> seed) // Role // Sum / PerfEff + PerfAvg // Result (Diff, PerMatch, wins...)
 
@@ -32,16 +26,16 @@ priceMoney
 
 matchesPlayed
 intervalsPlayed
-momentumSum
+momentumStrSum
 initiativeStrSum
 transitionStrSum
 attackStrSum
 defendStrSum
 shotStrSum
 saveStrSum
-formData
-formSum
-moraleSum
+formStrData
+formStrSum
+moraleStrSum
 
 attacks
 defends
@@ -66,15 +60,15 @@ winsOvertime()
 lossesOvertime()
 losses()
 
-momentumAvg()
+momentumStrAvg()
 initiativeStrAvg()
 transitionStrAvg()
 attackStrAvg()
 defendStrAvg()
 shotStrAvg()
 saveStrAvg()
-formAvg()
-moraleAvg()
+formStrAvg()
+moraleStrAvg()
 resultsL5Avg()
 initiativeStrDiceAvg()
 transitionStrDiceAvg()

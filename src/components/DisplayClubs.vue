@@ -52,13 +52,13 @@
 
       <div class="tweak-stats">
         <div class="tweak-entry" title="Momentum avg">
-          <label>Mmø</label><label>{{ club.momentumAvg() }}</label>
+          <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
         </div>
         <div class="tweak-entry" title="Form avg">
-          <label>Foø</label><label>{{ club.formAvg() }}</label>
+          <label>Foø</label><label>{{ club.formStrAvg() }}</label>
         </div>
         <div class="tweak-entry" title="Morale avg">
-          <label>Mrø</label><label>{{ club.moraleAvg() }}</label>
+          <label>Mrø</label><label>{{ club.moraleStrAvg() }}</label>
         </div>
       </div>
 

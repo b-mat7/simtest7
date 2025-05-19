@@ -457,10 +457,10 @@ export default {
               }
             )
 
-            // update formData (based on opponent tableRank)
+            // update formStrData (based on opponent tableRank)
             updateFormData(this, this.home, this.away)
 
-            // update form (based on last 5 formData items)
+            // update form (based on last 5 formStrData items)
             updateForm(this.home)
             updateForm(this.away)
 

@@ -78,8 +78,8 @@ const calcMomentum = (comp, home, away) => {
   }
 
   // write momentum to club
-  home.momentumSum += comp.homeMomentum
-  away.momentumSum += comp.awayMomentum
+  home.momentumStrSum += comp.homeMomentum
+  away.momentumStrSum += comp.awayMomentum
 }
 
 const calcInitiative = (comp, home, away, dice) => {
@@ -265,29 +265,29 @@ const updatePoints = (comp, home, away) => {
   comp.lastIntervalTrailer = trailer
 }
 
-// Update formData (based on opp' matchday rank) for form calc
+// Update formStrData (based on opp' matchday rank) for form calc
 const updateFormData = (comp, home, away) => {
   // determine winner & loser
   const [winner, loser] = comp.homeGoals >= comp.awayGoals
   ? [home, away]
   : [away, home]
 
-  winner.formData.push({
+  winner.formStrData.push({
     'points': comp.matchTime === 60 ? 3 : 2,
     'rank': winner === home ? away.rankMatchday : home.rankMatchday
   })
 
-  loser.formData.push({
+  loser.formStrData.push({
     'points': comp.matchTime === 60 ? 0 : 1, 
     'rank': loser === home ? away.rankMatchday : home.rankMatchday
   })
 }
 
-// Calc form (based on formData), done only after matchday 5
+// Calc form (based on formStrData), done only after matchday 5
 const updateForm = (team) => {
   if (team.matchesPlayed < 5) return
 
-  const last5Games = team.formData.slice(-5).reverse()
+  const last5Games = team.formStrData.slice(-5).reverse()
 
   let sum = 0
   let form = 0
@@ -301,14 +301,14 @@ const updateForm = (team) => {
   form = form < 0.3 ? 0.3 : form
 
   team.form = form
-  team.formSum += form
+  team.formStrSum += form
 }
 
 // Update Morale based on results/opponents and other factors
 const updateMorale = (comp, home, away) => {
-  // Update themoraleSum with the morale that was active at this (current) match (-> before match-end's morale re-calculation below)
-  home.moraleSum += home.morale
-  away.moraleSum += away.morale
+  // Update the moraleStrSum with the morale that was active at this (current) match (-> before match-end's morale re-calculation below)
+  home.moraleStrSum += home.morale
+  away.moraleStrSum += away.morale
 
   // determine winner & loser
   const [winner, loser] = comp.homeGoals >= comp.awayGoals
@@ -325,8 +325,8 @@ const updateMorale = (comp, home, away) => {
   let winnerBonus = 0
   let loserPenalty = 0
 
-  // console.log("START: winner:", winner.morale, winner.moraleSum, winner.moraleAvg(), winner.initials,)
-  // console.log("START: loser:", loser.morale, loser.moraleSum, loser.moraleAvg(), loser.initials,)
+  // console.log("START: winner:", winner.morale, winner.moraleStrSum, winner.moraleStrAvg(), winner.initials,)
+  // console.log("START: loser:", loser.morale, loser.moraleStrSum, loser.moraleStrAvg(), loser.initials,)
 
   // Role Expectaion Effect (always):
   // Title- & RelCandidates win/loss against bottom/top teams
@@ -450,8 +450,8 @@ const updateMorale = (comp, home, away) => {
     // console.log("moserMorale-TOTAL LIMIT MIN:", loser.morale, " -> ", totalLimits[loser.role].min)
   }
 
-  // console.log("END: new winner.morale", winner.morale, "moraleSum/moraleAvg", winner.moraleSum, winner.moraleAvg(), winner.initials,)
-  // console.log("END: new loser.morale", loser.morale, "moraleSum/moraleAvg", loser.moraleSum, loser.moraleAvg(), loser.initials,)
+  // console.log("END: new winner.morale", winner.morale, "moraleStrSum/moraleStrAvg", winner.moraleStrSum, winner.moraleStrAvg(), winner.initials,)
+  // console.log("END: new loser.morale", loser.morale, "moraleStrSum/moraleStrAvg", loser.moraleStrSum, loser.moraleStrAvg(), loser.initials,)
 }
 
 // Table generator (sorting: seed, then topic/default + add club.entryName)
