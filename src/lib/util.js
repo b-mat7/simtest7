@@ -34,6 +34,170 @@ const simulateGameSpeed = {
     // brauch das? oder macht einfach "simulate until Date.now()"?
 }
 
+// Shuffle Clubs for schedule generator
+const shuffleClubs = (clubs) => {
+  // Create shallow copy
+  const shuffledClubs = [...clubs]
+
+  // Apply Fisher-Yates shuffle algorithm
+  for (let i = shuffledClubs.length - 1; i > 0; i--) {
+    // Generate random index between 0 and i (inclusive)
+    const j = Math.floor(Math.random() * (i + 1))
+    // Swap elements at indices i and j
+    const temp = shuffledClubs[i]
+    shuffledClubs[i] = shuffledClubs[j]
+    shuffledClubs[j] = temp
+  }
+  return shuffledClubs
+}
+
+// Schedule generator
+const createSchedule = (clubs) => {
+  const numClubs = clubs.length
+  const numMatchdays = (numClubs - 1) * 2 // Two halves
+
+  const shuffledClubs = shuffleClubs(clubs)
+
+  // Initialize schedule object
+  // const schedule = Array.from({ length: numMatchdays }, () => [])   // as Array
+  const schedule = {
+    season: 2023,
+    league: 'DEL2',
+    matchdayList: Array.from({ length: numMatchdays }, () => [])
+  }
+
+  // Generate first half of the schedule using modified round-robin algorithm
+  for (let day = 0; day < 4 * (numClubs - 1); day++) {
+  // for (let day = 0; day < numClubs - 1; day++) {
+    schedule.matchdayList[day] = {
+      dayNr: day + 1,
+      date: 'Date{}',
+      matches: [],
+    }
+    for (let i = 0; i < numClubs / 2; i++) {
+      const homeClub = shuffledClubs[i]
+      const awayClub = shuffledClubs[numClubs - 1 - i]
+      if (day % 2 === 1) {
+        schedule.matchdayList[day].matches.push({ 
+          'dayNr': day + 1,
+          'date': 'Date{}', 
+          'matchNr': i + 1, 
+          'home': awayClub, 
+          'away': homeClub, 
+          'matchReport': {} 
+        })      
+      } else {
+        schedule.matchdayList[day].matches.push({ 
+          'dayNr': day + 1,
+          'date': 'Date{}', 
+          'matchNr': i + 1, 
+          'home': homeClub, 
+          'away': awayClub, 
+          'matchReport': {} 
+        })
+      }
+    }
+
+    // Rotate the clubs
+    const temp = shuffledClubs[1]
+    for (let i = 1; i < numClubs - 1; i++) {
+      shuffledClubs[i] = shuffledClubs[i + 1]
+    }
+    shuffledClubs[numClubs - 1] = temp
+  }
+
+  // Generate second half of the schedule by switching home/away
+  for (let day = 0; day < numClubs - 1; day++) {
+    const secondHalfDay = day + numClubs - 1
+    schedule.matchdayList[secondHalfDay] = {
+      dayNr: secondHalfDay + 1,
+      date: 'Date{}',
+      matches: [],
+    }
+    for (let match of schedule.matchdayList[day].matches) {
+      schedule.matchdayList[secondHalfDay].matches.push({ 
+        'dayNr': secondHalfDay + 1,
+        'date': 'Date{}', 
+        'matchNr': match.match, 
+        'home': match.away, 
+        'away': match.home, 
+        'matchReport': {} 
+      })
+    }
+  }
+  return schedule
+}
+
+// Assign each teams' role & roleTarget for the saison (based on seed strength)
+const prepareRole = (clubs) => {
+  const roles = {
+    1: 'TitleCandidate',
+    2: 'TitleCandidate',
+    3: 'TitleCandidate',
+    4: 'Contender',
+    5: 'Contender',
+    6: 'UpperMidfielder',
+    7: 'UpperMidfielder',
+    8: 'LowerMidfielder',
+    9: 'LowerMidfielder',
+    10: 'Survivalist',
+    11: 'Survivalist',
+    12: 'RelCandidate',
+    13: 'RelCandidate',
+    14: 'RelCandidate',
+
+    // 1: 'TitleCandidate',
+    // 2: 'TitleCandidate',
+    // 3: 'TitleCandidate',
+    // 4: 'TitleCandidate',
+    // 5: 'TitleCandidate',
+    // 6: 'TitleCandidate',
+    // 7: 'Contender',
+    // 8: 'Contender',
+    // 9: 'Contender',
+    // 10: 'Contender',
+    // 11: 'UpperMidfielder',
+    // 12: 'UpperMidfielder',
+    // 13: 'UpperMidfielder',
+    // 14: 'UpperMidfielder',
+    // 15: 'LowerMidfielder',
+    // 16: 'LowerMidfielder',
+    // 17: 'LowerMidfielder',
+    // 18: 'LowerMidfielder',
+    // 19: 'Survivalist',
+    // 20: 'Survivalist',
+    // 21: 'Survivalist',
+    // 22: 'Survivalist',
+    // 23: 'RelCandidate',
+    // 24: 'RelCandidate',
+    // 25: 'RelCandidate',
+    // 26: 'RelCandidate',
+    // 27: 'RelCandidate',
+    // 28: 'RelCandidate',
+  }
+
+  //  +++ ++ + 0 - -- --- / * 0.05, 0.1, 0.2, oder pro Pos Abweichung +- 0.01 bis maxLimit | nach Spieltag 8
+  // rTarget: NACH 8, MODIFIER
+
+  const roleTargets = {
+    'TitleCandidate': {'name': 'Title',    'rank': [1, 2]},
+    'Contender':      {'name': 'Playoffs', 'rank': [3, 4, 5, 6]},
+    'UpperMidfielder': {'name': 'Playoffs', 'rank': [5, 6, 7, 8]},
+    'LowerMidfielder': {'name': 'Comfort',  'rank': [7, 8, 9, 10]},
+    'Survivalist':    {'name': 'Comfort',  'rank': [9, 10, 11, 12]},
+    'RelCandidate':   {'name': 'Survival', 'rank': [11, 12, 13]},
+  }
+
+  const sortedClubs = updateRank(clubs, 'rankSeed')
+
+  sortedClubs.forEach((entry, index) => {
+    entry.role = roles[index + 1]
+    entry.roleTarget = roleTargets[entry.role]
+  })
+
+  return sortedClubs
+}
+
 const calcMomentum = (comp, home, away) => {
   // calc home momentum: better curve (=^ home bonus) (increase faster, decrease slower)
   const x = comp.homeMomentum
@@ -498,175 +662,15 @@ const updateRoleDiff = (clubs) => {
   })
 }
 
-// Shuffle Clubs for schedule generator
-const shuffleClubs = (clubs) => {
-  // Create shallow copy
-  const shuffledClubs = [...clubs]
-
-  // Apply Fisher-Yates shuffle algorithm
-  for (let i = shuffledClubs.length - 1; i > 0; i--) {
-    // Generate random index between 0 and i (inclusive)
-    const j = Math.floor(Math.random() * (i + 1))
-    // Swap elements at indices i and j
-    const temp = shuffledClubs[i]
-    shuffledClubs[i] = shuffledClubs[j]
-    shuffledClubs[j] = temp
-  }
-  return shuffledClubs
-}
-
-// Schedule generator
-const createSchedule = (clubs) => {
-  const numClubs = clubs.length
-  const numMatchdays = (numClubs - 1) * 2 // Two halves
-
-  const shuffledClubs = shuffleClubs(clubs)
-
-  // Initialize schedule object
-  // const schedule = Array.from({ length: numMatchdays }, () => [])   // as Array
-  const schedule = {
-    season: 2023,
-    league: 'DEL2',
-    matchdayList: Array.from({ length: numMatchdays }, () => [])
-  }
-
-  // Generate first half of the schedule using modified round-robin algorithm
-  for (let day = 0; day < 4 * (numClubs - 1); day++) {
-  // for (let day = 0; day < numClubs - 1; day++) {
-    schedule.matchdayList[day] = {
-      dayNr: day + 1,
-      date: 'Date{}',
-      matches: [],
-    }
-    for (let i = 0; i < numClubs / 2; i++) {
-      const homeClub = shuffledClubs[i]
-      const awayClub = shuffledClubs[numClubs - 1 - i]
-      if (day % 2 === 1) {
-        schedule.matchdayList[day].matches.push({ 
-          'dayNr': day + 1,
-          'date': 'Date{}', 
-          'matchNr': i + 1, 
-          'home': awayClub, 
-          'away': homeClub, 
-          'matchReport': {} 
-        })      
-      } else {
-        schedule.matchdayList[day].matches.push({ 
-          'dayNr': day + 1,
-          'date': 'Date{}', 
-          'matchNr': i + 1, 
-          'home': homeClub, 
-          'away': awayClub, 
-          'matchReport': {} 
-        })
-      }
-    }
-
-    // Rotate the clubs
-    const temp = shuffledClubs[1]
-    for (let i = 1; i < numClubs - 1; i++) {
-      shuffledClubs[i] = shuffledClubs[i + 1]
-    }
-    shuffledClubs[numClubs - 1] = temp
-  }
-
-  // Generate second half of the schedule by switching home/away
-  for (let day = 0; day < numClubs - 1; day++) {
-    const secondHalfDay = day + numClubs - 1
-    schedule.matchdayList[secondHalfDay] = {
-      dayNr: secondHalfDay + 1,
-      date: 'Date{}',
-      matches: [],
-    }
-    for (let match of schedule.matchdayList[day].matches) {
-      schedule.matchdayList[secondHalfDay].matches.push({ 
-        'dayNr': secondHalfDay + 1,
-        'date': 'Date{}', 
-        'matchNr': match.match, 
-        'home': match.away, 
-        'away': match.home, 
-        'matchReport': {} 
-      })
-    }
-  }
-  return schedule
-}
-
-// Assign each teams' role & roleTarget for the saison (based on seed strength)
-const prepareRole = (clubs) => {
-  const roles = {
-    1: 'TitleCandidate',
-    2: 'TitleCandidate',
-    3: 'TitleCandidate',
-    4: 'Contender',
-    5: 'Contender',
-    6: 'UpperMidfielder',
-    7: 'UpperMidfielder',
-    8: 'LowerMidfielder',
-    9: 'LowerMidfielder',
-    10: 'Survivalist',
-    11: 'Survivalist',
-    12: 'RelCandidate',
-    13: 'RelCandidate',
-    14: 'RelCandidate',
-
-    // 1: 'TitleCandidate',
-    // 2: 'TitleCandidate',
-    // 3: 'TitleCandidate',
-    // 4: 'TitleCandidate',
-    // 5: 'TitleCandidate',
-    // 6: 'TitleCandidate',
-    // 7: 'Contender',
-    // 8: 'Contender',
-    // 9: 'Contender',
-    // 10: 'Contender',
-    // 11: 'UpperMidfielder',
-    // 12: 'UpperMidfielder',
-    // 13: 'UpperMidfielder',
-    // 14: 'UpperMidfielder',
-    // 15: 'LowerMidfielder',
-    // 16: 'LowerMidfielder',
-    // 17: 'LowerMidfielder',
-    // 18: 'LowerMidfielder',
-    // 19: 'Survivalist',
-    // 20: 'Survivalist',
-    // 21: 'Survivalist',
-    // 22: 'Survivalist',
-    // 23: 'RelCandidate',
-    // 24: 'RelCandidate',
-    // 25: 'RelCandidate',
-    // 26: 'RelCandidate',
-    // 27: 'RelCandidate',
-    // 28: 'RelCandidate',
-  }
-
-  //  +++ ++ + 0 - -- --- / * 0.05, 0.1, 0.2, oder pro Pos Abweichung +- 0.01 bis maxLimit | nach Spieltag 8
-  // rTarget: NACH 8, MODIFIER
-
-  const roleTargets = {
-    'TitleCandidate': {'name': 'Title',    'rank': [1, 2]},
-    'Contender':      {'name': 'Playoffs', 'rank': [3, 4, 5, 6]},
-    'UpperMidfielder': {'name': 'Playoffs', 'rank': [5, 6, 7, 8]},
-    'LowerMidfielder': {'name': 'Comfort',  'rank': [7, 8, 9, 10]},
-    'Survivalist':    {'name': 'Comfort',  'rank': [9, 10, 11, 12]},
-    'RelCandidate':   {'name': 'Survival', 'rank': [11, 12, 13]},
-  }
-
-  const sortedClubs = updateRank(clubs, 'rankSeed')
-
-  sortedClubs.forEach((entry, index) => {
-    entry.role = roles[index + 1]
-    entry.roleTarget = roleTargets[entry.role]
-  })
-
-  return sortedClubs
-}
-
 const formatD0 = (num, decimals = 0) => Number(num.toFixed(decimals))
 const formatD1 = (num, decimals = 1) => Number(num.toFixed(decimals))
 const formatD2 = (num, decimals = 2) => Number(num.toFixed(decimals))
 
 export {
+  shuffleClubs,
+  createSchedule,
+  prepareRole,
+
   calcMomentum,
   calcInitiative,
   calcTransition,
@@ -675,6 +679,7 @@ export {
   calcShotStr,
   calcSaveStr,
   calcShotCheck,
+
   updateTeam,
   updatePoints,
   updateFormData,
@@ -682,9 +687,8 @@ export {
   updateMorale,
   updateRank,
   updateRoleDiff,
-  shuffleClubs,
-  createSchedule,
-  prepareRole,
+
+
   formatD0,
   formatD1,
   formatD2,

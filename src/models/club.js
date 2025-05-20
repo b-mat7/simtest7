@@ -2,7 +2,7 @@ import { formatD1, formatD2 } from "../lib/util.js"
 
 export class Club {
   constructor(seedData) {
-    // Assign seed data properties
+    // ----- BASE -----
     /** @type {string} */
     this.uuid = seedData.uuid
     /** @type {string} */
@@ -11,6 +11,9 @@ export class Club {
     this.initials = seedData.initials
     /** @type {string} */
     this.colorPrim = seedData.colorPrim
+
+
+    // ----- ABILITY -----
     /** @type {number} */
     this.initiative = seedData.initiative
     /** @type {number} */
@@ -23,12 +26,17 @@ export class Club {
     this.defend = seedData.defend
     /** @type {number} */
     this.save = seedData.save
+
+
+    // ----- TWEAK -----
+    // MOMENTUM
     /** @type {number} */
     this.form = seedData.form
     /** @type {number} */
     this.morale = seedData.morale
 
-    // Initialize other properties
+
+    // ----- ROLE -----
     this.role = ''
     this.roleTarget = {}
     this.roleDiff = 0
@@ -36,15 +44,17 @@ export class Club {
     this.rankMatchday = 0
     this.priceMoney = 0
 
+
+    // ----- SUM -----
     this.matchesPlayed = 0
     this.intervalsPlayed = 0
-    this.momentumStrSum = 0
     this.initiativeStrSum = 0
     this.transitionStrSum = 0
     this.attackStrSum = 0
     this.defendStrSum = 0
     this.shotStrSum = 0
     this.saveStrSum = 0
+    this.momentumStrSum = 0
     this.formStrData = []
     this.formStrSum = 0
     this.moraleStrSum = 0
@@ -63,13 +73,15 @@ export class Club {
     this.points = 0
     this.results = []
   }
-  
-  // Initialize methods
-  // General and Diffs
+
+
+  // --- ROLE --- (methods die auch ROLE sind)
   seed() {
     return formatD2(this.initiative + this.transition + this.attack + this.shoot + this.defend + this.save)
   }
 
+
+  // --- SUM --- (methods die auch SUM sind)
   initiativesDiff() {
     return this.attacks - this.defends
   }
@@ -82,26 +94,11 @@ export class Club {
     return this.goals - this.goalsAgainst
   }
 
-  wins() {
-    return [...this.results].filter(x => x === 3).length
-  }
 
-  winsOvertime() {
-    return [...this.results].filter(x => x === 2).length
-  }
-
-  lossesOvertime() {
-    return [...this.results].filter(x => x === 1).length
-  }
-
-  losses() {
-    return [...this.results].filter(x => x === 0).length
-  }
-
-  // Averages
-  momentumStrAvg() {
+  // --- PERF AVG ---
+  resultsL5Avg() {
     return this.matchesPlayed > 0 
-    ? formatD2(this.momentumStrSum / this.intervalsPlayed) 
+    ? formatD2((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5))) 
     : 0
   }
   initiativeStrAvg() {
@@ -134,6 +131,11 @@ export class Club {
     ? formatD2(this.saveStrSum / (this.attackShotsAgainst + this.counterShotsAgainst)) 
     : 0 
   }
+  momentumStrAvg() {
+    return this.matchesPlayed > 0 
+    ? formatD2(this.momentumStrSum / this.intervalsPlayed) 
+    : 0
+  }
   formStrAvg() { // ab matchday5 (4 is for displaying)
     return this.matchesPlayed > 5 
     ? formatD2(this.formStrSum / (this.matchesPlayed - 4)) 
@@ -144,12 +146,6 @@ export class Club {
     ? formatD2(this.moraleStrSum / this.matchesPlayed) 
     : 0
   }
-  resultsL5Avg() {
-    return this.matchesPlayed > 0 
-    ? formatD2((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5))) 
-    : 0
-  }
-
   initiativeStrDiceAvg() {
     return this.matchesPlayed > 0 
     ? formatD2(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumStrAvg() * 1.3)) 
@@ -180,8 +176,9 @@ export class Club {
     ? formatD2(this.saveStrAvg() - (this.save + this.formStrAvg() / 2)) 
     : 0
   }
-  
-  // Efficiencies ( % )
+
+
+  // --- PERF EFF ( % ) ---
   initiativesEff() {
     return this.matchesPlayed > 0 
     ? formatD1(this.attacks / this.intervalsPlayed * 100) 
@@ -228,7 +225,8 @@ export class Club {
     : 0
   }
 
-  // Per Match
+
+  // --- RESULT / OTHER ---
   goalsPerMatch() {
     return this.matchesPlayed > 0 
     ? formatD1(this.goals / this.matchesPlayed) 
@@ -248,5 +246,21 @@ export class Club {
     return this.matchesPlayed > 0 
     ? formatD1(this.points / this.matchesPlayed) 
     : 0
+  }
+
+  wins() {
+    return [...this.results].filter(x => x === 3).length
+  }
+
+  winsOvertime() {
+    return [...this.results].filter(x => x === 2).length
+  }
+
+  lossesOvertime() {
+    return [...this.results].filter(x => x === 1).length
+  }
+
+  losses() {
+    return [...this.results].filter(x => x === 0).length
   }
 }

@@ -1,55 +1,60 @@
 <template>
   <div class="display-clubs-wrapper">
     <div v-for="(club, index) in sortedClubs" :key=index class="club">
-      <!-- OVERVIEW SECTION -->
-      <div class="overview">
+      <!-- BASE & ROLE -->
+      <div class="role">
         <label title="Inititals">{{ club.initials }}</label>
         <label title="Seed strength (rank)">{{ club.seed() }} ({{ club.rankSeed }}.)</label>
         <label title="Role (rank matchday, role difference)">{{ club.role }} ({{ club.rankMatchday }}. {{ club.roleDiff }})</label>
       </div>
 
-      <div class="results">
+
+      <!-- PERF AVG & RESULT-->
+      <div class="result">
         <label title="Results (points) last 5 games (avg)">Re {{ club.results.slice(-5) }} ({{ club.resultsL5Avg() }})</label>
         <label title="W - OTW - OTL - L">{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{ club.losses() }}</label>
       </div>
 
 
-      <!-- SEED SECTION -->
-      <div class="seed-stats">
-        <div class="seed-entry" title="Initiative">
+      <!-- ABILITY & TWEAK -->
+      <div class="ability-stats">
+        <div class="ability-entry" title="Initiative">
           <label>In</label>
           <label>{{ club.initiative }}</label>
         </div>
-        <div class="seed-entry" title="Transition">
+        <div class="ability-entry" title="Transition">
           <label>Tr</label>
           <label>{{ club.transition }}</label>
         </div>
-        <div class="seed-entry" title="Attack">
+        <div class="ability-entry" title="Attack">
           <label>At</label>
           <label>{{ club.attack }}</label>
         </div>
-        <div class="seed-entry" title="Shoot">
+        <div class="ability-entry" title="Shoot">
           <label>Sh</label>
           <label>{{ club.shoot }}</label>
         </div>
-        <div class="seed-entry" title="Defend">
+        <div class="ability-entry" title="Defend">
           <label>De</label>
           <label>{{ club.defend }}</label>
         </div>
-        <div class="seed-entry" title="Save">
+        <div class="ability-entry" title="Save">
           <label>Sa</label>
           <label>{{ club.save }}</label>
         </div>
-        <div class="seed-entry" title="Form">
+        <!-- MOMENTUM -->
+        <div class="ability-entry" title="Form">
           <label>Fo</label>
           <label>{{ formatD2(club.form) }}</label>
         </div>
-        <div class="seed-entry" title="Morale">
+        <div class="ability-entry" title="Morale">
           <label>Mr</label>
           <label>{{ formatD2(club.morale) }}</label>
         </div>
       </div>
 
+
+      <!-- PERF AVG -->
       <div class="tweak-stats">
         <div class="tweak-entry" title="Momentum avg">
           <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
@@ -63,9 +68,10 @@
       </div>
 
 
-      <!-- PERFORMANCE SECTION -->
+      <!-- PERF AVG & EFF & RESULT -->
       <div class="perf-stats">
         <div class="column">
+          <!-- PERF AVG -->
           <div v-if="showPerfAvgDetails">
             <div class="perf-entry" title="Initiative strength avg">
               <label>Inø</label><label>{{ club.initiativeStrAvg() }}</label>
@@ -87,6 +93,7 @@
             </div>
           </div>
 
+          <!-- PERF EFF -->
           <div v-if="showPerfEffDetails">
             <div class="perf-entry" title="Initiatives difference, efficiency">
               <label>In,%</label><label>{{ club.initiativesDiff() }}</label><label>{{ club.initiativesEff() }}</label>
@@ -102,6 +109,7 @@
             </div>
           </div>
 
+          <!-- RESULT -->
           <div v-if="showResultDetails">
             <div class="perf-entry" title="Shots : Shots against">
               <label>Sh</label><label>{{ club.attackShots + club.counterShots }} : {{ club.attackShotsAgainst + club.counterShotsAgainst }}</label>
@@ -121,7 +129,9 @@
           </div>
         </div>
 
+
         <div class="column">
+          <!-- PERF AVG -->
           <div v-if="showPerfAvgDetails">
             <div class="perf-entry" title="Initative strength dice avg">
               <label>InDø</label><label>{{ club.initiativeStrDiceAvg() }}</label>
@@ -143,6 +153,7 @@
             </div>
           </div>
 
+          <!-- PERF EFF -->
           <div v-if="showPerfEffDetails">
             <div class="perf-entry" title="Transitions difference, efficiency">
               <label>Tr,%</label><label>{{ club.transitionsDiff() }}</label><label>{{ club.transitionsEff() }}</label>
@@ -158,6 +169,7 @@
             </div>
           </div>
 
+          <!-- RESULT -->
           <div v-if="showResultDetails">
             <div class="perf-entry" title="Shots efficiency">
               <label>Sh%</label><label>{{ club.shotsEff() }}</label>
@@ -225,13 +237,13 @@ export default {
     border-radius: 4px;
     background-color: #35495e;
 
-    .overview {
+    .role {
       display: flex;
       justify-content: space-between;
       font-weight: 700;
     }
     
-    .results {
+    .result {
       display: flex;
       justify-content: space-between;
       font-weight: 700;
@@ -240,12 +252,12 @@ export default {
       margin-bottom: 4px;
     }
     
-    .seed-stats {
+    .ability-stats {
       display: flex;
       column-gap: 0.25rem;
       text-align: center;
       
-      .seed-entry {
+      .ability-entry {
         display: flex;
         flex-direction: column;
         width: 2rem;
