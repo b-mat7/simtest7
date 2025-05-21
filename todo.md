@@ -10,7 +10,6 @@ Border: solid, Sections: dashed
         AllClubsList -> focusClub []
 
 
-> Tables: focusClub auch als [] mit ausgewähltes push -> kann n Aus-/Abwählen
 > Tables: + Rank diff zu last matchday
 
 

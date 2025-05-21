@@ -180,169 +180,169 @@
       <div class="body">
         <!-- Default columns -->
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
-          <div class="column sticky-left-0" :class="{ 'bold': focusClub === club.initials}">
+          <div class="column sticky-left-0" :class="{ 'bold': focusClubs.includes(club.initials) }">
             <label>{{ club.rankLive }}</label>
           </div>
-          <div class="column sticky-left-1 interact" :class="{ 'bold': focusClub === club.initials}" @click="setFocusClub(club)">
+          <div class="column sticky-left-1 interact" :class="{ 'bold': focusClubs.includes(club.initials) }" @click="addFocusClub(club)">
             <label>{{ club.initials }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || focusClub === club.initials}">
+          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || focusClubs.includes(club.initials) }">
             <label>{{ club.matchesPlayed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goals' || focusClub === club.initials}">
+          <div class="column" :class="{ 'bold': sortTopic === 'goals' || focusClubs.includes(club.initials) }">
             <label>{{ club.goals }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || focusClub === club.initials}">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || focusClubs.includes(club.initials) }">
             <label>{{ club.goalsAgainst }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || focusClub === club.initials}">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || focusClubs.includes(club.initials) }">
             <label>{{ club.goalsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || focusClub === club.initials}">
+          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || focusClubs.includes(club.initials) }">
             <label>{{ club.points }}</label>
           </div>
 
 
           <!-- RESULT -->
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.goalsAgainstPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.pointsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'wins' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'wins' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.wins() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.winsOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.lossesOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClub === club.initials}" v-if="showResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClubs.includes(club.initials) }" v-if="showResultDetails">
             <label>{{ club.losses() }}</label>
           </div>
 
 
           <!-- PERF AVG + EFF -->
-          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.resultsL5Avg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ (club.momentumStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ (club.formStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ (club.moraleStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.shotsEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'savesEff' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'savesEff' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.savesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.shotsSavesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.initiativesDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.transitionsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.initiativeStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.initiativeStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.transitionStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.attackStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.attackStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.shotStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.shotStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.defendStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.defendStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.saveStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' || focusClub === club.initials}" v-if="showPerfDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ club.saveStrDiceAvg() }}</label>
           </div>
 
 
           <!-- ROLE -->
-          <div class="column" :class="{ 'bold': sortTopic === 'seed' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'seed' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.seed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.rankSeed }}</label>
           </div>
-          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClub === club.initials}" v-if="showRoleDetails">
+          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.rankMatchday }}</label>
           </div> -->
-          <div class="column" :class="{ 'bold': focusClub === club.initials} "v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': focusClubs.includes(club.initials) } "v-if="showRoleDetails">
             <label>{{ club.role.slice(0, 5) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
           </div>
 
 
           <!-- ABILITY -->
-          <div class="column" :class="{ 'bold': sortTopic === 'initiative' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiative' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.initiative }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transition' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transition' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.transition }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attack' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attack' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.attack }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.shoot }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defend' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defend' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.defend }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'save' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'save' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ club.save }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ formatD2(club.momentum) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ formatD2(club.form) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClub === club.initials}" v-if="showRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClubs.includes(club.initials) }" v-if="showRoleDetails">
             <label>{{ formatD2(club.morale) }}</label>
           </div>
         </li>
@@ -369,7 +369,7 @@ export default {
       showRoleDetails: false,
       liveTable: [],
       sortTopic: '',
-      focusClub: 'FRB'
+      focusClubs: ['FRB']
     }
   },
   methods: {
@@ -386,8 +386,8 @@ export default {
       this.sortTopic = topic
       this.createLiveTable([...this.clubs])
     },
-    setFocusClub(club) {
-      this.focusClub != club.initials ? this.focusClub = club.initials : this.focusClub = ''
+    addFocusClub(club) {
+      this.focusClubs.includes(club.initials) ? this.focusClubs = this.focusClubs.filter(item => item !== club.initials) : this.focusClubs.push(club.initials)
     }
   },
   watch: {
