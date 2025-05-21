@@ -42,7 +42,10 @@
           <label>Sa</label>
           <label>{{ club.save }}</label>
         </div>
-        <!-- MOMENTUM -->
+        <div class="ability-entry" title="Momentum">
+          <label>Mm</label>
+          <label>{{ formatD2(club.momentum) }}</label>
+        </div>
         <div class="ability-entry" title="Form">
           <label>Fo</label>
           <label>{{ formatD2(club.form) }}</label>
@@ -55,7 +58,7 @@
 
 
       <!-- PERF AVG -->
-      <div class="tweak-stats">
+      <div class="tweak-stats" v-if="showPerfAvgDetails">
         <div class="tweak-entry" title="Momentum avg">
           <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
         </div>
@@ -95,14 +98,23 @@
 
           <!-- PERF EFF -->
           <div v-if="showPerfEffDetails">
-            <div class="perf-entry" title="Initiatives difference, efficiency">
-              <label>In,%</label><label>{{ club.initiativesDiff() }}</label><label>{{ club.initiativesEff() }}</label>
+            <div class="perf-entry" title="Initiatives difference">
+              <label>InDif</label><label>{{ club.initiativesDiff() }}</label>
             </div>
-            <div class="perf-entry" title="Attacks, efficiency">
-              <label>At,%</label><label>{{ club.attacks }}</label><label>{{ club.attacksEff() }}</label>
+            <div class="perf-entry" title="Initiatives efficiency">
+              <label>In%</label><label>{{ club.initiativesEff() }}</label>
             </div>
-            <div class="perf-entry" title="Fallbacks, efficiency">
-              <label>Fb,%</label><label>{{ club.fallbacks }}</label><label>{{ club.fallbacksEff() }}</label>
+            <div class="perf-entry" title="Attacks">
+              <label>At</label><label>{{ club.attacks }}</label>
+            </div>
+            <div class="perf-entry" title="Attacks efficiency">
+              <label>At%</label><label>{{ club.attacksEff() }}</label>
+            </div>
+            <div class="perf-entry" title="Fallbacks">
+              <label>Fb</label><label>{{ club.fallbacks }}</label>
+            </div>
+            <div class="perf-entry" title="Fallbacks efficiency">
+              <label>Fb%</label><label>{{ club.fallbacksEff() }}</label>
             </div>
             <div class="perf-entry" title="Attack shots : Attack shots against (percentage from all)">
               <label>AtSh%</label><label>{{ formatD1(club.attackShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.attackShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
@@ -110,7 +122,7 @@
           </div>
 
           <!-- RESULT -->
-          <div v-if="showResultDetails">
+          <div>
             <div class="perf-entry" title="Shots : Shots against">
               <label>Sh</label><label>{{ club.attackShots + club.counterShots }} : {{ club.attackShotsAgainst + club.counterShotsAgainst }}</label>
             </div>
@@ -155,14 +167,23 @@
 
           <!-- PERF EFF -->
           <div v-if="showPerfEffDetails">
-            <div class="perf-entry" title="Transitions difference, efficiency">
-              <label>Tr,%</label><label>{{ club.transitionsDiff() }}</label><label>{{ club.transitionsEff() }}</label>
+            <div class="perf-entry" title="Transitions difference">
+              <label>TrDif</label><label>{{ club.transitionsDiff() }}</label>
             </div>
-            <div class="perf-entry" title="Defends, efficiency">
-              <label>De,%</label><label>{{ club.defends }}</label><label>{{ club.defendsEff() }}</label>
+            <div class="perf-entry" title="Transitions efficiency">
+              <label>Tr%</label><label>{{ club.transitionsEff() }}</label>
             </div>
-            <div class="perf-entry" title="Counters, efficiency">
-              <label>Co,%</label><label>{{ club.counters }}</label><label>{{ club.countersEff() }}</label>
+            <div class="perf-entry" title="Defends">
+              <label>De</label><label>{{ club.defends }}</label>
+            </div>
+            <div class="perf-entry" title="Defends efficiency">
+              <label>De%</label><label>{{ club.defendsEff() }}</label>
+            </div>
+            <div class="perf-entry" title="Counters">
+              <label>Co</label><label>{{ club.counters }}</label>
+            </div>
+            <div class="perf-entry" title="Counters efficiency">
+              <label>Co%</label><label>{{ club.countersEff() }}</label>
             </div>
             <div class="perf-entry" title="Counter shots : Counter shots against (percentage from all)">
               <label>CoSh%</label><label>{{ formatD1(club.counterShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.counterShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
@@ -170,7 +191,7 @@
           </div>
 
           <!-- RESULT -->
-          <div v-if="showResultDetails">
+          <div>
             <div class="perf-entry" title="Shots efficiency">
               <label>Sh%</label><label>{{ club.shotsEff() }}</label>
             </div>
@@ -209,7 +230,6 @@ export default {
       sortedClubs: [],
       showPerfAvgDetails: true,
       showPerfEffDetails: true,
-      showResultDetails: true,
     }
   },
   methods: {
@@ -229,7 +249,7 @@ export default {
   gap: 8px;
 
   .club {
-    width: 264px;
+    max-width: 338px;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -256,6 +276,9 @@ export default {
       display: flex;
       column-gap: 0.25rem;
       text-align: center;
+      padding-bottom: 4px;
+      border-bottom: 1px dashed #f0275e;
+      margin-bottom: 4px;
       
       .ability-entry {
         display: flex;
@@ -263,18 +286,16 @@ export default {
         width: 2rem;
       }
     }
-    
+
     .tweak-stats {
       display: flex;
       justify-content: space-between;
-      padding-bottom: 4px;
-      border-bottom: 1px dashed #f0275e;
-      margin-bottom: 4px;
 
       .tweak-entry {
-        width: 4.5rem;
+        width: 4.75rem;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        border-bottom: 1px dashed #f0275e;
       }
     }
     
@@ -284,12 +305,18 @@ export default {
 
       .column {
         .perf-entry {
-          width: 7.5rem;
+          width: 9rem;
           display: flex;
           justify-content: space-between;
         }
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .display-clubs-wrapper {
+    justify-content: center;
   }
 }
 </style>

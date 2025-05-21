@@ -1,9 +1,3 @@
-> MOMENTUM:
-add: club.momentum = 0 into seed + PLACE INTO: vor transition
-anpassen: momentum in Struktur + Anzeige: club / util / DisplayClub / DisplayTables / SimMatch
-
----
-
 > Result5 -> Points5
 resultL5 -> pointsL5, P5ø + P5 neue Spalte mit 3,3,2,1,0 Schriftgröße wie Header links-oben
 

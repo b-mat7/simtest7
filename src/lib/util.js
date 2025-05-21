@@ -244,6 +244,9 @@ const calcMomentum = (comp, home, away) => {
   // write momentum to club
   home.momentumStrSum += comp.homeMomentum
   away.momentumStrSum += comp.awayMomentum
+
+  home.momentum = comp.homeMomentum
+  away.momentum = comp.awayMomentum
 }
 
 const calcInitiative = (comp, home, away, dice) => {

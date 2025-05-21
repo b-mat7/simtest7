@@ -81,10 +81,10 @@
           <label title="Sum of Shots & Saves efficiency">∑%</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'initiativesDiff' }" @click="setSortTopic('initiativesDiff')" v-if="showPerfDetails">
-          <label title="Initiatives difference">In#</label>
+          <label title="Initiatives difference">InDif</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'transitionsDiff' }" @click="setSortTopic('transitionsDiff')" v-if="showPerfDetails">
-          <label title="Transitions difference">Tr#</label>
+          <label title="Transitions difference">TrDif</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="showPerfDetails">
           <label title="Initiative strength avg">Inø</label>
@@ -164,7 +164,9 @@
         <div class="column interact" :class="{ 'bold': sortTopic === 'save' }" @click="setSortTopic('save')" v-if="showRoleDetails">
           <label title="Transition">Sa</label>
         </div>
-        <!-- MOMENTUM -->
+        <div class="column interact" :class="{ 'bold': sortTopic === 'momentum' }" @click="setSortTopic('momentum')" v-if="showRoleDetails">
+          <label title="Momentum">Mm</label>
+        </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="showRoleDetails">
           <label title="Form">Fo</label>
         </div>
@@ -334,7 +336,9 @@
           <div class="column" :class="{ 'bold': sortTopic === 'save' || focusClub === club.initials}" v-if="showRoleDetails">
             <label>{{ club.save }}</label>
           </div>
-          <!-- MOMENTUM -->
+          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || focusClub === club.initials}" v-if="showRoleDetails">
+            <label>{{ formatD2(club.momentum) }}</label>
+          </div>
           <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClub === club.initials}" v-if="showRoleDetails">
             <label>{{ formatD2(club.form) }}</label>
           </div>

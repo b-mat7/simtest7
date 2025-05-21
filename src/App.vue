@@ -86,7 +86,7 @@ body {
   }
 
   .clubs-container {
-    max-height: 440px;
+    max-height: 372px;
     overflow-y: scroll;
   }
 

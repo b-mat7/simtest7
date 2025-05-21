@@ -29,7 +29,8 @@ export class Club {
 
 
     // ----- TWEAK -----
-    // MOMENTUM
+    /** @type {number} */
+    this.momentum = seedData.momentum
     /** @type {number} */
     this.form = seedData.form
     /** @type {number} */
