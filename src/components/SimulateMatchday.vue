@@ -96,7 +96,7 @@ export default {
   .matches {
     display: flex;
     flex-direction: column;
-    row-gap: 8px;
+    row-gap: 12px;
   }
 }
 </style>

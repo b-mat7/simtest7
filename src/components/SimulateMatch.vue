@@ -24,44 +24,44 @@
       <div v-if="showStats" @click="showStats = !showStats" class="stats">
         <div class="possession">
           <div class="entry">
-            <label>In, ø</label>
-            <label>{{ homeInitiativeStr }}|{{ formatD1(homeInitiativeStrSum / matchTime) }}</label>
-            <label>{{ awayInitiativeStr }}|{{ formatD1(awayInitiativeStrSum / matchTime) }}</label>
+            <label class="bold">Inø</label>
+            <label>{{ formatD1(homeInitiativeStrSum / matchTime) }}</label>
+            <label>{{ formatD1(awayInitiativeStrSum / matchTime) }}</label>
           </div>
           <div class="entry">
-            <label>At%</label>
+            <label class="bold">At%</label>
             <label>{{ formatD0(homeAttacks / matchTime * 100) }}</label>
             <label>{{ formatD0(awayAttacks / matchTime * 100) }}</label>
           </div>
           <div class="entry">
-            <label>Tr, ø</label>
-            <label>{{ homeTransitionStr }}|{{ formatD1(homeTransitionStrSum / (homeCounters + homeFallbacks)) }}</label>
-            <label>{{ awayTransitionStr }}|{{ formatD1(awayTransitionStrSum / (awayCounters + awayFallbacks)) }}</label>
+            <label class="bold">Trø</label>
+            <label>{{ formatD1(homeTransitionStrSum / (homeCounters + homeFallbacks)) }}</label>
+            <label>{{ formatD1(awayTransitionStrSum / (awayCounters + awayFallbacks)) }}</label>
           </div>
           <div class="entry">
-            <label>Co%</label>
+            <label class="bold">Co%</label>
             <label>{{ formatD0(homeCounterShots / homeCounters * 100) }}</label>
             <label>{{ formatD0(awayCounterShots / awayCounters * 100) }}</label>
           </div>
           <div class="entry">
-            <label>Fb%</label>
+            <label class="bold">Fb%</label>
             <label>{{ formatD0((homeFallbacks - awayCounterShots) / homeFallbacks * 100) }}</label>
             <label>{{ formatD0((awayFallbacks - homeCounterShots) / awayFallbacks * 100) }}</label>
           </div>
         </div>
         <div class="tweaks">
           <div class="entry">
-            <label>Mm</label>
+            <label class="bold">Mm</label>
             <label>{{ formatD2(homeMomentum) }}</label>
             <label>{{ formatD2(awayMomentum) }}</label>
           </div>
           <div class="entry">
-            <label>Fo</label>
+            <label class="bold">Fo</label>
             <label>{{ formatD2(home.form) }}</label>
             <label>{{ formatD2(away.form) }}</label>
           </div>
           <div class="entry">
-            <label>Mr</label>
+            <label class="bold">Mr</label>
             <label>{{ formatD2(home.morale) }}</label>
             <label>{{ formatD2(away.morale) }}</label>
           </div>
@@ -72,41 +72,41 @@
         </div>
         <div class="attack">
           <div class="entry">
-            <label>Atø</label>
+            <label class="bold">Atø</label>
             <label>{{ formatD1(homeAttackStrSum / homeAttacks) }}</label>
             <label>{{ formatD1(awayAttackStrSum / awayAttacks) }}</label>
           </div>
           <div class="entry">
-            <label>Shø</label>
+            <label class="bold">Shø</label>
             <label>{{ formatD1(homeShotStrSum / (homeAttackShots + homeCounterShots)) }}</label>
             <label>{{ formatD1(awayShotStrSum / (awayAttackShots + awayCounterShots)) }}</label>
           </div>
           <div class="entry">
-            <label>Sh, %</label>
+            <label class="bold">Sh, %</label>
             <label>{{ homeAttackShots + homeCounterShots }} | {{ formatD0(homeGoals / (homeAttackShots + homeCounterShots) * 100) }}</label>
             <label>{{ awayAttackShots + awayCounterShots }} | {{ formatD0(awayGoals / (awayAttackShots + awayCounterShots) * 100) }}</label>
           </div>
         </div>
         <div class="defend">
           <div class="entry">
-            <label>Deø</label>
+            <label class="bold">Deø</label>
             <label>{{ formatD1(homeDefendStrSum / homeDefends) }}</label>
             <label>{{ formatD1(awayDefendStrSum / awayDefends) }}</label>
           </div>
           <div class="entry">
-            <label>Saø</label>
+            <label class="bold">Saø</label>
             <label>{{ formatD1(homeSaveStrSum / (awayAttackShots + awayCounterShots)) }}</label>
             <label>{{ formatD1(awaySaveStrSum / (homeAttackShots + homeCounterShots)) }}</label>
           </div>
           <div class="entry">
-            <label>Sa, %</label>
+            <label class="bold">Sa, %</label>
             <label>{{ homeSaves }} | {{ formatD0(homeSaves / (awayAttackShots + awayCounterShots) * 100) }}</label>
             <label>{{ awaySaves }} | {{ formatD0(awaySaves / (homeAttackShots + homeCounterShots) * 100) }}</label>
           </div>
         </div>
       </div>
       <div v-else @click="showStats = !showStats" class="ticker">
-        <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index">
+        <li v-for="(tick, index) in liveTicker.slice().reverse()" :key="index" :class="{ bold: tick.includes('Goal')}">
           {{ tick }}
         </li>
         <label>Unser LiveTicker berichtet... live...oO</label>
@@ -266,9 +266,10 @@ export default {
           attacker.attackShots++
           defender.attackShotsAgainst++
 
+          // Time inkl random seconds: ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}
           this.liveTicker.push(`
-              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Attack success ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
-            `)
+            ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Attack success - ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
+          `)
           // console.log(`${attacker.initials} ATTACK SUCCESS`)
 
 
@@ -290,8 +291,8 @@ export default {
             defender.goalsAgainst++
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
-              `)
+              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Goal - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+            `)
             // console.log(`${attacker.initials} >--< >--< >--< ATTACK GOAL - END >--< >--< >--<`)
 
           // if ScoreChance < SaveChance => miss goal
@@ -300,16 +301,16 @@ export default {
             defender.saves++
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
-              `)
+              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Miss - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})               
+            `)
             // console.log(`${attacker.initials} >--< >--< >--< ATTACK MISS - END >--< >--< >--<`)
           }
         // if attackStr < defendStr -> attack failed, defender gets counter chance based on transitionStr
         } else {
 
           this.liveTicker.push(`
-              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Attack fail ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
-            `)
+            ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Attack fail - ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)}) 
+          `)
           // console.log(`${attacker.initials} ATTACK FAIL - COUNTER/FB TRIGGERED`)
 
 
@@ -335,7 +336,7 @@ export default {
           if((this.homeTransitionStr > this.awayTransitionStr && attacker === this.home) || (this.awayTransitionStr > this.homeTransitionStr && attacker === this.away)) {
 
             this.liveTicker.push(`
-              ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Counter success
+              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Counter success
             `)
             // console.log(`${attacker.initials} COUNTER SUCCESS`)
 
@@ -364,8 +365,8 @@ export default {
               defender.goalsAgainst++
 
               this.liveTicker.push(`
-                  ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Goal ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)}) | ${this.homeGoals} : ${this.awayGoals}
-                `)
+                ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Goal - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+              `)
               // console.log(`${attacker.initials} >--< >--< >--< COUNTER GOAL - END >--< >--< >--<`)
 
             // if ScoreChance < SaveChance => miss goal
@@ -374,16 +375,16 @@ export default {
               defender.saves++
 
               this.liveTicker.push(`
-                  ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Miss ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
-                `)
+                ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Miss - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+              `)
               // console.log(`${attacker.initials} >--< >--< >--< COUNTER MISS - END >--< >--< >--<`)
             }
           // if new attackers' transitionStr < new defenders' transitionStr -> counter failed, intervall end
           } else {
 
             this.liveTicker.push(`
-                ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}: ${attacker.initials} Counter fail
-              `)
+              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Counter fail
+            `)
             // console.log(`${attacker.initials} >--< >--< >--< COUNTER FAIL - END >--< >--< >--<`)
           }
         }
@@ -436,7 +437,7 @@ export default {
           if (this.homeGoals === this.awayGoals) {
             this.matchLength += 5
 
-            this.liveTicker.push(`${this.matchTime}.: Overtime, +5min`)
+            this.liveTicker.push(`${this.matchTime}. Min | +++ Overtime, +5min +++`)
           }
           else {
             this.stopSimulateMatch()
@@ -467,7 +468,7 @@ export default {
             // update morale (based on own+opponent form, role, rank)
             updateMorale(this, this.home, this.away)
 
-            this.liveTicker.push(`${this.matchTime}.: End of the game`)
+            this.liveTicker.push(`${this.matchTime}. Min | +++ End of the game +++`)
 
             // emit: match is finished
             this.$emit('matchFinished', this.match.matchNr)
@@ -502,7 +503,7 @@ export default {
 .simulate-match-wrapper {
   display: flex;
   column-gap: 8px;
-  height: 2.25rem;
+  height: 2.5rem;
 
   .main {
     min-width: 180px;
@@ -536,7 +537,7 @@ export default {
   }
 
   .details {
-    min-width: 20.5rem;   // check with size of each entry
+    min-width: 476px;
     font-size: 0.5rem;
 
     .stats {
@@ -549,8 +550,9 @@ export default {
       .attack,
       .defend {
         display: flex;
+        padding: 2px;
         border-radius: 4px;
-        border: 1px solid #f0275e;
+        outline: 1px solid #f0275e;
         
         .entry {
           display: flex;
@@ -563,11 +565,16 @@ export default {
     .ticker {
       height: 2.25rem;
       overflow-x: scroll;
-      text-align: start;
       list-style: none;
+      padding: 2px;
+      padding-left: 8px;
       border-radius: 4px;
-      border: 1px solid #f0275e;
+      outline: 1px solid #f0275e;
     }
+  }
+
+  .bold {
+    font-weight: 900;
   }
 }
 </style>
