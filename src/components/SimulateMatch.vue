@@ -446,7 +446,7 @@ export default {
             updateTeam(
               this.homeGoals > this.awayGoals ? this.home : this.away,
               team => {
-                this.matchTime === 60 ? team.results.push(3) : team.results.push(2)
+                this.matchTime === 60 ? team.resultPoints.push(3) : team.resultPoints.push(2)
               }
             )
 
@@ -454,7 +454,7 @@ export default {
             updateTeam(
               this.homeGoals < this.awayGoals ? this.home : this.away,
               team => {
-                this.matchTime === 60 ? team.results.push(0) : team.results.push(1)
+                this.matchTime === 60 ? team.resultPoints.push(0) : team.resultPoints.push(1)
               }
             )
 

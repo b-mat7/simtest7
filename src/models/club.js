@@ -72,7 +72,7 @@ export class Club {
     this.goals = 0
     this.goalsAgainst = 0
     this.points = 0
-    this.results = []
+    this.resultPoints = []
   }
 
 
@@ -97,9 +97,9 @@ export class Club {
 
 
   // --- PERF AVG ---
-  resultsL5Avg() {
+  pointsL5Avg() {
     return this.matchesPlayed > 0 
-    ? formatD2((this.results.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.results.length, 5))) 
+    ? formatD2((this.resultPoints.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.resultPoints.length, 5))) 
     : 0
   }
   initiativeStrAvg() {
@@ -250,18 +250,18 @@ export class Club {
   }
 
   wins() {
-    return [...this.results].filter(x => x === 3).length
+    return [...this.resultPoints].filter(x => x === 3).length
   }
 
   winsOvertime() {
-    return [...this.results].filter(x => x === 2).length
+    return [...this.resultPoints].filter(x => x === 2).length
   }
 
   lossesOvertime() {
-    return [...this.results].filter(x => x === 1).length
+    return [...this.resultPoints].filter(x => x === 1).length
   }
 
   losses() {
-    return [...this.results].filter(x => x === 0).length
+    return [...this.resultPoints].filter(x => x === 0).length
   }
 }

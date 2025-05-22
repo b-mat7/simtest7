@@ -2,9 +2,11 @@
   <div v-if="clubs.length > 0" class="season-container">
     <SimulateSeason :clubs :schedule/>
   </div>
+
   <div class="tables-container">
     <DisplayTables :clubs/>
   </div>
+
   <div v-if="clubs.length > 0" class="clubs-container">
     <DisplayClubs :clubs/>
   </div>
@@ -86,7 +88,6 @@ body {
   }
 
   .clubs-container {
-    max-height: 372px;
     overflow-y: scroll;
   }
 

@@ -1,7 +1,3 @@
-> Result5 -> Points5
-resultL5 -> pointsL5, P5ø + P5 neue Spalte mit 3,3,2,1,0 Schriftgröße wie Header links-oben
-
-
 > Season Control als "SimControl" in App +sticky -> props into components
 Border: solid, Sections: dashed
     -> Season: +SimSpeed als Btns Auswahl=util SimSpeeds
@@ -11,7 +7,6 @@ Border: solid, Sections: dashed
 
 
 > Tables: + Rank diff zu last matchday
-
 
 ---
 

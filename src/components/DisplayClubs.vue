@@ -11,7 +11,7 @@
 
       <!-- PERF AVG & RESULT-->
       <div class="result">
-        <label title="Results (points) last 5 games (avg)">Re {{ club.results.slice(-5) }} ({{ club.resultsL5Avg() }})</label>
+        <label title="Points last 5 games (avg)">P5(ø) {{ club.resultPoints.slice(-5) }} ({{ club.pointsL5Avg() }})</label>
         <label title="W - OTW - OTL - L">{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{ club.losses() }}</label>
       </div>
 
@@ -245,12 +245,11 @@ export default {
 <style lang="scss" scoped>
 .display-clubs-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  column-gap: 8px;
 
   .club {
     max-width: 338px;
-    padding: 8px;
+    padding: 4px 8px;
     display: flex;
     flex-direction: column;
     border: 1px solid #f0275e;
@@ -311,12 +310,6 @@ export default {
         }
       }
     }
-  }
-}
-
-@media (max-width: 768px) {
-  .display-clubs-wrapper {
-    justify-content: center;
   }
 }
 </style>

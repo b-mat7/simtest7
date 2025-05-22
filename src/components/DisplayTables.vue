@@ -59,8 +59,11 @@
 
 
         <!-- PERF AVG + EFF -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'resultsL5Avg' }" @click="setSortTopic('resultsL5Avg')" v-if="showPerfDetails">
-          <label title="Results (points) last 5 games avg">R5ø</label>
+        <div class="column" v-if="showPerfDetails">
+          <label title="Points last 5 games">P5</label>
+        </div>
+        <div class="column interact" :class="{ 'bold': sortTopic === 'pointsL5Avg' }" @click="setSortTopic('pointsL5Avg')" v-if="showPerfDetails">
+          <label title="Points last 5 games avg">P5ø</label>
         </div>
         <div class="column interact" :class="{ 'bold': sortTopic === 'momentumStrAvg' }" @click="setSortTopic('momentumStrAvg')" v-if="showPerfDetails">
           <label title="Momentum avg">Mmø</label>
@@ -231,8 +234,11 @@
 
 
           <!-- PERF AVG + EFF -->
-          <div class="column" :class="{ 'bold': sortTopic === 'resultsL5Avg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
-            <label>{{ club.resultsL5Avg() }}</label>
+          <div class="column pointsL5" :class="{ 'bold': focusClubs.includes(club.initials) }" v-if="showPerfDetails">
+            <label>{{ club.resultPoints.slice(-5).join('')  }}</label>
+          </div>         
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsL5Avg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
+            <label>{{ club.pointsL5Avg() }}</label>
           </div>
           <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || focusClubs.includes(club.initials) }" v-if="showPerfDetails">
             <label>{{ (club.momentumStrAvg()) }}</label>
@@ -465,6 +471,12 @@ export default {
       font-size: 0.5rem;
       display: flex;
       flex-direction: column;
+    }
+
+    .pointsL5 {
+      font-size: 0.85rem;
+      display: flex;
+      place-items: center;
     }
   }
 }
