@@ -9,28 +9,32 @@
                     class="app-controls-btn btn-interact"
                     title="Simulate matchdays sequentially"
                     @click="handleToggleSimulateSequ"
-                    >SimSequ</button>
+                    >SimSequ
+                </button>
                 <button 
                     v-else 
                     :disabled="globalState.simulatePara"
                     class="app-controls-btn btn-interact"
                     title="Stop simulate matchdays sequentially"
                     @click="handleToggleSimulateSequ"
-                    >Stop</button>
+                    >Stop
+                </button>
                 <button 
                     v-if="!globalState.simulatePara"
                     :disabled="globalState.simulateSequ"
                     class="app-controls-btn btn-interact"
                     title="Simulate matchdays in parallel"
                     @click="handleToggleSimulatePara"
-                    >SimPara</button>
+                    >SimPara
+                </button>
                 <button 
                     v-else 
                     :disabled="globalState.simulateSequ"
                     class="app-controls-btn btn-interact"
                     title="Stop simulate matchdays in parallel"
                     @click="handleToggleSimulatePara"
-                    >Stop</button>
+                    >Stop
+                </button>
                 <input v-model="globalState.simulateSpeed" type="number" title="Simulation speed in ms" placeholder="Speed" max="60000" style="max-width: 62px;">
 
                 <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
@@ -40,19 +44,63 @@
         <div v-if="showFullPane" class="table-controls">
             <label class="descr-column">Table:</label>
             <div class="btn-column">
-                <button class="app-controls-btn btn-interact" title="Show result details" @click="handleTableShowResultDetails">Result</button>
-                <button class="app-controls-btn btn-interact" title="Show performance average details" @click="handleTableShowPerfAvgDetails">Perf Avg</button>
-                <button class="app-controls-btn btn-interact" title="Show performance efficiency details" @click="handleTableShowPerfEffDetails">Perf Eff</button>
-                <button class="app-controls-btn btn-interact" title="Show role details" @click="handleTableShowRoleDetails">Role</button>
+                <button
+                    class="app-controls-btn btn-interact"
+                    :class="{ 'btn-active': globalState.tableShowResultDetails }"
+                    title="Show result details"
+                    @click="handleTableShowResultDetails"
+                    >Result
+                </button>
+                <button
+                    class="app-controls-btn btn-interact"
+                    :class="{ 'btn-active': globalState.tableShowPerfAvgDetails }"
+                    title="Show performance average details"
+                    @click="handleTableShowPerfAvgDetails"
+                    >Perf Avg
+                </button>
+                <button
+                    class="app-controls-btn btn-interact"
+                    :class="{ 'btn-active': globalState.tableShowPerfEffDetails }"
+                    title="Show performance efficiency details"
+                    @click="handleTableShowPerfEffDetails"
+                    >Perf Eff
+                </button>
+                <button
+                    class="app-controls-btn btn-interact"
+                    :class="{ 'btn-active': globalState.tableShowRoleDetails }"
+                    title="Show role details"
+                    @click="handleTableShowRoleDetails"
+                    >Role
+                </button>
             </div>
         </div>
         <div v-if="showFullPane" class="clubs-controls">
             <label class="descr-column">Clubs:</label>
             <div class="btn-column">
-                <button class="app-controls-btn btn-interact" title="Show result details" @click="handleClubsShowResultDetails">Result</button>
-                <button class="app-controls-btn btn-interact" title="Show performance average details" @click="handleClubsShowPerfAvgDetails">Perf Avg</button>
-                <button class="app-controls-btn btn-interact" title="Show performance efficiency details" @click="handleClubsShowPerfEffDetails">Perf Eff</button>
-                <button class="app-controls-btn btn-interact" title="Show role details" @click="handleClubsShowRoleDetails">Role</button>
+                <button
+                class="app-controls-btn btn-interact"
+                :class="{ 'btn-active': globalState.clubsShowResultDetails }"
+                title="Show result details"
+                @click="handleClubsShowResultDetails">Result
+            </button>
+                <button
+                class="app-controls-btn btn-interact"
+                :class="{ 'btn-active': globalState.clubsShowPerfAvgDetails }"
+                title="Show performance average details"
+                @click="handleClubsShowPerfAvgDetails">Perf Avg
+            </button>
+                <button
+                class="app-controls-btn btn-interact"
+                :class="{ 'btn-active': globalState.clubsShowPerfEffDetails }"
+                title="Show performance efficiency details"
+                @click="handleClubsShowPerfEffDetails">Perf Eff
+            </button>
+                <button
+                class="app-controls-btn btn-interact"
+                :class="{ 'btn-active': globalState.clubsShowRoleDetails }"
+                title="Show role details"
+                @click="handleClubsShowRoleDetails">Role
+            </button>
             </div>
         </div>
         <div v-if="showFullPane" class="clubs-list-controls">
@@ -160,10 +208,6 @@ export default {
             display: flex;
             flex-wrap: wrap;
             gap: 8px; 
-
-            .app-controls-btn {
-                min-width: 70px;
-            }
 
             .club-item {
                 width: 2.5rem;

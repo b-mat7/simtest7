@@ -2,9 +2,25 @@
   <div class="simulate-matchday-wrapper">
     <div class="controls">
       <label>Day: {{ matchday.dayNr }}</label>
-      <button v-if="!matchdayOngoing" class="matchday-btn btn-interact" @click="toggleMatchdayOngoing">Anpfiff</button>
-      <button v-else class="matchday-btn btn-interact" @click="toggleMatchdayOngoing">Auszeit</button>
-      <button class="matchday-btn btn-interact" @click="showMatchdayDetails = !showMatchdayDetails">Details</button>
+      <button
+        v-if="!matchdayOngoing"
+        :disabled="matchday.matches.length === finishedMatches.length"
+        class="matchday-btn btn-interact"
+        @click="toggleMatchdayOngoing"
+        >Anpfiff
+      </button>
+      <button
+        v-else
+        :disabled="matchday.matches.length === finishedMatches.length"
+        class="matchday-btn btn-interact"
+        @click="toggleMatchdayOngoing"
+        >Auszeit
+      </button>
+      <button
+        class="matchday-btn btn-interact"
+        @click="showMatchdayDetails = !showMatchdayDetails"
+        >Details
+      </button>
     </div>
     <div class="matches">
       <div v-for="match in matchday.matches">
@@ -70,7 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .simulate-matchday-wrapper {
-  min-width: 180px;
+  min-width: 168px;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
@@ -80,17 +96,14 @@ export default {
   background-color: #35495e;
 
   .controls {
-    max-width: 180px;
+    max-width: 168px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-weight: 700;
     padding-bottom: 4px;
     border-bottom: 1px dashed #f0275e;
     margin-bottom: 4px;
-
-    .matchday-btn {
-      min-width: 60px;
-    }
   }
 
   .matches {

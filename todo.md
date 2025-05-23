@@ -1,6 +1,6 @@
-> Season Control focusClub -> in Clubs array?
-
-> class highlight in App for global focusClub
+> Season Control 
+    focusClub -> in Clubs array?
+    mediaQuerry auf diese komponente
 
 > Tables: + Rank diff zu last matchday
 

@@ -15,9 +15,26 @@
         </div>
       </div>
       <div class="controls">
-        <button v-if="!matchOngoing" class="btn-interact" @click="simulateMatch">Anpfiff</button>
-        <button v-else class="btn-interact" @click="stopSimulateMatch">Auszeit</button>
-        <button v-if="matchTime > 0" class="btn-interact" @click="showDetails = !showDetails">Details</button>
+        <button
+          v-if="!matchOngoing"
+          :disabled="matchTime === matchLength"
+          class="match-btn btn-interact"
+          @click="simulateMatch"
+          >Anpfiff
+        </button>
+        <button
+          v-else
+          :disabled="matchTime === matchLength"
+          class="match-btn btn-interact"
+          @click="stopSimulateMatch"
+          >Auszeit
+        </button>
+        <button
+          v-if="matchTime > 0"
+          class="match-btn btn-interact"
+          @click="showDetails = !showDetails"
+          >Details
+        </button>
       </div>
     </div>
     <div v-if="showDetails || showMatchdayDetails" class="details">
@@ -511,9 +528,9 @@ export default {
   height: 2.5rem;
 
   .main {
-    min-width: 180px;
+    min-width: 168px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     .teams {
       width: 4.75rem;
@@ -532,12 +549,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
-      button {
-        width: 42px;
-        font-size: 0.5rem;
-        height: calc((2.25rem - 2px) / 2);
-      }
     }
   }
 

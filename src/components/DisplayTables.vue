@@ -13,46 +13,46 @@
         <div class="column sticky-left-1">
           <label title="Club initials">+++</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
           <label title="Matches played">M</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goals' }" @click="setSortTopic('goals')">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goals' }" @click="setSortTopic('goals')">
           <label title="Goals">G</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsAgainst' }" @click="setSortTopic('goalsAgainst')">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goalsAgainst' }" @click="setSortTopic('goalsAgainst')">
           <label title="Goals against">GA</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsDiff' }" @click="setSortTopic('goalsDiff')">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goalsDiff' }" @click="setSortTopic('goalsDiff')">
           <label title="Goals difference">Dif</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')">
+        <div class="column interact" :class="{ 'highlight': sortTopic === '' || sortTopic === 'points' }" @click="setSortTopic('points')">
           <label title="Points">P</label>
         </div>
 
 
         <!-- RESULT -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goalsPerMatch' }" @click="setSortTopic('goalsPerMatch')" v-if="globalState.tableShowResultDetails">
           <label title="Goals per match">G/M</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goalsAgainstPerMatch' }" @click="setSortTopic('goalsAgainstPerMatch')" v-if="globalState.tableShowResultDetails">
           <label title="Goals against per match">GA/M</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'goalsDiffPerMatch' }" @click="setSortTopic('goalsDiffPerMatch')" v-if="globalState.tableShowResultDetails">
           <label title="Goals difference per match">Dif/M</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'pointsPerMatch' }" @click="setSortTopic('pointsPerMatch')" v-if="globalState.tableShowResultDetails">
           <label title="Points per match">P/M</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'wins' }" @click="setSortTopic('wins')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'wins' }" @click="setSortTopic('wins')" v-if="globalState.tableShowResultDetails">
           <label title="Wins">W</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'winsOvertime' }" @click="setSortTopic('winsOvertime')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'winsOvertime' }" @click="setSortTopic('winsOvertime')" v-if="globalState.tableShowResultDetails">
           <label title="Overtime wins">OTW</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'lossesOvertime' }" @click="setSortTopic('lossesOvertime')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'lossesOvertime' }" @click="setSortTopic('lossesOvertime')" v-if="globalState.tableShowResultDetails">
           <label title="Overtime losses">OTL</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="globalState.tableShowResultDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'losses' }" @click="setSortTopic('losses')" v-if="globalState.tableShowResultDetails">
           <label title="Losses">L</label>
         </div>
 
@@ -61,121 +61,121 @@
         <div class="column" v-if="globalState.tableShowPerfEffDetails">
           <label title="Points last 5 games">P5</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'pointsL5Avg' }" @click="setSortTopic('pointsL5Avg')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'pointsL5Avg' }" @click="setSortTopic('pointsL5Avg')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Points last 5 games avg">P5ø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'shotsEff' }" @click="setSortTopic('shotsEff')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Shots efficiency">Sh%</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'savesEff' }" @click="setSortTopic('savesEff')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'savesEff' }" @click="setSortTopic('savesEff')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Saves efficiency">Sa%</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'shotsSavesEff' }" @click="setSortTopic('shotsSavesEff')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'shotsSavesEff' }" @click="setSortTopic('shotsSavesEff')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Sum of Shots & Saves efficiency">∑%</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativesDiff' }" @click="setSortTopic('initiativesDiff')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativesDiff' }" @click="setSortTopic('initiativesDiff')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Initiatives difference">InDif</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionsDiff' }" @click="setSortTopic('transitionsDiff')" v-if="globalState.tableShowPerfEffDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'transitionsDiff' }" @click="setSortTopic('transitionsDiff')" v-if="globalState.tableShowPerfEffDetails">
           <label title="Transitions difference">TrDif</label>
         </div>
 
 
         <!-- PERF AVG -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'momentumStrAvg' }" @click="setSortTopic('momentumStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'momentumStrAvg' }" @click="setSortTopic('momentumStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Momentum avg">Mmø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'formStrAvg' }" @click="setSortTopic('formStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'formStrAvg' }" @click="setSortTopic('formStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Form avg">Foø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'moraleStrAvg' }" @click="setSortTopic('moraleStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'moraleStrAvg' }" @click="setSortTopic('moraleStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Morale avg">Mrø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Initiative strength avg">Inø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' }" @click="setSortTopic('initiativeStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativeStrDiceAvg' }" @click="setSortTopic('initiativeStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Initiative strength dice avg">InDø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionStrAvg' }" @click="setSortTopic('transitionStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'transitionStrAvg' }" @click="setSortTopic('transitionStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Transition strength avg">Trø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Transition strength dice avg">TrDø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Attack strength avg">Atø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Attack strength dice avg">AtDø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'shotStrAvg' }" @click="setSortTopic('shotStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'shotStrAvg' }" @click="setSortTopic('shotStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Shot strength avg">Shø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' }" @click="setSortTopic('shotStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'shotStrDiceAvg' }" @click="setSortTopic('shotStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Shot strength dice avg">ShDø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'defendStrAvg' }" @click="setSortTopic('defendStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'defendStrAvg' }" @click="setSortTopic('defendStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Defend strength avg">Deø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' }" @click="setSortTopic('defendStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'defendStrDiceAvg' }" @click="setSortTopic('defendStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Defend strength dice avg">DeDø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'saveStrAvg' }" @click="setSortTopic('saveStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'saveStrAvg' }" @click="setSortTopic('saveStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Save strength avg">Saø</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' }" @click="setSortTopic('saveStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'saveStrDiceAvg' }" @click="setSortTopic('saveStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Save strength dice avg">SaDø</label>
         </div>
 
 
         <!-- ROLE -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'seed' }" @click="setSortTopic('seed')" v-if="globalState.tableShowRoleDetails">
           <label title="Seed">Seed</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'rankSeed' }" @click="setSortTopic('rankSeed')" v-if="globalState.tableShowRoleDetails">
           <label title="Seed rank">SRa</label>
         </div>
-        <!-- <div class="column interact" :class="{ 'bold': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="globalState.tableShowRoleDetails">
+        <!-- <div class="column interact" :class="{ 'highlight': sortTopic === 'rankMatchday' }" @click="setSortTopic('rankMatchday')" v-if="globalState.tableShowRoleDetails">
           <label title="Day rank">DRa</label>
         </div> -->
         <div class="column" v-if="globalState.tableShowRoleDetails">
           <label title="Role">Role</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'roleDiff' }" @click="setSortTopic('roleDiff')" v-if="globalState.tableShowRoleDetails">
           <label title="Role difference">RDiff</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'priceMoney' }" @click="setSortTopic('priceMoney')" v-if="globalState.tableShowRoleDetails">
           <label title="Price money (in thousand)">Pr$</label>
         </div>
 
 
         <!-- ABILITY -->
-        <div class="column interact" :class="{ 'bold': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'initiative' }" @click="setSortTopic('initiative')" v-if="globalState.tableShowRoleDetails">
           <label title="Initiative">In</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'transition' }" @click="setSortTopic('transition')" v-if="globalState.tableShowRoleDetails">
           <label title="Transition">Tr</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'attack' }" @click="setSortTopic('attack')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'attack' }" @click="setSortTopic('attack')" v-if="globalState.tableShowRoleDetails">
           <label title="Transition">At</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'shoot' }" @click="setSortTopic('shoot')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'shoot' }" @click="setSortTopic('shoot')" v-if="globalState.tableShowRoleDetails">
           <label title="Transition">Sh</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'defend' }" @click="setSortTopic('defend')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'defend' }" @click="setSortTopic('defend')" v-if="globalState.tableShowRoleDetails">
           <label title="Transition">De</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'save' }" @click="setSortTopic('save')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'save' }" @click="setSortTopic('save')" v-if="globalState.tableShowRoleDetails">
           <label title="Transition">Sa</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'momentum' }" @click="setSortTopic('momentum')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'momentum' }" @click="setSortTopic('momentum')" v-if="globalState.tableShowRoleDetails">
           <label title="Momentum">Mm</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'form' }" @click="setSortTopic('form')" v-if="globalState.tableShowRoleDetails">
           <label title="Form">Fo</label>
         </div>
-        <div class="column interact" :class="{ 'bold': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="globalState.tableShowRoleDetails">
+        <div class="column interact" :class="{ 'highlight': sortTopic === 'morale' }" @click="setSortTopic('morale')" v-if="globalState.tableShowRoleDetails">
           <label title="Morale">Mr</label>
         </div>
       </div>
@@ -185,175 +185,175 @@
       <div class="body">
         <!-- Default columns -->
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
-          <div class="column sticky-left-0" :class="{ 'bold': clubIsFocused(club) }">
+          <div class="column sticky-left-0" :class="{ 'highlight': clubIsFocused(club) }">
             <label>{{ club.rankLive }}</label>
           </div>
-          <div class="column sticky-left-1 interact" :class="{ 'bold': clubIsFocused(club) }" @click="addTableFocusClub(club)">
+          <div class="column sticky-left-1 interact" :class="{ 'highlight': clubIsFocused(club) }" @click="addTableFocusClub(club)">
             <label>{{ club.initials }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || clubIsFocused(club) }">
+          <div class="column" :class="{ 'highlight': sortTopic === 'matchesPlayed' || clubIsFocused(club) }">
             <label>{{ club.matchesPlayed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goals' || clubIsFocused(club) }">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goals' || clubIsFocused(club) }">
             <label>{{ club.goals }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || clubIsFocused(club) }">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goalsAgainst' || clubIsFocused(club) }">
             <label>{{ club.goalsAgainst }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || clubIsFocused(club) }">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goalsDiff' || clubIsFocused(club) }">
             <label>{{ club.goalsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || clubIsFocused(club) }">
+          <div class="column" :class="{ 'highlight': sortTopic === '' || sortTopic === 'points' || clubIsFocused(club) }">
             <label>{{ club.points }}</label>
           </div>
 
 
           <!-- RESULT -->
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goalsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goalsAgainstPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsAgainstPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'goalsDiffPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'pointsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.pointsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'wins' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'wins' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.wins() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'winsOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.winsOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'lossesOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.lossesOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'losses' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'losses' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.losses() }}</label>
           </div>
 
 
           <!-- PERF EFF -->
-          <div class="column pointsL5" :class="{ 'bold': clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column pointsL5" :class="{ 'highlight': clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.resultPoints.slice(-5).join('')  }}</label>
           </div>         
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsL5Avg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'pointsL5Avg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.pointsL5Avg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'shotsEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.shotsEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'savesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'savesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.savesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'shotsSavesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.shotsSavesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'initiativesDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.initiativesDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'transitionsDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.transitionsDiff() }}</label>
           </div>
 
 
           <!-- PERF AVG -->
-          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'momentumStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.momentumStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'formStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.formStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'moraleStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.moraleStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'initiativeStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.initiativeStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'initiativeStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.initiativeStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'transitionStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.transitionStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'transitionStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'attackStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.attackStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'attackStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.attackStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'shotStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.shotStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'shotStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.shotStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'defendStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.defendStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'defendStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.defendStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'saveStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.saveStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'saveStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.saveStrDiceAvg() }}</label>
           </div>
 
 
           <!-- ROLE -->
-          <div class="column" :class="{ 'bold': sortTopic === 'seed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'seed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.seed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'rankSeed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.rankSeed }}</label>
           </div>
-          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <!-- <div class="column" :class="{ 'highlight': sortTopic === 'rankMatchday' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.rankMatchday }}</label>
           </div> -->
-          <div class="column" :class="{ 'bold': clubIsFocused(club) } "v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': clubIsFocused(club) } "v-if="globalState.tableShowRoleDetails">
             <label>{{ club.role.slice(0, 5) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'roleDiff' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'priceMoney' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
           </div>
 
 
           <!-- ABILITY -->
-          <div class="column" :class="{ 'bold': sortTopic === 'initiative' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'initiative' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.initiative }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transition' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'transition' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.transition }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attack' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'attack' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.attack }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'shoot' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.shoot }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defend' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'defend' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.defend }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'save' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'save' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.save }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'momentum' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.momentum) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'form' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'form' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.form) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'morale' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'highlight': sortTopic === 'morale' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.morale) }}</label>
           </div>
         </li>
@@ -456,11 +456,6 @@ export default {
       &:not(:first-of-type) {
         border-top: 1px dashed #f0275e;
       }
-    }
-
-    .bold {
-      font-weight: 900;
-      color: #f0275e;
     }
 
     .sticky-left-0 {

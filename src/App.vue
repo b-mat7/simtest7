@@ -104,6 +104,7 @@ body {
     overflow-y: scroll;
   }
 
+  // GLOBAL STYLES SECTION
   .interact {
     cursor: pointer;
     transition: all 0.1s ease;
@@ -130,11 +131,31 @@ body {
       border-radius: 4px;
       // box-shadow: 0 0 8px #f0275e;
     }
+
+    &:disabled {
+      pointer-events: none;
+    }
+  }
+
+  .btn-active {
+    font-weight: 900;
+    color: #f0275e;
+  }
+
+  .app-controls-btn {
+    min-width: 70px;
+  }
+
+  .matchday-btn,
+  .match-btn {
+    width: 42px;
+    font-size: 0.5rem;
+    height: calc((2.25rem - 2px) / 2);
   }
 
   .highlight {
-      font-weight: 900;
-      color: #f0275e;
+    font-weight: 900;
+    color: #f0275e;
   }
 }
 </style>
