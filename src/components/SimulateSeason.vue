@@ -1,16 +1,7 @@
 season<template>
   <div class="simulate-season-wrapper">
-    <div class="controls">
-      <label>Season-Control:</label>
-      <button v-if="!simulateSequ" class="btn-size btn-interact" @click="toggleSimulateSequ">SimSequ</button>
-      <button v-else class="btn-size btn-interact" @click="toggleSimulateSequ">Stop</button>
-      <button v-if="!simulatePara" class="btn-size btn-interact" @click="toggleSimulatePara">SimPara</button>
-      <button v-else class="btn-size btn-interact" @click="toggleSimulatePara">Stop</button>
-    </div>
-    <div class="matchdays">
-      <div v-for="matchday in schedule.matchdayList">
-        <SimulateMatchday :matchday :simulatePara :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
-      </div>
+    <div v-for="matchday in schedule.matchdayList">
+      <SimulateMatchday :matchday :simulatePara="globalState.simulatePara" :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
     </div>
   </div>
 </template>
@@ -18,6 +9,7 @@ season<template>
 <script>
 import SimulateMatchday from './SimulateMatchday.vue'
 
+import { globalState } from '../lib/state.js'
 import { updateRank, prepareRole, updateRoleDiff } from '../lib/util.js'
 
 export default {
@@ -33,21 +25,15 @@ export default {
   },
   data() {
     return {
-      simulatePara: false,
-      simulateSequ: false,
+      globalState,
       simulateSequDayNr: 0,
       startDayIntervall: null,
       finishedMatchdays: []
     }
   },
   methods: {
-    toggleSimulatePara() {
-      this.simulatePara = !this.simulatePara
-    },
-    async toggleSimulateSequ() {
-      this.simulateSequ = !this.simulateSequ
-
-      if(this.simulateSequ) {
+    async startSimulateSequIntervals() {
+      if(globalState.simulateSequ) {
         this.startDayIntervall = setInterval(async () => {
           let nextSimDay = this.schedule.matchdayList.find(matchday => this.finishedMatchdays.includes(matchday.dayNr) === false)
 
@@ -81,6 +67,12 @@ export default {
       
       updateRank(this.clubs, null, 'rankMatchday')
       updateRoleDiff(this.clubs)
+      // updatePriceMoney(this.clubs, this.finishedMatchdays)
+    }
+  },
+  watch: {
+    'globalState.simulateSequ': function(newValue) {
+      this.startSimulateSequIntervals()
     }
   },
   mounted() {
@@ -95,28 +87,7 @@ export default {
 <style lang="scss" scoped>
 .simulate-season-wrapper {
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-
-  .controls {
-    max-width: fit-content;
-    display: flex;
-    font-weight: 700;
-    column-gap: 4px;
-    padding: 4px 8px;
-    border: 1px solid #f0275e;
-    border-radius: 4px;
-    background-color: #35495e;
-
-    .btn-size {
-      width: 70px;
-    }
-  }
-
-  .matchdays {
-    display: flex;
-    column-gap: 8px;
-    overflow-x: scroll;
-  }
+  column-gap: 8px;
+  overflow-x: scroll;
 }
 </style>

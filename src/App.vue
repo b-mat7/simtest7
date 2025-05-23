@@ -1,4 +1,8 @@
 <template>
+  <div class="app-controls-container">
+    <AppControls />
+  </div>
+
   <div v-if="clubs.length > 0" class="season-container">
     <SimulateSeason :clubs :schedule/>
   </div>
@@ -13,6 +17,7 @@
 </template>
 
 <script>
+import AppControls from './components/AppControls.vue'
 import DisplayClubs from './components/DisplayClubs.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
 import DisplayTables from './components/DisplayTables.vue'
@@ -42,6 +47,7 @@ export default {
     this.init(Club, clubSeedData)
   },
   components: {
+    AppControls,
     DisplayClubs,
     SimulateSeason,
     DisplayTables,
@@ -78,6 +84,13 @@ body {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+
+  .app-controls-container {
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+    // max-width: fit-content;
+  }
 
   .season-container {
     overflow-x: scroll;

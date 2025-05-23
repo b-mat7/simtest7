@@ -2,9 +2,9 @@
   <div class="simulate-matchday-wrapper">
     <div class="controls">
       <label>Day: {{ matchday.dayNr }}</label>
-      <button v-if="!matchdayOngoing" class="btn-size btn-interact" @click="toggleMatchdayOngoing">Anpfiff</button>
-      <button v-else class="btn-size btn-interact" @click="toggleMatchdayOngoing">Auszeit</button>
-      <button class="btn-size btn-interact" @click="showMatchdayDetails = !showMatchdayDetails">Details</button>
+      <button v-if="!matchdayOngoing" class="matchday-btn btn-interact" @click="toggleMatchdayOngoing">Anpfiff</button>
+      <button v-else class="matchday-btn btn-interact" @click="toggleMatchdayOngoing">Auszeit</button>
+      <button class="matchday-btn btn-interact" @click="showMatchdayDetails = !showMatchdayDetails">Details</button>
     </div>
     <div class="matches">
       <div v-for="match in matchday.matches">
@@ -88,7 +88,7 @@ export default {
     border-bottom: 1px dashed #f0275e;
     margin-bottom: 4px;
 
-    .btn-size {
+    .matchday-btn {
       min-width: 60px;
     }
   }
