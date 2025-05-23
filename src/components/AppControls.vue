@@ -31,7 +31,7 @@
                     title="Stop simulate matchdays in parallel"
                     @click="handleToggleSimulatePara"
                     >Stop</button>
-                <input v-model="globalState.simulateSpeed" type="number" title="Simulation speed" placeholder="Speed ms" style="max-width: 75px;">
+                <input v-model="globalState.simulateSpeed" type="number" title="Simulation speed in ms" placeholder="Speed" max="60000" style="max-width: 62px;">
 
                 <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
                 <button v-else class="app-controls-btn btn-interact" title="Close controls panel" @click="handleToggleControlsPane">Close</button>
@@ -40,10 +40,10 @@
         <div v-if="showFullPane" class="table-controls">
             <label class="descr-column">Table:</label>
             <div class="btn-column">
-                <button class="app-controls-btn btn-interact">1</button>
-                <button class="app-controls-btn btn-interact">2</button>
-                <button class="app-controls-btn btn-interact">2</button>
-                <button class="app-controls-btn btn-interact">2</button>
+                <button class="app-controls-btn btn-interact" title="Show result details" @click="handleTableShowResultDetails">Result</button>
+                <button class="app-controls-btn btn-interact" title="Show performance average details" @click="handleTableShowPerfAvgDetails">Perf Avg</button>
+                <button class="app-controls-btn btn-interact" title="Show performance efficiency details" @click="handleTableShowPerfEffDetails">Perf Eff</button>
+                <button class="app-controls-btn btn-interact" title="Show role details" @click="handleTableShowRoleDetails">Role</button>
             </div>
         </div>
         <div v-if="showFullPane" class="clubs-controls">
@@ -77,6 +77,19 @@ export default {
         },
         handleToggleControlsPane() {
             this.showFullPane = !this.showFullPane
+        },
+        
+        handleTableShowResultDetails() {
+            globalState.tableShowResultDetails = !globalState.tableShowResultDetails
+        },
+        handleTableShowPerfAvgDetails() {
+            globalState.tableShowPerfAvgDetails = !globalState.tableShowPerfAvgDetails
+        },
+        handleTableShowPerfEffDetails() {
+            globalState.tableShowPerfEffDetails = !globalState.tableShowPerfEffDetails
+        },
+        handleTableShowRoleDetails() {
+            globalState.tableShowRoleDetails = !globalState.tableShowRoleDetails
         },
     }
 }

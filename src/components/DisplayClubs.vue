@@ -248,7 +248,7 @@ export default {
   column-gap: 8px;
 
   .club {
-    max-width: 338px;
+    min-width: 320px;
     padding: 4px 8px;
     display: flex;
     flex-direction: column;

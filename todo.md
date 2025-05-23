@@ -1,5 +1,4 @@
 > Season Control 
-    -> Table: Base / Ability / Role /PerfEff + PerfAvg / Result
     -> Clubs: 3 Btn Eff / Avg / Result
         AllClubsList -> focusClub []
 
