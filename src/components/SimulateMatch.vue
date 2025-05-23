@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import { globalState } from '../lib/state.js'
 import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, calcShotCheck, updateTeam, updatePoints, updateFormData, updateForm, updateMorale, formatD0, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
@@ -135,6 +136,7 @@ export default {
   },
   data() {
     return {
+      globalState,
       matchTime: 0,
       matchLength: 60,
       initMatchesPlayedUpdated: false,
@@ -480,7 +482,7 @@ export default {
             return this.match
           }
         }
-      }, 50)
+      }, globalState.simulateSpeed)
     },
     stopSimulateMatch() {
       clearInterval(this.simulateMatchIntervall)

@@ -3,13 +3,38 @@
         <div class="season-controls">
             <label class="descr-column">Season:</label>
             <div class="btn-column">
-                <button v-if="!globalState.simulateSequ" class="app-controls-btn btn-interact" @click="handleToggleSimulateSequ">SimSequ</button>
-                <button v-else class="app-controls-btn btn-interact" @click="handleToggleSimulateSequ">Stop</button>
-                <button v-if="!globalState.simulatePara" class="app-controls-btn btn-interact" @click="handleToggleSimulatePara">SimPara</button>
-                <button v-else class="app-controls-btn btn-interact" @click="handleToggleSimulatePara">Stop</button>
+                <button 
+                    v-if="!globalState.simulateSequ"
+                    :disabled="globalState.simulatePara"
+                    class="app-controls-btn btn-interact"
+                    title="Simulate matchdays sequentially"
+                    @click="handleToggleSimulateSequ"
+                    >SimSequ</button>
+                <button 
+                    v-else 
+                    :disabled="globalState.simulatePara"
+                    class="app-controls-btn btn-interact"
+                    title="Stop simulate matchdays sequentially"
+                    @click="handleToggleSimulateSequ"
+                    >Stop</button>
+                <button 
+                    v-if="!globalState.simulatePara"
+                    :disabled="globalState.simulateSequ"
+                    class="app-controls-btn btn-interact"
+                    title="Simulate matchdays in parallel"
+                    @click="handleToggleSimulatePara"
+                    >SimPara</button>
+                <button 
+                    v-else 
+                    :disabled="globalState.simulateSequ"
+                    class="app-controls-btn btn-interact"
+                    title="Stop simulate matchdays in parallel"
+                    @click="handleToggleSimulatePara"
+                    >Stop</button>
+                <input v-model="globalState.simulateSpeed" type="number" title="Simulation speed" placeholder="Speed ms" style="max-width: 75px;">
 
-                <button v-if="!showFullPane" class="app-controls-btn" @click="handleToggleControlsPane">Open</button>
-                <button v-else class="app-controls-btn" @click="handleToggleControlsPane">Close</button>
+                <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
+                <button v-else class="app-controls-btn btn-interact" title="Close controls panel" @click="handleToggleControlsPane">Close</button>
             </div>
         </div>
         <div v-if="showFullPane" class="table-controls">
