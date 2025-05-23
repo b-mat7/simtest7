@@ -2,7 +2,7 @@
   <div class="display-clubs-wrapper">
     <div v-for="(club, index) in sortedClubs" :key=index class="club">
       <!-- BASE & ROLE -->
-      <div class="role">
+      <div class="role" :class="{'highlight': clubIsFocused(club)}">
         <label title="Inititals">{{ club.initials }}</label>
         <label title="Seed strength (rank)">{{ club.seed() }} ({{ club.rankSeed }}.)</label>
         <label title="Role (rank matchday, role difference)">{{ club.role }} ({{ club.rankMatchday }}. {{ club.roleDiff }})</label>
@@ -17,7 +17,7 @@
 
 
       <!-- ABILITY & TWEAK -->
-      <div class="ability-stats">
+      <div v-if="globalState.clubsShowRoleDetails" class="ability-stats">
         <div class="ability-entry" title="Initiative">
           <label>In</label>
           <label>{{ club.initiative }}</label>
@@ -58,7 +58,7 @@
 
 
       <!-- PERF AVG -->
-      <div class="tweak-stats" v-if="showPerfAvgDetails">
+      <div class="tweak-stats" v-if="globalState.clubsShowPerfAvgDetails">
         <div class="tweak-entry" title="Momentum avg">
           <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
         </div>
@@ -75,7 +75,7 @@
       <div class="perf-stats">
         <div class="column">
           <!-- PERF AVG -->
-          <div v-if="showPerfAvgDetails">
+          <div v-if="globalState.clubsShowPerfAvgDetails">
             <div class="perf-entry" title="Initiative strength avg">
               <label>Inø</label><label>{{ club.initiativeStrAvg() }}</label>
             </div>
@@ -97,7 +97,7 @@
           </div>
 
           <!-- PERF EFF -->
-          <div v-if="showPerfEffDetails">
+          <div v-if="globalState.clubsShowPerfEffDetails">
             <div class="perf-entry" title="Initiatives difference">
               <label>InDif</label><label>{{ club.initiativesDiff() }}</label>
             </div>
@@ -122,7 +122,7 @@
           </div>
 
           <!-- RESULT -->
-          <div>
+          <div v-if="globalState.clubsShowResultDetails">
             <div class="perf-entry" title="Shots : Shots against">
               <label>Sh</label><label>{{ club.attackShots + club.counterShots }} : {{ club.attackShotsAgainst + club.counterShotsAgainst }}</label>
             </div>
@@ -144,7 +144,7 @@
 
         <div class="column">
           <!-- PERF AVG -->
-          <div v-if="showPerfAvgDetails">
+          <div v-if="globalState.clubsShowPerfAvgDetails">
             <div class="perf-entry" title="Initative strength dice avg">
               <label>InDø</label><label>{{ club.initiativeStrDiceAvg() }}</label>
             </div>
@@ -166,7 +166,7 @@
           </div>
 
           <!-- PERF EFF -->
-          <div v-if="showPerfEffDetails">
+          <div v-if="globalState.clubsShowPerfEffDetails">
             <div class="perf-entry" title="Transitions difference">
               <label>TrDif</label><label>{{ club.transitionsDiff() }}</label>
             </div>
@@ -191,7 +191,7 @@
           </div>
 
           <!-- RESULT -->
-          <div>
+          <div v-if="globalState.clubsShowResultDetails">
             <div class="perf-entry" title="Shots efficiency">
               <label>Sh%</label><label>{{ club.shotsEff() }}</label>
             </div>
@@ -215,6 +215,7 @@
 </template>
 
 <script>
+import { globalState } from '../lib/state.js'
 import { formatD1, formatD2 } from '../lib/util.js'
 
 export default {
@@ -227,14 +228,16 @@ export default {
   },
   data() {
     return {
-      sortedClubs: [],
-      showPerfAvgDetails: true,
-      showPerfEffDetails: true,
+      globalState,
+      sortedClubs: []
     }
   },
   methods: {
     formatD1, // need to define it here again to be able to use it in template section
-    formatD2
+    formatD2,
+    clubIsFocused(club) {
+      return globalState.globalFocusClubs.includes(club.initials)
+    },
   },
   mounted() {
     this.sortedClubs = [...this.clubs].sort((a, b) => b.seed() - a.seed())

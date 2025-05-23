@@ -185,175 +185,175 @@
       <div class="body">
         <!-- Default columns -->
         <li v-for="(club, index) in liveTable" :key="index" class="entry">
-          <div class="column sticky-left-0" :class="{ 'bold': focusClubs.includes(club.initials) }">
+          <div class="column sticky-left-0" :class="{ 'bold': clubIsFocused(club) }">
             <label>{{ club.rankLive }}</label>
           </div>
-          <div class="column sticky-left-1 interact" :class="{ 'bold': focusClubs.includes(club.initials) }" @click="addFocusClub(club)">
+          <div class="column sticky-left-1 interact" :class="{ 'bold': clubIsFocused(club) }" @click="addTableFocusClub(club)">
             <label>{{ club.initials }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || focusClubs.includes(club.initials) }">
+          <div class="column" :class="{ 'bold': sortTopic === 'matchesPlayed' || clubIsFocused(club) }">
             <label>{{ club.matchesPlayed }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goals' || focusClubs.includes(club.initials) }">
+          <div class="column" :class="{ 'bold': sortTopic === 'goals' || clubIsFocused(club) }">
             <label>{{ club.goals }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || focusClubs.includes(club.initials) }">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainst' || clubIsFocused(club) }">
             <label>{{ club.goalsAgainst }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || focusClubs.includes(club.initials) }">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiff' || clubIsFocused(club) }">
             <label>{{ club.goalsDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || focusClubs.includes(club.initials) }">
+          <div class="column" :class="{ 'bold': sortTopic === '' || sortTopic === 'points' || clubIsFocused(club) }">
             <label>{{ club.points }}</label>
           </div>
 
 
           <!-- RESULT -->
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsAgainstPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsAgainstPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'goalsDiffPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.goalsDiffPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsPerMatch' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.pointsPerMatch() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'wins' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'wins' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.wins() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'winsOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.winsOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'lossesOvertime' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.lossesOvertime() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'losses' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowResultDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'losses' || clubIsFocused(club) }" v-if="globalState.tableShowResultDetails">
             <label>{{ club.losses() }}</label>
           </div>
 
 
           <!-- PERF EFF -->
-          <div class="column pointsL5" :class="{ 'bold': focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column pointsL5" :class="{ 'bold': clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.resultPoints.slice(-5).join('')  }}</label>
           </div>         
-          <div class="column" :class="{ 'bold': sortTopic === 'pointsL5Avg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'pointsL5Avg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.pointsL5Avg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.shotsEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'savesEff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'savesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.savesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotsSavesEff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.shotsSavesEff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativesDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.initiativesDiff() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfEffDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionsDiff' || clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.transitionsDiff() }}</label>
           </div>
 
 
           <!-- PERF AVG -->
-          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'momentumStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.momentumStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'formStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.formStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'moraleStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.moraleStrAvg()) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.initiativeStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiativeStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.initiativeStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.transitionStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transitionStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.attackStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attackStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.attackStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.shotStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shotStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.shotStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.defendStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defendStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.defendStrDiceAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.saveStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowPerfAvgDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'saveStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.saveStrDiceAvg() }}</label>
           </div>
 
 
           <!-- ROLE -->
-          <div class="column" :class="{ 'bold': sortTopic === 'seed' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'seed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.seed() }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'rankSeed' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.rankSeed }}</label>
           </div>
-          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <!-- <div class="column" :class="{ 'bold': sortTopic === 'rankMatchday' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.rankMatchday }}</label>
           </div> -->
-          <div class="column" :class="{ 'bold': focusClubs.includes(club.initials) } "v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': clubIsFocused(club) } "v-if="globalState.tableShowRoleDetails">
             <label>{{ club.role.slice(0, 5) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'roleDiff' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.roleDiff }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'priceMoney' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ (club.priceMoney / 1000).toFixed(2) }}</label>
           </div>
 
 
           <!-- ABILITY -->
-          <div class="column" :class="{ 'bold': sortTopic === 'initiative' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'initiative' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.initiative }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'transition' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'transition' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.transition }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'attack' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'attack' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.attack }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'shoot' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.shoot }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'defend' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'defend' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.defend }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'save' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'save' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ club.save }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'momentum' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.momentum) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'form' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'form' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.form) }}</label>
           </div>
-          <div class="column" :class="{ 'bold': sortTopic === 'morale' || focusClubs.includes(club.initials) }" v-if="globalState.tableShowRoleDetails">
+          <div class="column" :class="{ 'bold': sortTopic === 'morale' || clubIsFocused(club) }" v-if="globalState.tableShowRoleDetails">
             <label>{{ formatD2(club.morale) }}</label>
           </div>
         </li>
@@ -379,7 +379,7 @@ export default {
       globalState,
       liveTable: [],
       sortTopic: '',
-      focusClubs: ['FRB']
+      tableFocusClubs: []
     }
   },
   methods: {
@@ -396,8 +396,13 @@ export default {
       this.sortTopic = topic
       this.createLiveTable([...this.clubs])
     },
-    addFocusClub(club) {
-      this.focusClubs.includes(club.initials) ? this.focusClubs = this.focusClubs.filter(item => item !== club.initials) : this.focusClubs.push(club.initials)
+    addTableFocusClub(club) {
+      this.tableFocusClubs.includes(club.initials) 
+        ? this.tableFocusClubs = this.tableFocusClubs.filter(item => item !== club.initials) 
+        : this.tableFocusClubs.push(club.initials)
+    },
+    clubIsFocused(club) {
+      return globalState.globalFocusClubs.includes(club.initials) || this.tableFocusClubs.includes(club.initials)
     }
   },
   watch: {

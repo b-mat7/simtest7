@@ -2,9 +2,9 @@
   <div class="simulate-match-wrapper">
     <div class="main">
       <div class="teams">
-        <label>{{ home.initials }}</label>
+        <label :class="{'highlight': clubIsFocused(home)}">{{ home.initials }}</label>
         <label> - </label>
-        <label>{{ away.initials }}</label>
+        <label :class="{'highlight': clubIsFocused(away)}">{{ away.initials }}</label>
       </div>
       <div class="standing">
         <label>{{ homeGoals }}</label>
@@ -200,6 +200,9 @@ export default {
     formatD0, // need to define it here again to be able to use it in template section
     formatD1,
     formatD2,
+    clubIsFocused(club) {
+      return globalState.globalFocusClubs.includes(club.initials)
+    },
     startSimulateMatch() {  // xday
     },
     simulateMatch() {
@@ -513,7 +516,7 @@ export default {
     justify-content: space-around;
 
     .teams {
-      width: 4.5rem;
+      width: 4.75rem;
     }
     
     .standing {

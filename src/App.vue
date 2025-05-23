@@ -1,6 +1,6 @@
 <template>
   <div class="app-controls-container">
-    <AppControls />
+    <AppControls :clubs/>
   </div>
 
   <div v-if="clubs.length > 0" class="season-container">
@@ -130,6 +130,11 @@ body {
       border-radius: 4px;
       // box-shadow: 0 0 8px #f0275e;
     }
+  }
+
+  .highlight {
+      font-weight: 900;
+      color: #f0275e;
   }
 }
 </style>

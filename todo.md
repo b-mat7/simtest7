@@ -1,7 +1,6 @@
-> Season Control 
-    -> Clubs: 3 Btn Eff / Avg / Result
-        AllClubsList -> focusClub []
+> Season Control focusClub -> in Clubs array?
 
+> class highlight in App for global focusClub
 
 > Tables: + Rank diff zu last matchday
 

@@ -49,9 +49,18 @@
         <div v-if="showFullPane" class="clubs-controls">
             <label class="descr-column">Clubs:</label>
             <div class="btn-column">
-                <button class="app-controls-btn btn-interact">1</button>
-                <button class="app-controls-btn btn-interact">2</button>
-                <button class="app-controls-btn btn-interact">2</button>
+                <button class="app-controls-btn btn-interact" title="Show result details" @click="handleClubsShowResultDetails">Result</button>
+                <button class="app-controls-btn btn-interact" title="Show performance average details" @click="handleClubsShowPerfAvgDetails">Perf Avg</button>
+                <button class="app-controls-btn btn-interact" title="Show performance efficiency details" @click="handleClubsShowPerfEffDetails">Perf Eff</button>
+                <button class="app-controls-btn btn-interact" title="Show role details" @click="handleClubsShowRoleDetails">Role</button>
+            </div>
+        </div>
+        <div v-if="showFullPane" class="clubs-list-controls">
+            <label class="descr-column">Focus:</label>
+            <div class="btn-column">
+                <div v-for="(club, idx) in clubs" :key="idx" class="club-item interact" :class="{'highlight': globalState.globalFocusClubs.includes(club.initials)}" @click="handleAddGlobalFocusClub(club)">
+                    <label>{{ club.initials }}</label>
+                </div>
             </div>
         </div>
     </div>
@@ -62,6 +71,12 @@ import { globalState } from '../lib/state.js'
 
 export default {
     name: 'AppControls',
+    props: {
+        clubs: {
+            type: Array,
+            required: true
+        }
+    },
     data() {
         return {
             globalState,
@@ -91,6 +106,25 @@ export default {
         handleTableShowRoleDetails() {
             globalState.tableShowRoleDetails = !globalState.tableShowRoleDetails
         },
+
+        handleClubsShowResultDetails() {
+            globalState.clubsShowResultDetails = !globalState.clubsShowResultDetails
+        },
+        handleClubsShowPerfAvgDetails() {
+            globalState.clubsShowPerfAvgDetails = !globalState.clubsShowPerfAvgDetails
+        },
+        handleClubsShowPerfEffDetails() {
+            globalState.clubsShowPerfEffDetails = !globalState.clubsShowPerfEffDetails
+        },
+        handleClubsShowRoleDetails() {
+            globalState.clubsShowRoleDetails = !globalState.clubsShowRoleDetails
+        },
+
+        handleAddGlobalFocusClub(club) {
+            globalState.globalFocusClubs.includes(club.initials)
+                ? globalState.globalFocusClubs = globalState.globalFocusClubs.filter(item => item !== club.initials)
+                : globalState.globalFocusClubs.push(club.initials)
+        }
     }
 }
 </script>
@@ -113,7 +147,8 @@ export default {
 
     .season-controls,
     .table-controls,
-    .clubs-controls {
+    .clubs-controls,
+    .clubs-list-controls {
         display: flex;
         column-gap: 8px;
 
@@ -128,6 +163,11 @@ export default {
 
             .app-controls-btn {
                 min-width: 70px;
+            }
+
+            .club-item {
+                width: 2.5rem;
+                text-align: center;
             }
         }
         
