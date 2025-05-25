@@ -2,16 +2,13 @@
     focusClub -> in Clubs array?
     mediaQuerry auf diese komponente
 
-> Tables: + Rank diff zu last matchday
-
----
-
 > DiceStrAvg calc -> Real dice value
 
 
 > MATCHDAY TABLES:
-DisplayTable -> DisplayLiveTable 
-+ DisplayMatchdayTable mit Auswahl im Season Control (single days, days from-to)
+DisplayTable -> DisplayLiveTable
+    + DisplayMatchdayTable mit Auswahl im Season Control (Just a single day, table just about from-to days)
+    LiveTable: + Rank diff zu last matchday
 
 
 > Matchday -> focus on current running day?
