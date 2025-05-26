@@ -21,9 +21,9 @@ export class Club {
     /** @type {number} */
     this.attack = seedData.attack
     /** @type {number} */
-    this.shoot = seedData.shoot
-    /** @type {number} */
     this.defend = seedData.defend
+    /** @type {number} */
+    this.shoot = seedData.shoot    
     /** @type {number} */
     this.save = seedData.save
 
@@ -84,14 +84,12 @@ export class Club {
 
 
   // --- SUM --- (methods die auch SUM sind)
-  initiativesDiff() {
-    return this.attacks - this.defends
-  }
-
-  transitionsDiff() {
-    return this.counters - this.fallbacks
-  }
-
+  // initiativesDiff() {
+  //   return this.attacks - this.defends
+  // }
+  // transitionsDiff() {
+  //   return this.counters - this.fallbacks
+  // }
   goalsDiff() {
     return this.goals - this.goalsAgainst
   }
@@ -199,12 +197,32 @@ export class Club {
     ? formatD1((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)) 
     : 0
   }
+  // AtSh% "Attack shots : Attack shots against (percentage from all)"
+  // formatD1(this.attackShots / (this.attackShots + this.counterShots) * 100) : formatD1(this.attackShotsAgainst / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)
+
+  // CoSh% "Counter shots : Counter shots against (percentage from all)"
+  // formatD1(this.counterShots / (this.attackShots + this.counterShots) * 100) : formatD1(this.counterShotsAgainst / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)
 
 
   // --- PERF EFF Last x ( % ) ---
 
 
   // --- RESULT / OTHER ---
+  shotsPerMatch() {
+    return this.matchesPlayed > 0 
+    ? formatD1((this.attackShots + this.counterShots) / this.matchesPlayed) 
+    : 0
+  }
+  shotsAgainstPerMatch() {
+    return this.matchesPlayed > 0 
+    ? formatD1((this.attackShotsAgainst + this.counterShotsAgainst) / this.matchesPlayed) 
+    : 0
+  }
+  savesPerMatch() {
+    return this.matchesPlayed > 0 
+    ? formatD1(this.saves / this.matchesPlayed) 
+    : 0
+  }
   goalsPerMatch() {
     return this.matchesPlayed > 0 
     ? formatD1(this.goals / this.matchesPlayed) 

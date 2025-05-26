@@ -30,14 +30,14 @@
           <label>At</label>
           <label>{{ club.attack }}</label>
         </div>
-        <div class="ability-entry" title="Shoot">
-          <label>Sh</label>
-          <label>{{ club.shoot }}</label>
-        </div>
         <div class="ability-entry" title="Defend">
           <label>De</label>
           <label>{{ club.defend }}</label>
         </div>
+        <div class="ability-entry" title="Shoot">
+          <label>Sh</label>
+          <label>{{ club.shoot }}</label>
+        </div>        
         <div class="ability-entry" title="Save">
           <label>Sa</label>
           <label>{{ club.save }}</label>
@@ -57,22 +57,38 @@
       </div>
 
 
-      <!-- PERF AVG TOTAL -->
-      <div class="tweak-stats" v-if="globalState.clubsShowPerfAvgDetails">
-        <div class="tweak-entry" title="Momentum avg">
-          <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
-        </div>
-        <div class="tweak-entry" title="Form avg">
-          <label>Foø</label><label>{{ club.formStrAvg() }}</label>
-        </div>
-        <div class="tweak-entry" title="Morale avg">
-          <label>Mrø</label><label>{{ club.moraleStrAvg() }}</label>
-        </div>
-      </div>
-
-
-      <!-- PERF AVG TOTAL & EFF TOTAL & RESULT -->
+      <!-- PERF AVG & EFF & RESULT -->
       <div class="perf-stats">
+        <div class="column">
+          <!-- PERF AVG Last x -->
+          <div v-if="globalState.clubsShowPerfAvgDetails">
+          </div>
+
+          <!-- PERF EFF Last x -->
+          <div v-if="globalState.clubsShowPerfEffDetails">
+          </div>
+
+          <!-- RESULT -->
+          <div v-if="globalState.clubsShowResultDetails">
+            <div class="perf-entry" title="Shots : Shots against per match">
+              <label>Sh/M</label><label>{{ club.shotsPerMatch() }} : {{ club.shotsAgainstPerMatch() }}</label>
+            </div>
+            <div class="perf-entry" title="Saves per match">
+              <label>Sa/M</label><label>{{ club.savesPerMatch() }}</label>
+            </div>
+            <div class="perf-entry" title="Goals : Goals against per match">
+              <label>G/M</label><label>{{ club.goalsPerMatch() }} : {{ club.goalsAgainstPerMatch() }}</label>
+            </div>
+            <div class="perf-entry" title="Goals difference per match">
+              <label>Dif/M</label><label>{{ club.goalsDiffPerMatch() }}</label>
+            </div>
+            <div class="perf-entry" title="Points per match">
+              <label>P/M</label><label>{{ club.pointsPerMatch() }}</label>
+            </div>
+          </div>
+        </div>
+
+
         <div class="column">
           <!-- PERF AVG TOTAL -->
           <div v-if="globalState.clubsShowPerfAvgDetails">
@@ -85,39 +101,54 @@
             <div class="perf-entry" title="Attack strength avg">
               <label>Atø</label><label>{{ club.attackStrAvg() }}</label>
             </div>
-            <div class="perf-entry" title="Shot strength avg">
-              <label>Shø</label><label>{{ club.shotStrAvg() }}</label>
-            </div>
             <div class="perf-entry" title="Defend strength avg">
               <label>Deø</label><label>{{ club.defendStrAvg() }}</label>
             </div>
+            <div class="perf-entry" title="Shot strength avg">
+              <label>Shø</label><label>{{ club.shotStrAvg() }}</label>
+            </div>            
             <div class="perf-entry" title="Save strength avg">
               <label>Saø</label><label>{{ club.saveStrAvg() }}</label>
+            </div>
+            <div class="perf-entry" title="Save strength avg">
+              <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
+            </div>
+            <div class="perf-entry" title="Save strength avg">
+              <label>Foø</label><label>{{ club.formStrAvg() }}</label>
+            </div>
+            <div class="perf-entry" title="Save strength avg">
+              <label>Mrø</label><label>{{ club.moraleStrAvg() }}</label>
             </div>
           </div>
 
           <!-- PERF EFF TOTAL -->
           <div v-if="globalState.clubsShowPerfEffDetails">
-            <div class="perf-entry" title="Initiatives difference">
-              <label>InDif</label><label>{{ club.initiativesDiff() }}</label>
-            </div>
             <div class="perf-entry" title="Initiatives efficiency">
               <label>In%</label><label>{{ club.initiativesEff() }}</label>
             </div>
-            <div class="perf-entry" title="Attacks">
-              <label>At</label><label>{{ club.attacks }}</label>
+            <div class="perf-entry" title="Transitions efficiency">
+              <label>Tr%</label><label>{{ club.transitionsEff() }}</label>
             </div>
             <div class="perf-entry" title="Attacks efficiency">
               <label>At%</label><label>{{ club.attacksEff() }}</label>
             </div>
-            <div class="perf-entry" title="Fallbacks">
-              <label>Fb</label><label>{{ club.fallbacks }}</label>
+            <div class="perf-entry" title="Defends efficiency">
+              <label>De%</label><label>{{ club.defendsEff() }}</label>
+            </div>
+            <div class="perf-entry" title="Counters efficiency">
+              <label>Co%</label><label>{{ club.countersEff() }}</label>
             </div>
             <div class="perf-entry" title="Fallbacks efficiency">
               <label>Fb%</label><label>{{ club.fallbacksEff() }}</label>
             </div>
-            <div class="perf-entry" title="Attack shots : Attack shots against (percentage from all)">
-              <label>AtSh%</label><label>{{ formatD1(club.attackShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.attackShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
+            <div class="perf-entry" title="Shots efficiency">
+              <label>Sh%</label><label>{{ club.shotsEff() }}</label>
+            </div>
+            <div class="perf-entry" title="Saves efficiency">
+              <label>Sa%</label><label>{{ club.savesEff() }}</label>
+            </div>            
+            <div class="perf-entry" title="Sum of Shots & Saves efficiency">
+              <label>∑%</label><label>{{ club.shotsSavesEff() }}</label>
             </div>
           </div>
 
@@ -137,57 +168,6 @@
             </div>
             <div class="perf-entry" title="Points">
               <label>P</label><label>{{ club.points }}</label>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="column">
-          <!-- PERF AVG TOTAL -->
-          <div v-if="globalState.clubsShowPerfAvgDetails">
-          </div>
-
-          <!-- PERF EFF TOTAL -->
-          <div v-if="globalState.clubsShowPerfEffDetails">
-            <div class="perf-entry" title="Transitions difference">
-              <label>TrDif</label><label>{{ club.transitionsDiff() }}</label>
-            </div>
-            <div class="perf-entry" title="Transitions efficiency">
-              <label>Tr%</label><label>{{ club.transitionsEff() }}</label>
-            </div>
-            <div class="perf-entry" title="Defends">
-              <label>De</label><label>{{ club.defends }}</label>
-            </div>
-            <div class="perf-entry" title="Defends efficiency">
-              <label>De%</label><label>{{ club.defendsEff() }}</label>
-            </div>
-            <div class="perf-entry" title="Counters">
-              <label>Co</label><label>{{ club.counters }}</label>
-            </div>
-            <div class="perf-entry" title="Counters efficiency">
-              <label>Co%</label><label>{{ club.countersEff() }}</label>
-            </div>
-            <div class="perf-entry" title="Counter shots : Counter shots against (percentage from all)">
-              <label>CoSh%</label><label>{{ formatD1(club.counterShots / (club.attackShots + club.counterShots) * 100) }} : {{ formatD1(club.counterShotsAgainst / (club.attackShotsAgainst + club.counterShotsAgainst) * 100)}}</label>
-            </div>
-          </div>
-
-          <!-- RESULT -->
-          <div v-if="globalState.clubsShowResultDetails">
-            <div class="perf-entry" title="Shots efficiency">
-              <label>Sh%</label><label>{{ club.shotsEff() }}</label>
-            </div>
-            <div class="perf-entry" title="Saves efficiency">
-              <label>Sa%</label><label>{{ club.savesEff() }}</label>
-            </div>
-            <div class="perf-entry" title="Goals : Goals against per match">
-              <label>G/M</label><label>{{ club.goalsPerMatch() }} : {{ club.goalsAgainstPerMatch() }}</label>
-            </div>
-            <div class="perf-entry" title="Goals difference per match">
-              <label>Dif/M</label><label>{{ club.goalsDiffPerMatch() }}</label>
-            </div>
-            <div class="perf-entry" title="Points per match">
-              <label>P/M</label><label>{{ club.pointsPerMatch() }}</label>
             </div>
           </div>
         </div>
@@ -268,18 +248,6 @@ export default {
         display: flex;
         flex-direction: column;
         width: 2rem;
-      }
-    }
-
-    .tweak-stats {
-      display: flex;
-      justify-content: space-between;
-
-      .tweak-entry {
-        width: 4.75rem;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px dashed #f0275e;
       }
     }
     
