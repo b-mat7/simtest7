@@ -9,7 +9,7 @@
       </div>
 
 
-      <!-- PERF AVG & RESULT-->
+      <!-- PERF AVG TOTAL & RESULT-->
       <div class="result">
         <label title="Points last 5 games (avg)">P5(ø) {{ club.resultPoints.slice(-5) }} ({{ club.pointsL5Avg() }})</label>
         <label title="W - OTW - OTL - L">{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{ club.losses() }}</label>
@@ -57,7 +57,7 @@
       </div>
 
 
-      <!-- PERF AVG -->
+      <!-- PERF AVG TOTAL -->
       <div class="tweak-stats" v-if="globalState.clubsShowPerfAvgDetails">
         <div class="tweak-entry" title="Momentum avg">
           <label>Mmø</label><label>{{ club.momentumStrAvg() }}</label>
@@ -71,10 +71,10 @@
       </div>
 
 
-      <!-- PERF AVG & EFF & RESULT -->
+      <!-- PERF AVG TOTAL & EFF TOTAL & RESULT -->
       <div class="perf-stats">
         <div class="column">
-          <!-- PERF AVG -->
+          <!-- PERF AVG TOTAL -->
           <div v-if="globalState.clubsShowPerfAvgDetails">
             <div class="perf-entry" title="Initiative strength avg">
               <label>Inø</label><label>{{ club.initiativeStrAvg() }}</label>
@@ -96,7 +96,7 @@
             </div>
           </div>
 
-          <!-- PERF EFF -->
+          <!-- PERF EFF TOTAL -->
           <div v-if="globalState.clubsShowPerfEffDetails">
             <div class="perf-entry" title="Initiatives difference">
               <label>InDif</label><label>{{ club.initiativesDiff() }}</label>
@@ -143,29 +143,11 @@
 
 
         <div class="column">
-          <!-- PERF AVG -->
+          <!-- PERF AVG TOTAL -->
           <div v-if="globalState.clubsShowPerfAvgDetails">
-            <div class="perf-entry" title="Initative strength dice avg">
-              <label>InDø</label><label>{{ club.initiativeStrDiceAvg() }}</label>
-            </div>
-            <div class="perf-entry" title="Transition strength dice avg">
-              <label>TrDø</label><label>{{ club.transitionStrDiceAvg() }}</label>
-            </div>
-            <div class="perf-entry" title="Attack strength dice avg">
-              <label>AtDø</label><label>{{ club.attackStrDiceAvg() }}</label>
-            </div>
-            <div class="perf-entry" title="Shot strength dice avg">
-              <label>ShDø</label><label>{{ club.shotStrDiceAvg() }}</label>
-            </div>
-            <div class="perf-entry" title="Defend strength dice avg">
-              <label>DeDø</label><label>{{ club.defendStrDiceAvg() }}</label>
-            </div>
-            <div class="perf-entry" title="Save strength dice avg">
-              <label>SaDø</label><label>{{ club.saveStrDiceAvg() }}</label>
-            </div>
           </div>
 
-          <!-- PERF EFF -->
+          <!-- PERF EFF TOTAL -->
           <div v-if="globalState.clubsShowPerfEffDetails">
             <div class="perf-entry" title="Transitions difference">
               <label>TrDif</label><label>{{ club.transitionsDiff() }}</label>

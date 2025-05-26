@@ -47,8 +47,9 @@ export class Club {
 
 
     // ----- SUM -----
-    this.matchesPlayed = 0
     this.intervalsPlayed = 0
+    this.matchesPlayed = 0
+
     this.initiativeStrSum = 0
     this.transitionStrSum = 0
     this.attackStrSum = 0
@@ -68,9 +69,9 @@ export class Club {
     this.attackShotsAgainst = 0
     this.counterShots = 0
     this.counterShotsAgainst = 0
-    this.saves = 0
     this.goals = 0
     this.goalsAgainst = 0
+    this.saves = 0
     this.points = 0
     this.resultPoints = []
   }
@@ -96,7 +97,7 @@ export class Club {
   }
 
 
-  // --- PERF AVG ---
+  // --- PERF AVG TOTAL ---
   pointsL5Avg() {
     return this.matchesPlayed > 0 
     ? formatD2((this.resultPoints.slice(-5).reduce((a, b) => a + b, 0) / Math.min(this.resultPoints.length, 5))) 
@@ -147,39 +148,12 @@ export class Club {
     ? formatD2(this.moraleStrSum / this.matchesPlayed) 
     : 0
   }
-  initiativeStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? formatD2(this.initiativeStrAvg() - ((this.initiative - this.transition) + this.initiative * this.momentumStrAvg() * 1.3)) 
-    : 0
-  }
-  transitionStrDiceAvg() {
-    return this.matchesPlayed > 0  
-    ? formatD2(this.transitionStrAvg() - ((this.transition - this.initiative) + this.transition * this.momentumStrAvg() * 1.3)) 
-    : 0 
-  }
-  attackStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? formatD2(this.attackStrAvg() - (this.attack * this.moraleStrAvg() + this.formStrAvg())) 
-    : 0
-  }
-  defendStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? formatD2(this.defendStrAvg() - (this.defend * this.moraleStrAvg() + this.formStrAvg())) 
-    : 0
-  }
-  shotStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? formatD2(this.shotStrAvg() - (this.shoot + this.formStrAvg() / 2)) 
-    : 0
-  }
-  saveStrDiceAvg() {
-    return this.matchesPlayed > 0 
-    ? formatD2(this.saveStrAvg() - (this.save + this.formStrAvg() / 2)) 
-    : 0
-  }
 
 
-  // --- PERF EFF ( % ) ---
+  // --- PERF AVG Last x ---
+
+
+  // --- PERF EFF TOTAL ( % ) ---
   initiativesEff() {
     return this.matchesPlayed > 0 
     ? formatD1(this.attacks / this.intervalsPlayed * 100) 
@@ -225,6 +199,9 @@ export class Club {
     ? formatD1((this.goals / (this.attackShots + this.counterShots) * 100) + (this.saves / (this.attackShotsAgainst + this.counterShotsAgainst) * 100)) 
     : 0
   }
+
+
+  // --- PERF EFF Last x ( % ) ---
 
 
   // --- RESULT / OTHER ---

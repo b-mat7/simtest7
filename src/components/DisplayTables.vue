@@ -57,7 +57,7 @@
         </div>
 
 
-        <!-- PERF EFF -->
+        <!-- PERF EFF TOTAL -->
         <div class="column" v-if="globalState.tableShowPerfEffDetails">
           <label title="Points last 5 games">P5</label>
         </div>
@@ -81,7 +81,7 @@
         </div>
 
 
-        <!-- PERF AVG -->
+        <!-- PERF AVG TOTAL -->
         <div class="column interact" :class="{ 'highlight': sortTopic === 'momentumStrAvg' }" @click="setSortTopic('momentumStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Momentum avg">Mmø</label>
         </div>
@@ -94,38 +94,20 @@
         <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativeStrAvg' }" @click="setSortTopic('initiativeStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Initiative strength avg">Inø</label>
         </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativeStrDiceAvg' }" @click="setSortTopic('initiativeStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Initiative strength dice avg">InDø</label>
-        </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'transitionStrAvg' }" @click="setSortTopic('transitionStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Transition strength avg">Trø</label>
-        </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'transitionStrDiceAvg' }" @click="setSortTopic('transitionStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Transition strength dice avg">TrDø</label>
         </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'attackStrAvg' }" @click="setSortTopic('attackStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Attack strength avg">Atø</label>
         </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'attackStrDiceAvg' }" @click="setSortTopic('attackStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Attack strength dice avg">AtDø</label>
-        </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'shotStrAvg' }" @click="setSortTopic('shotStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Shot strength avg">Shø</label>
-        </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'shotStrDiceAvg' }" @click="setSortTopic('shotStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Shot strength dice avg">ShDø</label>
         </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'defendStrAvg' }" @click="setSortTopic('defendStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Defend strength avg">Deø</label>
         </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'defendStrDiceAvg' }" @click="setSortTopic('defendStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Defend strength dice avg">DeDø</label>
-        </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'saveStrAvg' }" @click="setSortTopic('saveStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
           <label title="Save strength avg">Saø</label>
-        </div>
-        <div class="column interact" :class="{ 'highlight': sortTopic === 'saveStrDiceAvg' }" @click="setSortTopic('saveStrDiceAvg')" v-if="globalState.tableShowPerfAvgDetails">
-          <label title="Save strength dice avg">SaDø</label>
         </div>
 
 
@@ -235,7 +217,7 @@
           </div>
 
 
-          <!-- PERF EFF -->
+          <!-- PERF EFF TOTAL -->
           <div class="column pointsL5" :class="{ 'highlight': clubIsFocused(club) }" v-if="globalState.tableShowPerfEffDetails">
             <label>{{ club.resultPoints.slice(-5).join('')  }}</label>
           </div>         
@@ -259,7 +241,7 @@
           </div>
 
 
-          <!-- PERF AVG -->
+          <!-- PERF AVG TOTAL -->
           <div class="column" :class="{ 'highlight': sortTopic === 'momentumStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ (club.momentumStrAvg()) }}</label>
           </div>
@@ -272,38 +254,20 @@
           <div class="column" :class="{ 'highlight': sortTopic === 'initiativeStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.initiativeStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'initiativeStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.initiativeStrDiceAvg() }}</label>
-          </div>
           <div class="column" :class="{ 'highlight': sortTopic === 'transitionStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.transitionStrAvg() }}</label>
-          </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'transitionStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.transitionStrDiceAvg() }}</label>
           </div>
           <div class="column" :class="{ 'highlight': sortTopic === 'attackStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.attackStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'attackStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.attackStrDiceAvg() }}</label>
-          </div>
           <div class="column" :class="{ 'highlight': sortTopic === 'shotStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.shotStrAvg() }}</label>
-          </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'shotStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.shotStrDiceAvg() }}</label>
           </div>
           <div class="column" :class="{ 'highlight': sortTopic === 'defendStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.defendStrAvg() }}</label>
           </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'defendStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.defendStrDiceAvg() }}</label>
-          </div>
           <div class="column" :class="{ 'highlight': sortTopic === 'saveStrAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
             <label>{{ club.saveStrAvg() }}</label>
-          </div>
-          <div class="column" :class="{ 'highlight': sortTopic === 'saveStrDiceAvg' || clubIsFocused(club) }" v-if="globalState.tableShowPerfAvgDetails">
-            <label>{{ club.saveStrDiceAvg() }}</label>
           </div>
 
 
