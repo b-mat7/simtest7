@@ -374,12 +374,6 @@ import { updateRank, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
   name: 'DisplayTables',
-  props: {
-    clubs : {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       globalState,
@@ -400,7 +394,7 @@ export default {
     },
     setSortTopic(topic) {
       this.sortTopic = topic
-      this.createLiveTable([...this.clubs])
+      this.createLiveTable([...this.globalState.simClubs])
     },
     addTableFocusClub(club) {
       this.tableFocusClubs.includes(club.initials) 
@@ -412,7 +406,7 @@ export default {
     }
   },
   watch: {
-    clubs: {
+    'globalState.simClubs': {
       handler(newClubs, oldClubs) {
         this.createLiveTable([...newClubs], null, 'rankLive')
       },

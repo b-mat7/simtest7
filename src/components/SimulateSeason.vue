@@ -10,7 +10,7 @@ season<template>
 import SimulateMatchday from './SimulateMatchday.vue'
 
 import { globalState } from '../lib/state.js'
-import { updateRank, prepareRole, updateRoleDiff } from '../lib/util.js'
+import { updateRank, prepareRole, updateRoleDiff, updatePriceMoney } from '../lib/util.js'
 
 export default {
   name: 'SimulateSeason',
@@ -18,9 +18,6 @@ export default {
     schedule: {
       type: Object,
       required: true
-    },
-    clubs: {
-      type: Array
     }
   },
   data() {
@@ -58,16 +55,16 @@ export default {
       }
     },
     prepareSeason() {
-      updateRank(this.clubs, null, 'rankSeed')
-      updateRank(this.clubs, null, 'rankMatchday')
-      prepareRole(this.clubs)
+      updateRank(this.globalState.simClubs, null, 'rankSeed')
+      updateRank(this.globalState.simClubs, null, 'rankMatchday')
+      prepareRole(this.globalState.simClubs)
     },
     handlefinishedMatchdays(dayNr) {  // für resetMatch() müsste überabeitet werden
       this.finishedMatchdays.push(dayNr)
       
-      updateRank(this.clubs, null, 'rankMatchday')
-      updateRoleDiff(this.clubs)
-      // updatePriceMoney(this.clubs, this.finishedMatchdays)
+      updateRank(this.globalState.simClubs, null, 'rankMatchday')
+      updateRoleDiff(this.globalState.simClubs)
+      // updatePriceMoney(this.globalState.simClubs, this.finishedMatchdays)
     }
   },
   watch: {

@@ -182,16 +182,14 @@ import { formatD1, formatD2 } from '../lib/util.js'
 
 export default {
   name: 'DisplayClubs',
-  props: {
-    clubs: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
-      globalState,
-      sortedClubs: []
+      globalState
+    }
+  },
+  computed: {
+    sortedClubs() {
+      return [...this.globalState.simClubs].sort((a, b) => b.seed() - a.seed())
     }
   },
   methods: {
@@ -200,9 +198,6 @@ export default {
     clubIsFocused(club) {
       return globalState.globalFocusClubs.includes(club.initials)
     },
-  },
-  mounted() {
-    this.sortedClubs = [...this.clubs].sort((a, b) => b.seed() - a.seed())
   }
 }
 </script>

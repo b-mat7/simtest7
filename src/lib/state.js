@@ -13,9 +13,12 @@ const globalState = reactive({
     clubsShowResultDetails: true,
     clubsShowPerfAvgDetails: false,
     clubsShowPerfEffDetails: false,
-    clubsShowRoleDetails: false,
+    clubsShowRoleDetails: true,
 
-    globalFocusClubs: ['FRB']
+    globalFocusClubs: ['FRB'],
+
+    initClubs: [],
+    simClubs: []
 })
 
 export {

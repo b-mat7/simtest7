@@ -492,14 +492,14 @@ export default {
 
             this.liveTicker.push(`${this.matchTime}. Min | +++ End of the game +++`)
 
-            // emit: match is finished
-            this.$emit('matchFinished', this.match.matchNr)
-
-            // add match stuff to matchReport{} and return match
-            this.match.matchReport.liveTicker = this.liveTicker
+            // add match stuff to matchReport{}
+            this.match.matchReport.liveTicker = [...this.liveTicker]
+            this.match.matchReport.home = { ...this.home }
+            this.match.matchReport.away = { ...this.away }
             // +: result (homeGoals/awayGoals), stats (aus details->stats)
 
-            return this.match
+            // emit: match is finished
+            this.$emit('matchFinished', this.match.matchNr)
           }
         }
       }, globalState.simulateSpeed)

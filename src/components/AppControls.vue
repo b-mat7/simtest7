@@ -106,7 +106,7 @@
         <div v-if="showFullPane" class="clubs-list-controls">
             <label class="descr-column">Focus:</label>
             <div class="btn-column">
-                <div v-for="(club, idx) in clubs" :key="idx" class="club-item interact" :class="{'highlight': globalState.globalFocusClubs.includes(club.initials)}" @click="handleAddGlobalFocusClub(club)">
+                <div v-for="(club, idx) in globalState.initClubs" :key="idx" class="club-item interact" :class="{'highlight': globalState.globalFocusClubs.includes(club.initials)}" @click="handleAddGlobalFocusClub(club)">
                     <label>{{ club.initials }}</label>
                 </div>
             </div>
@@ -119,12 +119,6 @@ import { globalState } from '../lib/state.js'
 
 export default {
     name: 'AppControls',
-    props: {
-        clubs: {
-            type: Array,
-            required: true
-        }
-    },
     data() {
         return {
             globalState,

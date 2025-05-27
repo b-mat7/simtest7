@@ -1,18 +1,19 @@
 <template>
   <div class="app-controls-container">
-    <AppControls :clubs/>
+    <AppControls />
   </div>
 
-  <div v-if="clubs.length > 0" class="season-container">
-    <SimulateSeason :clubs :schedule/>
+  <!-- ensure clubs are available for prepareSeason() tasks -->
+  <div v-if="this.globalState.simClubs.length !== 0" class="season-container">
+    <SimulateSeason :schedule/>
   </div>
 
   <div class="tables-container">
-    <DisplayTables :clubs/>
+    <DisplayTables />
   </div>
 
-  <div v-if="clubs.length > 0" class="clubs-container">
-    <DisplayClubs :clubs/>
+  <div class="clubs-container">
+    <DisplayClubs />
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import DisplayClubs from './components/DisplayClubs.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
 import DisplayTables from './components/DisplayTables.vue'
 
+import { globalState } from './lib/state.js'
 import { Club } from './models/club.js'
 import { clubSeedData } from './data/clubSeed.js'
 import { createSchedule } from './lib/util.js'
@@ -30,6 +32,7 @@ export default {
   name: 'App',
   data() {
     return {
+      globalState,
       season: 2023,
       league: 'DEL2',
       clubs: [],
@@ -38,9 +41,10 @@ export default {
   },
   methods: {
     init(Club, clubSeedData) {
-      this.clubs = clubSeedData.map(seedData => new Club(seedData))
+      this.globalState.initClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
+      this.globalState.simClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
 
-      this.schedule = createSchedule(this.clubs)
+      this.schedule = createSchedule(this.globalState.simClubs)
     }
   },
   mounted() {
