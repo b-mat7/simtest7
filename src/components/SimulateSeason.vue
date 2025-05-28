@@ -1,4 +1,4 @@
-season<template>
+<template>
   <div class="simulate-season-wrapper">
     <div v-for="matchday in schedule.matchdayList">
       <SimulateMatchday :matchday :simulatePara="globalState.simulatePara" :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>

@@ -19,9 +19,9 @@
 
 <script>
 import AppControls from './components/AppControls.vue'
-import DisplayClubs from './components/DisplayClubs.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
 import DisplayTables from './components/DisplayTables.vue'
+import DisplayClubs from './components/DisplayClubs.vue'
 
 import { globalState } from './lib/state.js'
 import { Club } from './models/club.js'
@@ -52,9 +52,9 @@ export default {
   },
   components: {
     AppControls,
-    DisplayClubs,
     SimulateSeason,
     DisplayTables,
+    DisplayClubs
   }
 }
 </script>

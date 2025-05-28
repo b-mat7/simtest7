@@ -4,14 +4,15 @@
       <div class="header">
         <!-- TABLE HEADER -->
         <div class="column sticky-left-0 split">
-          <label title="Live Table">Live</label>
+          <label>* * *</label>
           <label title="Sort for rank" class="interact" @click="setSortTopic('')">Rank</label>
         </div>
 
 
         <!-- Default columns -->
-        <div class="column sticky-left-1">
-          <label title="Club initials">+++</label>
+        <div class="column sticky-left-1 split">
+          <label title="Live Table">Live</label>
+          <label title="Live Table">Table</label>
         </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
           <label title="Matches played">M</label>
