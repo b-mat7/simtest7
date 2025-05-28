@@ -18,7 +18,9 @@ const globalState = reactive({
     globalFocusClubs: ['FRB'],
 
     initClubs: [],
-    simClubs: []
+    simClubs: [],
+    simulatedMatchdays: [],
+    selectedMatchday: 0
 })
 
 export {

@@ -135,6 +135,7 @@
 <script>
 import { globalState } from '../lib/state.js'
 import { calcMomentum, calcInitiative, calcTransition, calcAttackStr, calcDefendStr, calcShotStr, calcSaveStr, calcShotCheck, updateTeam, updatePoints, updateFormData, updateForm, updateMorale, formatD0, formatD1, formatD2 } from '../lib/util.js'
+import { cloneDeep } from 'lodash'
 
 export default {
   emits: ['matchFinished'],
@@ -494,12 +495,11 @@ export default {
 
             // add match stuff to matchReport{}
             this.match.matchReport.liveTicker = [...this.liveTicker]
-            this.match.matchReport.home = { ...this.home }
-            this.match.matchReport.away = { ...this.away }
-            // +: result (homeGoals/awayGoals), stats (aus details->stats)
+            this.match.matchReport.home = cloneDeep(this.home)
+            this.match.matchReport.away = cloneDeep(this.away)
 
             // emit: match is finished
-            this.$emit('matchFinished', this.match.matchNr)
+            this.$emit('matchFinished', this.match.matchNr, this.match.matchReport)
           }
         }
       }, globalState.simulateSpeed)

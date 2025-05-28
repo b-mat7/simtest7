@@ -35,14 +35,24 @@
                     @click="handleToggleSimulatePara"
                     >Stop
                 </button>
-                <input v-model="globalState.simulateSpeed" type="number" title="Simulation speed in ms" placeholder="Speed" max="60000" style="max-width: 62px;">
+                <input
+                    v-model="globalState.simulateSpeed"
+                    type="number"
+                    title="Simulation speed in ms"
+                    placeholder="Speed"
+                    min="5"
+                    max="60000"
+                    style="max-width: 62px;"
+                    @keydown="preventEmptyField(globalState.simulateSpeed, $event)"
+                    @input="validateSimulateSpeedInput"
+                >
 
                 <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
                 <button v-else class="app-controls-btn btn-interact" title="Close controls panel" @click="handleToggleControlsPane">Close</button>
             </div>
         </div>
         <div v-if="showFullPane" class="table-controls">
-            <label class="descr-column">Table:</label>
+            <label class="descr-column">Tables:</label>
             <div class="btn-column">
                 <button
                     class="app-controls-btn btn-interact"
@@ -72,6 +82,18 @@
                     @click="handleTableShowRoleDetails"
                     >Role
                 </button>
+                <input
+                    v-model="globalState.selectedMatchday"
+                    type="number"
+                    title="Matchday Table: Selected matchday"
+                    placeholder="Day"
+                    :disabled="globalState.simulatedMatchdays.length === 0"
+                    min="0"
+                    :max="globalState.simulatedMatchdays.length -1"
+                    style="width: 62px;"
+                    @keydown="preventKeyboardInput"
+                    @input="validateSelectedMatchdayInput"
+                >
             </div>
         </div>
         <div v-if="showFullPane" class="clubs-controls">
@@ -166,7 +188,28 @@ export default {
             globalState.globalFocusClubs.includes(club.initials)
                 ? globalState.globalFocusClubs = globalState.globalFocusClubs.filter(item => item !== club.initials)
                 : globalState.globalFocusClubs.push(club.initials)
-        }
+        },
+
+        preventEmptyField(val, event) {
+            const key = event.key
+
+            if (val.toString().length === 1) {
+                if (key === 'Backspace' || key === 'Delete') event.preventDefault()
+            }
+        },
+
+        preventKeyboardInput(event) {
+            event.preventDefault()
+        },
+
+        validateSimulateSpeedInput() {
+            if (this.globalState.simulateSpeed < 5) this.globalState.simulateSpeed = 5
+            if (this.globalState.simulateSpeed > 60000) this.globalState.simulateSpeed = 60000
+        },
+        validateSelectedMatchdayInput() {
+            if (this.globalState.selectedMatchday < 0) this.globalState.selectedMatchday = 0
+            if (this.globalState.selectedMatchday > globalState.simulatedMatchdays.length - 1) this.globalState.selectedMatchday = globalState.simulatedMatchdays.length - 1
+        },
     }
 }
 </script>

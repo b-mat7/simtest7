@@ -11,8 +11,8 @@
 
         <!-- Default columns -->
         <div class="column sticky-left-1 split">
-          <label title="Live Table">Live</label>
-          <label title="Live Table">Table</label>
+          <label class="highlight" title="Live Table">Live</label>
+          <label class="highlight" title="Live Table">Table</label>
         </div>
         <div class="column interact" :class="{ 'highlight': sortTopic === 'matchesPlayed' }" @click="setSortTopic('matchesPlayed')">
           <label title="Matches played">M</label>

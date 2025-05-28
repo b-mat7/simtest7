@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { globalState } from '../lib/state.js'
 import SimulateMatch from './SimulateMatch.vue'
 
 export default {
@@ -50,8 +51,10 @@ export default {
   },
   data() {
     return {
+      globalState,
       matchdayOngoing: false,
       finishedMatches: [],
+      finishedMatchReports: [],
       showMatchdayDetails: false
     }
   },
@@ -59,9 +62,12 @@ export default {
     toggleMatchdayOngoing() {
       this.matchdayOngoing = !this.matchdayOngoing
     },
-    handleFinishedMatches(matchNr) {  // für resetMatch() müsste überabeitet werden
+    handleFinishedMatches(matchNr, matchReport) {  // für resetMatch() müsste überabeitet werden
       this.finishedMatches.push(matchNr)
+      this.finishedMatchReports.push(matchReport)
+
       if (this.matchday.matches.length === this.finishedMatches.length) {
+        this.globalState.simulatedMatchdays.push(this.finishedMatchReports)
         this.$emit('matchdayFinished', this.matchday.dayNr)
       }
     }

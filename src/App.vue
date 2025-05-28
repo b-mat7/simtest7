@@ -4,12 +4,16 @@
   </div>
 
   <!-- ensure clubs are available for prepareSeason() tasks -->
-  <div v-if="this.globalState.simClubs.length !== 0" class="season-container">
+  <div v-if="this.globalState.simClubs.length > 0" class="season-container">
     <SimulateSeason :schedule/>
   </div>
 
   <div class="tables-container">
     <DisplayTables />
+  </div>
+
+  <div class="tables-container">
+    <DisplayMatchdayTable />
   </div>
 
   <div class="clubs-container">
@@ -21,6 +25,7 @@
 import AppControls from './components/AppControls.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
 import DisplayTables from './components/DisplayTables.vue'
+import DisplayMatchdayTable from './components/DisplayMatchdayTable.vue'
 import DisplayClubs from './components/DisplayClubs.vue'
 
 import { globalState } from './lib/state.js'
@@ -54,6 +59,7 @@ export default {
     AppControls,
     SimulateSeason,
     DisplayTables,
+    DisplayMatchdayTable,
     DisplayClubs
   }
 }
