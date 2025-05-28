@@ -95,10 +95,11 @@ body {
   // margin: 0 auto;
   margin: 0.5rem;
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 
   .app-controls-container {
+    width: 100%;
     position: sticky;
     top: 0px;
     z-index: 10;

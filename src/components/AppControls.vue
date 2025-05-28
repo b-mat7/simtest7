@@ -46,13 +46,14 @@
                     @keydown="preventEmptyField(globalState.simulateSpeed, $event)"
                     @input="validateSimulateSpeedInput"
                 >
+
                 <input
                     v-model="globalState.playOpponent"
                     type="number"
                     class="app-controls-input small"
                     title="Play each club x times"
                     placeholder="Duels"
-                    min="1"
+                    min="2"
                     max="100"
                     @keydown="preventEmptyField(globalState.playOpponent, $event)"
                     @input="validatePlayOpponentInput"
@@ -162,7 +163,7 @@ export default {
     data() {
         return {
             globalState,
-            showFullPane: false,
+            showFullPane: true,
         }
     },
     methods: {
@@ -225,7 +226,7 @@ export default {
             if (this.globalState.simulateSpeed > 60000) this.globalState.simulateSpeed = 60000
         },
         validatePlayOpponentInput() {
-            if (this.globalState.playOpponent < 1) this.globalState.playOpponent = 1
+            if (this.globalState.playOpponent < 2) this.globalState.playOpponent = 2
             if (this.globalState.playOpponent > 100) this.globalState.playOpponent = 100
         },
         validateSelectedMatchdayInput() {

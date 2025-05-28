@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 const globalState = reactive({
     simulatePara: false,
     simulateSequ: false,
-    simulateSpeed: 50,
+    simulateSpeed: 5,
     playOpponent: 4,
 
     tableShowResultDetails: false,
