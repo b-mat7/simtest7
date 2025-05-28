@@ -38,14 +38,31 @@
                 <input
                     v-model="globalState.simulateSpeed"
                     type="number"
+                    class="app-controls-input"
                     title="Simulation speed in ms"
                     placeholder="Speed"
                     min="5"
                     max="60000"
-                    style="max-width: 62px;"
                     @keydown="preventEmptyField(globalState.simulateSpeed, $event)"
                     @input="validateSimulateSpeedInput"
                 >
+                <input
+                    v-model="globalState.playOpponent"
+                    type="number"
+                    class="app-controls-input small"
+                    title="Play each club x times"
+                    placeholder="Duels"
+                    min="1"
+                    max="100"
+                    @keydown="preventEmptyField(globalState.playOpponent, $event)"
+                    @input="validatePlayOpponentInput"
+                >
+                <button 
+                    class="app-controls-btn btn-interact"
+                    title="Generate new match schedule"
+                    @click="generateNewSchedule"
+                    >Generate
+                </button>
 
                 <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
                 <button v-else class="app-controls-btn btn-interact" title="Close controls panel" @click="handleToggleControlsPane">Close</button>
@@ -86,11 +103,11 @@
                     v-model="globalState.selectedMatchday"
                     type="number"
                     title="Matchday Table: Selected matchday"
+                    class="app-controls-input small"
                     placeholder="Day"
                     :disabled="globalState.simulatedMatchdays.length === 0"
                     min="0"
                     :max="globalState.simulatedMatchdays.length -1"
-                    style="width: 62px;"
                     @keydown="preventKeyboardInput"
                     @input="validateSelectedMatchdayInput"
                 >
@@ -140,6 +157,7 @@
 import { globalState } from '../lib/state.js'
 
 export default {
+    emits: ['generateNewSchedule'],
     name: 'AppControls',
     data() {
         return {
@@ -206,10 +224,18 @@ export default {
             if (this.globalState.simulateSpeed < 5) this.globalState.simulateSpeed = 5
             if (this.globalState.simulateSpeed > 60000) this.globalState.simulateSpeed = 60000
         },
+        validatePlayOpponentInput() {
+            if (this.globalState.playOpponent < 1) this.globalState.playOpponent = 1
+            if (this.globalState.playOpponent > 100) this.globalState.playOpponent = 100
+        },
         validateSelectedMatchdayInput() {
             if (this.globalState.selectedMatchday < 0) this.globalState.selectedMatchday = 0
             if (this.globalState.selectedMatchday > globalState.simulatedMatchdays.length - 1) this.globalState.selectedMatchday = globalState.simulatedMatchdays.length - 1
         },
+
+        generateNewSchedule() {
+            this.$emit('generateNewSchedule')
+        }
     }
 }
 </script>

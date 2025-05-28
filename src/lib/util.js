@@ -52,9 +52,9 @@ const shuffleClubs = (clubs) => {
 }
 
 // Schedule generator
-const createSchedule = (clubs) => {
+const createSchedule = (clubs, playOpponent) => {
   const numClubs = clubs.length
-  const numMatchdays = (numClubs - 1) * 2 // Two halves
+  const numMatchdays = (numClubs - 1) * playOpponent
 
   const shuffledClubs = shuffleClubs(clubs)
 
@@ -67,7 +67,7 @@ const createSchedule = (clubs) => {
   }
 
   // Generate first half of the schedule using modified round-robin algorithm
-  for (let day = 0; day < 4 * (numClubs - 1); day++) {
+  for (let day = 0; day < numMatchdays; day++) {
   // for (let day = 0; day < numClubs - 1; day++) {
     schedule.matchdayList[day] = {
       dayNr: day + 1,

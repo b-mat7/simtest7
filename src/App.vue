@@ -1,6 +1,6 @@
 <template>
   <div class="app-controls-container">
-    <AppControls />
+    <AppControls @generate-new-schedule="generateNewSchedule"/>
   </div>
 
   <!-- ensure clubs are available for prepareSeason() tasks -->
@@ -49,7 +49,10 @@ export default {
       this.globalState.initClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
       this.globalState.simClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
 
-      this.schedule = createSchedule(this.globalState.simClubs)
+      this.schedule = createSchedule(this.globalState.simClubs, this.globalState.playOpponent)
+    },
+    generateNewSchedule() {
+      this.schedule = createSchedule(this.globalState.simClubs, this.globalState.playOpponent)
     }
   },
   mounted() {
@@ -153,7 +156,7 @@ body {
   }
 
   .app-controls-btn {
-    min-width: 70px;
+    width: 72px;
   }
 
   .matchday-btn,
@@ -166,6 +169,14 @@ body {
   .highlight {
     font-weight: 900;
     color: #f0275e;
+  }
+
+  .app-controls-input {
+    width: 64px;
+
+    &.small {
+      width: 40px;
+    }
   }
 }
 </style>

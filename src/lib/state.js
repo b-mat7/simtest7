@@ -4,6 +4,7 @@ const globalState = reactive({
     simulatePara: false,
     simulateSequ: false,
     simulateSpeed: 50,
+    playOpponent: 4,
 
     tableShowResultDetails: false,
     tableShowPerfAvgDetails: false,
