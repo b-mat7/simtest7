@@ -51,7 +51,7 @@
                     v-model="globalState.playOpponent"
                     type="number"
                     class="app-controls-input small"
-                    title="Play each club x times"
+                    title="Match schedule: Each club plays each other x times"
                     placeholder="Duels"
                     min="2"
                     max="100"
