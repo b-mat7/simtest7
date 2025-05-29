@@ -256,7 +256,7 @@ export default {
         calcMomentum(this, this.home, this.away)
 
         // calc both teams' initiativeStr
-        calcInitiative(this, this.home, this.away, 10)
+        calcInitiative(this, this.home, this.away, this.globalState.outfieldPlayerDiceRange)
 
         // determine attacker based on initiative
         // BULLYS: bullyStr(bestPlayer) + dice + momentum
@@ -276,8 +276,8 @@ export default {
         // >--< >--< >--< HANDLE ATTACK >--< >--< >--<
         // >--< >--< >--< >--< >--< >--< >--< >--< >--<
         // calc attackStr + defendStr
-        this.attackStr = calcAttackStr(attacker, 10)
-        this.defendStr = calcDefendStr(defender, 10)
+        this.attackStr = calcAttackStr(attacker, this.globalState.outfieldPlayerDiceRange)
+        this.defendStr = calcDefendStr(defender, this.globalState.outfieldPlayerDiceRange)
         attacker === this.home
           ? (this.homeAttackStrSum += this.attackStr, this.awayDefendStrSum += this.defendStr)
           : (this.homeDefendStrSum += this.defendStr, this.awayAttackStrSum += this.attackStr)
@@ -300,8 +300,8 @@ export default {
           // >--< >--< >---< HANDLE SHOT (attackShot) >--< >--< >---<
           // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---<
           // calc Scoring- & SaveStr
-          this.shotStr = calcShotStr(attacker, 10)
-          this.saveStr = calcSaveStr(defender, 10)
+          this.shotStr = calcShotStr(attacker, this.globalState.outfieldPlayerDiceRange)
+          this.saveStr = calcSaveStr(defender, this.globalState.goalkeeperDiceRange)
           attacker === this.home
           ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
           : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)
@@ -353,7 +353,7 @@ export default {
           defender.fallbacks++
 
           // calc both teams' transitionStr
-          calcTransition(this, this.home, this.away, 10)
+          calcTransition(this, this.home, this.away, this.globalState.outfieldPlayerDiceRange)
 
           // determine if counter is successfull based on transition 
           if((this.homeTransitionStr > this.awayTransitionStr && attacker === this.home) || (this.awayTransitionStr > this.homeTransitionStr && attacker === this.away)) {
@@ -374,8 +374,8 @@ export default {
             // >--< >--< >---< HANDLE SHOT (counterShot) >--< >--< >---<
             // >--< >--< >---< >--< >--< >--< >--< >--< >--< >--< >---<
             // calc Scoring- & SaveStr
-            this.shotStr = calcShotStr(attacker, 10)
-            this.saveStr = calcSaveStr(defender, 10)
+            this.shotStr = calcShotStr(attacker, this.globalState.outfieldPlayerDiceRange)
+            this.saveStr = calcSaveStr(defender, this.globalState.goalkeeperDiceRange)
             attacker === this.home
             ? (this.homeShotStrSum += this.shotStr, this.awaySaveStrSum += this.saveStr)
             : (this.homeSaveStrSum += this.saveStr, this.awayShotStrSum += this.shotStr)

@@ -5,6 +5,8 @@ const globalState = reactive({
     simulateSequ: false,
     simulateSpeed: 5,
     playOpponent: 4,
+    outfieldPlayerDiceRange: 10,
+    goalkeeperDiceRange: 14,
 
     tableShowResultDetails: false,
     tableShowPerfAvgDetails: false,

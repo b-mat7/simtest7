@@ -65,6 +65,29 @@
                     >Generate
                 </button>
 
+                <input
+                    v-model="globalState.outfieldPlayerDiceRange"
+                    type="number"
+                    class="app-controls-input small"
+                    title="Field players: dice range from 0"
+                    placeholder="Field dice"
+                    min="1"
+                    max="20"
+                    @keydown="preventEmptyField(globalState.outfieldPlayerDiceRange, $event)"
+                    @input="validateOutfieldPlayerDiceRangeInput"
+                >
+                <input
+                    v-model="globalState.goalkeeperDiceRange"
+                    type="number"
+                    class="app-controls-input small"
+                    title="Goalkeepers: dice range from 0"
+                    placeholder="Goal dice"
+                    min="1"
+                    max="40"
+                    @keydown="preventEmptyField(globalState.goalkeeperDiceRange, $event)"
+                    @input="validateGoalkeeperDiceRangeInput"
+                >
+
                 <button v-if="!showFullPane" class="app-controls-btn btn-interact" title="Show full controls panel" @click="handleToggleControlsPane">Open</button>
                 <button v-else class="app-controls-btn btn-interact" title="Close controls panel" @click="handleToggleControlsPane">Close</button>
             </div>
@@ -228,6 +251,14 @@ export default {
         validatePlayOpponentInput() {
             if (this.globalState.playOpponent < 2) this.globalState.playOpponent = 2
             if (this.globalState.playOpponent > 100) this.globalState.playOpponent = 100
+        },
+        validateOutfieldPlayerDiceRangeInput() {
+            if (this.globalState.outfieldPlayerDiceRange < 1) this.globalState.outfieldPlayerDiceRange = 1
+            if (this.globalState.outfieldPlayerDiceRange > 20) this.globalState.outfieldPlayerDiceRange = 20
+        },
+        validateGoalkeeperDiceRangeInput() {
+            if (this.globalState.goalkeeperDiceRange < 1) this.globalState.goalkeeperDiceRange = 1
+            if (this.globalState.goalkeeperDiceRange > 40) this.globalState.goalkeeperDiceRange = 40
         },
         validateSelectedMatchdayInput() {
             if (this.globalState.selectedMatchday < 0) this.globalState.selectedMatchday = 0

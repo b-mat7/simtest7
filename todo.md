@@ -11,4 +11,3 @@ DisplayTable -> DisplayLiveTable
     mediaQuerry auf diese komponente
 
 > Matchday -> focus on current running day?
-> Goali +5%: saveDice = saveDice + 5% vom maxDice (permanent)
