@@ -2,9 +2,16 @@
   <div class="simulate-match-wrapper">
     <div class="main">
       <div class="teams">
-        <label :class="{'highlight': clubIsFocused(home)}">{{ home.initials }}</label>
-        <label> - </label>
-        <label :class="{'highlight': clubIsFocused(away)}">{{ away.initials }}</label>
+        <div>
+          <label :class="{'highlight': clubIsFocused(home)}">{{ home.initials }}</label>
+          <label> - </label>
+          <label :class="{'highlight': clubIsFocused(away)}">{{ away.initials }}</label>
+        </div>
+        <div class="live-ticker-goals-only">
+          <li v-for="(tick, index) in liveTickerGoalsOnly.slice(-1)" :key="index">
+            {{ tick }}
+          </li>
+        </div>
       </div>
       <div class="standing">
         <label>{{ homeGoals }}</label>
@@ -214,6 +221,11 @@ export default {
       liveTicker: [],
     }
   },
+  computed: {
+    liveTickerGoalsOnly() {
+      return this.liveTicker.filter(entry => entry.toString().includes('Goal'))
+    }
+  },
   methods: {
     formatD0, // need to define it here again to be able to use it in template section
     formatD1,
@@ -291,7 +303,7 @@ export default {
 
           // Time inkl random seconds: ${this.matchTime - 1}:${(Math.floor(Math.random() * 60)).toString().padStart(2, 0)}
           this.liveTicker.push(`
-            ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Attack success - ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)})
+            ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Attack success
           `)
           // console.log(`${attacker.initials} ATTACK SUCCESS`)
 
@@ -314,7 +326,7 @@ export default {
             defender.goalsAgainst++
 
             this.liveTicker.push(`
-              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Goal - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+              ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Goal
             `)
             // console.log(`${attacker.initials} >--< >--< >--< ATTACK GOAL - END >--< >--< >--<`)
 
@@ -324,7 +336,7 @@ export default {
             defender.saves++
 
             this.liveTicker.push(`
-              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Miss - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})               
+              ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Miss              
             `)
             // console.log(`${attacker.initials} >--< >--< >--< ATTACK MISS - END >--< >--< >--<`)
           }
@@ -332,7 +344,7 @@ export default {
         } else {
 
           this.liveTicker.push(`
-            ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Attack fail - ${this.attackStr} : ${this.defendStr} (${(this.attackStr - this.defendStr).toFixed(1)}) 
+            ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Attack fail 
           `)
           // console.log(`${attacker.initials} ATTACK FAIL - COUNTER/FB TRIGGERED`)
 
@@ -359,7 +371,7 @@ export default {
           if((this.homeTransitionStr > this.awayTransitionStr && attacker === this.home) || (this.awayTransitionStr > this.homeTransitionStr && attacker === this.away)) {
 
             this.liveTicker.push(`
-              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Counter success
+              ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Counter success
             `)
             // console.log(`${attacker.initials} COUNTER SUCCESS`)
 
@@ -388,7 +400,7 @@ export default {
               defender.goalsAgainst++
 
               this.liveTicker.push(`
-                ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Goal - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+                ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Goal
               `)
               // console.log(`${attacker.initials} >--< >--< >--< COUNTER GOAL - END >--< >--< >--<`)
 
@@ -398,7 +410,7 @@ export default {
               defender.saves++
 
               this.liveTicker.push(`
-                ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Miss - ${this.shotStr} : ${this.saveStr} (${(this.shotStr - this.saveStr).toFixed(1)})
+                ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Miss
               `)
               // console.log(`${attacker.initials} >--< >--< >--< COUNTER MISS - END >--< >--< >--<`)
             }
@@ -406,7 +418,7 @@ export default {
           } else {
 
             this.liveTicker.push(`
-              ${this.matchTime}. Min | ${this.homeGoals} : ${this.awayGoals} - ${attacker.initials} Counter fail
+              ${this.matchTime}. ${this.homeGoals}:${this.awayGoals} - ${attacker.initials} Counter fail
             `)
             // console.log(`${attacker.initials} >--< >--< >--< COUNTER FAIL - END >--< >--< >--<`)
           }
@@ -460,7 +472,7 @@ export default {
           if (this.homeGoals === this.awayGoals) {
             this.matchLength += 5
 
-            this.liveTicker.push(`${this.matchTime}. Min | +++ Overtime, +5min +++`)
+            this.liveTicker.push(`${this.matchTime}. +++ Overtime, +5min +++`)
           }
           else {
             this.stopSimulateMatch()
@@ -491,7 +503,7 @@ export default {
             // update morale (based on own+opponent form, role, rank)
             updateMorale(this, this.home, this.away)
 
-            this.liveTicker.push(`${this.matchTime}. Min | +++ End of the game +++`)
+            this.liveTicker.push(`${this.matchTime}. +++ End of the game +++`)
 
             // add match stuff to matchReport{}
             this.match.matchReport.liveTicker = [...this.liveTicker]
@@ -534,6 +546,13 @@ export default {
 
     .teams {
       min-width: 4.75rem;
+      display: flex;
+      flex-direction: column;
+
+      .live-ticker-goals-only {
+        font-size: 0.5rem;
+        list-style: none;
+      }
     }
     
     .standing {
@@ -601,6 +620,10 @@ export default {
 
       .teams {
         min-width: 3rem;
+
+        .live-ticker-goals-only {
+          font-size: 0.35rem;
+        }
       }
       
       .standing {

@@ -39,11 +39,9 @@
                     v-model="globalState.simulateSpeed"
                     type="number"
                     class="app-controls-input"
-                    title="Simulation speed in ms"
+                    title="Simulation speed in ms, max:60000"
                     placeholder="Speed"
-                    min="5"
                     max="60000"
-                    @keydown="preventEmptyField(globalState.simulateSpeed, $event)"
                     @input="validateSimulateSpeedInput"
                 >
 
@@ -51,11 +49,10 @@
                     v-model="globalState.playOpponent"
                     type="number"
                     class="app-controls-input small"
-                    title="Match schedule: Each club plays each other x times"
+                    title="Match schedule: Each club plays each other x times, min:2 max:100"
                     placeholder="Duels"
                     min="2"
                     max="100"
-                    @keydown="preventEmptyField(globalState.playOpponent, $event)"
                     @input="validatePlayOpponentInput"
                 >
                 <button 
@@ -69,22 +66,20 @@
                     v-model="globalState.outfieldPlayerDiceRange"
                     type="number"
                     class="app-controls-input small"
-                    title="Field players: dice range from 0"
-                    placeholder="Field dice"
+                    title="Field players: dice range, min:1 max:20"
+                    placeholder="Player dice"
                     min="1"
                     max="20"
-                    @keydown="preventEmptyField(globalState.outfieldPlayerDiceRange, $event)"
                     @input="validateOutfieldPlayerDiceRangeInput"
                 >
                 <input
                     v-model="globalState.goalkeeperDiceRange"
                     type="number"
                     class="app-controls-input small"
-                    title="Goalkeepers: dice range from 0"
-                    placeholder="Goal dice"
+                    title="Goalkeepers: dice range, min:1 max:40"
+                    placeholder="Goali dice"
                     min="1"
                     max="40"
-                    @keydown="preventEmptyField(globalState.goalkeeperDiceRange, $event)"
                     @input="validateGoalkeeperDiceRangeInput"
                 >
 
@@ -132,7 +127,6 @@
                     :disabled="globalState.simulatedMatchdays.length === 0"
                     min="1"
                     :max="currMatchday !== maxMatchday ? currMatchday -1 : maxMatchday"
-                    @keydown="preventKeyboardInput"
                     @input="validateSelectedMatchdayInput"
                 >
             </div>
@@ -242,18 +236,6 @@ export default {
             globalState.globalFocusClubs.includes(club.initials)
                 ? globalState.globalFocusClubs = globalState.globalFocusClubs.filter(item => item !== club.initials)
                 : globalState.globalFocusClubs.push(club.initials)
-        },
-
-        preventEmptyField(val, event) {
-            const key = event.key
-
-            if (val.toString().length === 1) {
-                if (key === 'Backspace' || key === 'Delete') event.preventDefault()
-            }
-        },
-
-        preventKeyboardInput(event) {
-            event.preventDefault()
         },
 
         validateSimulateSpeedInput() {
