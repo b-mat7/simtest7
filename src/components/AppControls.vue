@@ -308,7 +308,7 @@ export default {
         column-gap: 8px;
 
         .descr-column {
-            width: 64px;
+            min-width: 64px;
         }
 
         .btn-column {
@@ -322,6 +322,25 @@ export default {
             }
         }
         
+    }
+}
+
+@media (max-width: 576px) {
+    .controls-wrapper {
+        .season-controls,
+        .table-controls,
+        .clubs-controls,
+        .clubs-list-controls {
+            .descr-column {
+                min-width: 32px;
+            }
+
+            .btn-column {
+                .club-item {
+                    width: 1.5rem;
+                }
+            }
+        }
     }
 }
 </style>

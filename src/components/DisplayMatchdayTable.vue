@@ -1,6 +1,6 @@
 <template>
-    <div class="display-tables-wrapper">
-        <div class="live-table">
+    <div class="display-matchday-table-wrapper">
+        <div class="matchday-table">
             <div class="header">
                 <!-- TABLE HEADER -->
                 <div class="column sticky-left-0 split">
@@ -474,7 +474,7 @@ import { globalState } from '../lib/state.js'
 import { updateRank, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
-    name: 'DisplayTables',
+    name: 'DisplayMatchdayTable',
     data() {
         return {
             globalState,
@@ -527,10 +527,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.display-tables-wrapper {
+.display-matchday-table-wrapper {
     overflow-x: scroll;
 
-    .live-table {
+    .matchday-table {
         min-width: fit-content;
         max-width: fit-content;
         list-style: none;
@@ -591,6 +591,24 @@ export default {
             font-size: 0.85rem;
             display: flex;
             place-items: center;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .display-matchday-table-wrapper {
+        .matchday-table {
+            .column {
+                width: 2rem;
+            }
+
+            .sticky-left-1 {
+                left: 2rem;
+            }
+
+            .pointsL5 {
+                font-size: 0.5rem;
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
   </div>
 
   <div class="tables-container">
-    <DisplayTables />
+    <DisplayLiveTable />
   </div>
 
   <div class="tables-container">
@@ -24,7 +24,7 @@
 <script>
 import AppControls from './components/AppControls.vue'
 import SimulateSeason from './components/SimulateSeason.vue'
-import DisplayTables from './components/DisplayTables.vue'
+import DisplayLiveTable from './components/DisplayLiveTable.vue'
 import DisplayMatchdayTable from './components/DisplayMatchdayTable.vue'
 import DisplayClubs from './components/DisplayClubs.vue'
 
@@ -61,7 +61,7 @@ export default {
   components: {
     AppControls,
     SimulateSeason,
-    DisplayTables,
+    DisplayLiveTable,
     DisplayMatchdayTable,
     DisplayClubs
   }
@@ -177,6 +177,18 @@ body {
 
     &.small {
       width: 40px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  #app {
+    font-size: 0.5rem;
+
+    button,
+    input {
+      font-size: 0.5rem;
+      max-width: 56px;
     }
   }
 }

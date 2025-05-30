@@ -257,4 +257,24 @@ export default {
         }
     }
 }
+
+@media (max-width: 576px) {
+    .club {
+        min-width: 160px;
+
+        .ability-stats {
+            .ability-entry {
+                width: 1rem
+            }
+        }
+
+        .perf-stats {
+            .column {
+                .perf-entry {
+                    width: 5rem;
+                }
+            }
+        }
+    }
+}
 </style>

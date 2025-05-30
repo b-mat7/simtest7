@@ -92,7 +92,6 @@ export default {
 
 <style lang="scss" scoped>
 .simulate-matchday-wrapper {
-  min-width: 168px;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
@@ -116,6 +115,14 @@ export default {
     display: flex;
     flex-direction: column;
     row-gap: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .simulate-matchday-wrapper {
+    .controls {
+      max-width: 134px;
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="display-tables-wrapper">
+  <div class="display-live-table-wrapper">
     <div class="live-table">
       <div class="header">
         <!-- TABLE HEADER -->
@@ -374,7 +374,7 @@ import { globalState } from '../lib/state.js'
 import { updateRank, formatD1, formatD2 } from '../lib/util.js'
 
 export default {
-  name: 'DisplayTables',
+  name: 'DisplayLiveTable',
   data() {
     return {
       globalState,
@@ -418,7 +418,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.display-tables-wrapper {
+.display-live-table-wrapper {
   overflow-x: scroll;
   
   .live-table {
@@ -482,6 +482,24 @@ export default {
       font-size: 0.85rem;
       display: flex;
       place-items: center;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .display-live-table-wrapper {
+    .live-table {
+      .column {
+        width: 2rem;
+      }
+
+      .sticky-left-1 {
+        left: 2rem;
+      }
+
+      .pointsL5 {
+        font-size: 0.5rem;
+      }
     }
   }
 }

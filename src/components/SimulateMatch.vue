@@ -533,11 +533,11 @@ export default {
     justify-content: space-between;
 
     .teams {
-      width: 4.75rem;
+      min-width: 4.75rem;
     }
     
     .standing {
-      width: 2.5rem;
+      min-width: 2.5rem;
       text-align: center;
 
       .time {
@@ -553,7 +553,7 @@ export default {
   }
 
   .details {
-    min-width: 476px;
+    min-width: 29.75rem;
     font-size: 0.5rem;
 
     .stats {
@@ -591,6 +591,22 @@ export default {
 
   .bold {
     font-weight: 900;
+  }
+}
+
+@media (max-width: 576px) {
+  .simulate-match-wrapper {
+    .main {
+      min-width: 134px;
+
+      .teams {
+        min-width: 3rem;
+      }
+      
+      .standing {
+        min-width: 1.75rem;
+      }
+    }
   }
 }
 </style>
