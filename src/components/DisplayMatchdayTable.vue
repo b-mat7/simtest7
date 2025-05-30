@@ -484,9 +484,11 @@ export default {
         }
     },
     computed: {
+        // currMatchDay is always "the next day", so we need to show "the last day" up until it actually is the last day
+        // see AppControls -> selectedMatchday :max attribute calculation
         clubs() {
-            return this.globalState.simulatedMatchdays.length !== 0 && this.globalState.selectedMatchday >= 0
-                ? [...this.globalState.simulatedMatchdays[this.globalState.selectedMatchday]].flatMap(report => [report.home, report.away])
+            return this.globalState.simulatedMatchdays.length !== 0 && this.globalState.selectedMatchday <= this.globalState.simulatedMatchdays.length
+                ? [...this.globalState.simulatedMatchdays[this.globalState.selectedMatchday - 1]].flatMap(report => [report.home, report.away])
                 : []
         }
     },

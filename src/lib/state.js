@@ -23,7 +23,7 @@ const globalState = reactive({
     initClubs: [],
     simClubs: [],
     simulatedMatchdays: [],
-    selectedMatchday: 0
+    selectedMatchday: 1
 })
 
 export {

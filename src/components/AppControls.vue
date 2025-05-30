@@ -130,8 +130,8 @@
                     class="app-controls-input small"
                     placeholder="Day"
                     :disabled="globalState.simulatedMatchdays.length === 0"
-                    min="0"
-                    :max="globalState.simulatedMatchdays.length -1"
+                    min="1"
+                    :max="currMatchday !== maxMatchday ? currMatchday -1 : maxMatchday"
                     @keydown="preventKeyboardInput"
                     @input="validateSelectedMatchdayInput"
                 >
@@ -187,6 +187,18 @@ export default {
         return {
             globalState,
             showFullPane: true,
+        }
+    },
+    computed: {
+        // currMatchDay is always "the next day", so we need to show "the last day" up until it actually is the last day
+        // see DisplayMatchDayTable -> club computed prop -> simulatedMatchdays[selectedMatchday - 1]
+        currMatchday() {
+            return this.globalState.simulatedMatchdays.length + 1 < this.maxMatchday
+            ?   this.globalState.simulatedMatchdays.length + 1
+            :   this.globalState.simulatedMatchdays.length
+        },
+        maxMatchday() {
+            return (this.globalState.simClubs.length -1 ) * this.globalState.playOpponent
         }
     },
     methods: {
@@ -261,8 +273,8 @@ export default {
             if (this.globalState.goalkeeperDiceRange > 40) this.globalState.goalkeeperDiceRange = 40
         },
         validateSelectedMatchdayInput() {
-            if (this.globalState.selectedMatchday < 0) this.globalState.selectedMatchday = 0
-            if (this.globalState.selectedMatchday > globalState.simulatedMatchdays.length - 1) this.globalState.selectedMatchday = globalState.simulatedMatchdays.length - 1
+            if (this.globalState.selectedMatchday < 1) this.globalState.selectedMatchday = 1
+            if (this.globalState.selectedMatchday > this.maxMatchday) this.globalState.selectedMatchday = this.maxMatchday
         },
 
         generateNewSchedule() {
