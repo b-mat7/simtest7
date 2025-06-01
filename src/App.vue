@@ -119,6 +119,11 @@ body {
   }
 
   // GLOBAL STYLES SECTION
+  .highlight {
+    font-weight: 900;
+    color: #f0275e;
+  }
+
   .interact {
     cursor: pointer;
     transition: all 0.1s ease;
@@ -167,11 +172,6 @@ body {
     height: calc((2.25rem - 2px) / 2);
   }
 
-  .highlight {
-    font-weight: 900;
-    color: #f0275e;
-  }
-
   .app-controls-input {
     width: 64px;
 
@@ -185,10 +185,25 @@ body {
   #app {
     font-size: 0.5rem;
 
-    button,
-    input {
-      font-size: 0.5rem;
+    .app-controls-btn {
       max-width: 56px;
+      font-size: 0.5rem;
+    }
+
+    .matchday-btn,
+    .match-btn {
+      width: 34px;
+      font-size: 0.4rem;
+      height: calc((2rem - 2px) / 2);
+    }
+
+    .app-controls-input {
+      max-width: 56px;
+      font-size: 0.5rem;
+
+      &.small {
+        width: 32px;
+      }
     }
   }
 }

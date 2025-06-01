@@ -37,10 +37,16 @@
           >Auszeit
         </button>
         <button
-          v-if="matchTime > 0"
+          v-if="matchTime > 0 && !showDetails"
           class="match-btn btn-interact"
-          @click="showDetails = !showDetails"
+          @click="showDetails = true"
           >Details
+        </button>
+        <button
+          v-if="matchTime > 0 && showDetails"
+          class="match-btn btn-interact"
+          @click="showDetails = false"
+          >Close
         </button>
       </div>
     </div>
@@ -73,7 +79,7 @@
             <label>{{ formatD0((awayFallbacks - homeCounterShots) / awayFallbacks * 100) }}</label>
           </div>
         </div>
-        <div class="tweaks">
+        <!-- <div class="tweaks">
           <div class="entry">
             <label class="bold">Mm</label>
             <label>{{ formatD2(homeMomentum) }}</label>
@@ -89,11 +95,11 @@
             <label>{{ formatD2(home.morale) }}</label>
             <label>{{ formatD2(away.morale) }}</label>
           </div>
-          <!-- <div class="entry">
+          <div class="entry">
             <label>Mod</label>
             Analog zu Buffs
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <div class="attack">
           <div class="entry">
             <label class="bold">Atø</label>
@@ -572,7 +578,7 @@ export default {
   }
 
   .details {
-    min-width: 29.75rem;
+    min-width: 23.25rem;
     font-size: 0.5rem;
 
     .stats {
@@ -615,19 +621,45 @@ export default {
 
 @media (max-width: 576px) {
   .simulate-match-wrapper {
+    height: 2rem;
+
     .main {
-      min-width: 134px;
+      min-width: 126px;
 
       .teams {
         min-width: 3rem;
 
         .live-ticker-goals-only {
-          font-size: 0.35rem;
+          font-size: 0.4rem;
         }
       }
       
       .standing {
-        min-width: 1.75rem;
+        min-width: 1.5rem;
+
+        .time {
+          font-size: 0.4rem;
+        }
+      }
+    }
+
+    .details {
+      min-width: 19.375rem;
+      font-size: 0.4rem;
+
+      .stats {
+        .possession,
+        .tweaks,
+        .attack,
+        .defend {
+          .entry {
+            width: 1.65rem;
+          }
+        }
+      }
+
+      .ticker {
+        height: 1.8rem;
       }
     }
   }

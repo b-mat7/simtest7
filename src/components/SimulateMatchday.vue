@@ -17,9 +17,16 @@
         >Auszeit
       </button>
       <button
+        v-if="!showMatchdayDetails"
         class="matchday-btn btn-interact"
-        @click="showMatchdayDetails = !showMatchdayDetails"
+        @click="showMatchdayDetails = true"
         >Details
+      </button>
+      <button
+        v-else
+        class="matchday-btn btn-interact"
+        @click="showMatchdayDetails = false"
+        >Close
       </button>
     </div>
     <div class="matches">
@@ -121,7 +128,7 @@ export default {
 @media (max-width: 576px) {
   .simulate-matchday-wrapper {
     .controls {
-      max-width: 134px;
+      max-width: 126px;
     }
   }
 }
