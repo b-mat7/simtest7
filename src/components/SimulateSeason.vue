@@ -1,6 +1,6 @@
 <template>
   <div class="simulate-season-wrapper">
-    <div v-for="matchday in schedule.matchdayList">
+    <div v-for="matchday in globalState.schedule.matchdayList">
       <SimulateMatchday :matchday :simulatePara="globalState.simulatePara" :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
     </div>
   </div>
@@ -14,12 +14,6 @@ import { updateRank, prepareRole, updateRoleDiff, updatePriceMoney } from '../li
 
 export default {
   name: 'SimulateSeason',
-  props: {
-    schedule: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
       globalState,
@@ -32,7 +26,7 @@ export default {
     async startSimulateSequIntervals() {
       if(globalState.simulateSequ) {
         this.startDayIntervall = setInterval(async () => {
-          let nextSimDay = this.schedule.matchdayList.find(matchday => this.finishedMatchdays.includes(matchday.dayNr) === false)
+          let nextSimDay = this.globalState.schedule.matchdayList.find(matchday => this.finishedMatchdays.includes(matchday.dayNr) === false)
 
           if (!nextSimDay) {
             clearInterval(this.startDayIntervall)

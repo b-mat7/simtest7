@@ -24,14 +24,13 @@
       <div class="controls">
         <button
           v-if="!matchOngoing"
-          :disabled="matchTime === matchLength"
+          :disabled="!globalState.simulationCanStart || matchTime === matchLength"
           class="match-btn btn-interact"
           @click="simulateMatch"
           >Anpfiff
         </button>
         <button
           v-else
-          :disabled="matchTime === matchLength"
           class="match-btn btn-interact"
           @click="stopSimulateMatch"
           >Auszeit
@@ -244,7 +243,7 @@ export default {
     simulateMatch() {
       // update matches_played one-time
       !this.initMatchesPlayedUpdated ? (this.home.matchesPlayed++, this.away.matchesPlayed++, this.initMatchesPlayedUpdated = true) : null
-
+      this.globalState.simulationHasStarted = true
 
       // >--< >--< >--< >--< >--< >--< >--< >--< >--< >--<
       // >--< >--< >--< START MATCH CYCLE >--< >--< >--<

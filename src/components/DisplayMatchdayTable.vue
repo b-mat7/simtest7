@@ -1,6 +1,6 @@
 <template>
     <div class="display-matchday-table-wrapper">
-        <div class="matchday-table">
+        <div v-if="matchdayTable.length !== 0" class="matchday-table">
             <div class="header">
                 <!-- TABLE HEADER -->
                 <div class="column sticky-left-0 split">
@@ -485,9 +485,13 @@ export default {
     },
     computed: {
         // currMatchDay is always "the next day", so we need to show "the last day" up until it actually is the last day
-        // see AppControls -> selectedMatchday :max attribute calculation
+        // see AppControls -> matchdayTableDisplayMaxMatchday
+        // not all checks here are needed since validateSelectedMatchdayInput in AppControls handels some of the boundaries 
         clubs() {
-            return this.globalState.simulatedMatchdays.length !== 0 && this.globalState.selectedMatchday <= this.globalState.simulatedMatchdays.length
+            return this.globalState.simulatedMatchdays.length !== 0 
+                && this.globalState.selectedMatchday 
+                && this.globalState.selectedMatchday > 0 
+                && this.globalState.selectedMatchday <= this.globalState.simulatedMatchdays.length
                 ? [...this.globalState.simulatedMatchdays[this.globalState.selectedMatchday - 1]].flatMap(report => [report.home, report.away])
                 : []
         }

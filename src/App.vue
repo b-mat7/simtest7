@@ -1,11 +1,11 @@
 <template>
   <div class="app-controls-container">
-    <AppControls @generate-new-schedule="generateNewSchedule"/>
+    <AppControls />
   </div>
 
   <!-- ensure clubs are available for prepareSeason() tasks -->
-  <div v-if="this.globalState.simClubs.length > 0" class="season-container">
-    <SimulateSeason :schedule/>
+  <div v-if="this.globalState.simClubs.length > 0 && this.globalState.schedule" class="season-container">
+    <SimulateSeason />
   </div>
 
   <div class="tables-container">
@@ -31,7 +31,6 @@ import DisplayClubs from './components/DisplayClubs.vue'
 import { globalState } from './lib/state.js'
 import { Club } from './models/club.js'
 import { clubSeedData } from './data/clubSeed.js'
-import { createSchedule } from './lib/util.js'
 
 export default {
   name: 'App',
@@ -39,20 +38,13 @@ export default {
     return {
       globalState,
       season: 2023,
-      league: 'DEL2',
-      clubs: [],
-      schedule: []
+      league: 'DEL2'
     }
   },
   methods: {
     init(Club, clubSeedData) {
       this.globalState.initClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
       this.globalState.simClubs = clubSeedData.map(clubSeed => new Club(clubSeed))
-
-      this.schedule = createSchedule(this.globalState.simClubs, this.globalState.playOpponent)
-    },
-    generateNewSchedule() {
-      this.schedule = createSchedule(this.globalState.simClubs, this.globalState.playOpponent)
     }
   },
   mounted() {
@@ -93,7 +85,7 @@ body {
 #app {
   // max-width: 1280px;
   // margin: 0 auto;
-  margin: 0.5rem;
+  margin: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -103,7 +95,6 @@ body {
     position: sticky;
     top: 0px;
     z-index: 10;
-    // max-width: fit-content;
   }
 
   .season-container {
@@ -183,7 +174,9 @@ body {
 
 @media (max-width: 576px) {
   #app {
+    margin: 4px;
     font-size: 0.5rem;
+    gap: 4px;
 
     .app-controls-btn {
       max-width: 56px;

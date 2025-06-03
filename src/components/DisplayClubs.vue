@@ -42,4 +42,10 @@ export default {
   display: flex;
   column-gap: 8px;
 }
+
+@media (max-width: 576px) {
+  .display-clubs-wrapper {
+    column-gap: 4px;
+  }
+}
 </style>

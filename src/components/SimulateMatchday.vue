@@ -4,14 +4,13 @@
       <label>Day: {{ matchday.dayNr }}</label>
       <button
         v-if="!matchdayOngoing"
-        :disabled="matchday.matches.length === finishedMatches.length"
+        :disabled="!globalState.simulationCanStart || matchday.matches.length === finishedMatches.length"
         class="matchday-btn btn-interact"
         @click="toggleMatchdayOngoing"
         >Anpfiff
       </button>
       <button
         v-else
-        :disabled="matchday.matches.length === finishedMatches.length"
         class="matchday-btn btn-interact"
         @click="toggleMatchdayOngoing"
         >Auszeit
