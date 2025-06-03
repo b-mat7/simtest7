@@ -1,7 +1,9 @@
 <template>
   <div class="simulate-matchday-wrapper">
     <div class="controls">
-      <label>Day: {{ matchday.dayNr }}</label>
+      <div>
+        <label>{{ matchday.dayNr }}</label><label v-if="matchday.dayNr === 1 || matchday.dayNr % 10 === 0"> / {{ globalState.schedule.matchdayList.length }}</label>
+      </div>
       <button
         v-if="!matchdayOngoing"
         :disabled="!globalState.simulationCanStart || matchday.matches.length === finishedMatches.length"
@@ -11,6 +13,7 @@
       </button>
       <button
         v-else
+        :disabled="matchday.matches.length === finishedMatches.length"
         class="matchday-btn btn-interact"
         @click="toggleMatchdayOngoing"
         >Auszeit
@@ -76,6 +79,10 @@ export default {
         this.globalState.simulatedMatchdays.push(this.finishedMatchReports)
         this.$emit('matchdayFinished', this.matchday.dayNr)
       }
+    },
+    // Scroll matchday into view when its up
+    focus() {
+      this.$el.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   },
   watch: {  //xday

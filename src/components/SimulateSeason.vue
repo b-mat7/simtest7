@@ -1,7 +1,7 @@
 <template>
   <div class="simulate-season-wrapper">
-    <div v-for="matchday in globalState.schedule.matchdayList">
-      <SimulateMatchday :matchday :simulatePara="globalState.simulatePara" :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
+    <div v-for="(matchday, idx) in globalState.schedule.matchdayList" :key="matchday.dayNr">
+      <SimulateMatchday :ref="'matchday' + matchday.dayNr" :matchday :simulatePara="globalState.simulatePara" :simulateSequDayNr @matchdayFinished="handlefinishedMatchdays"/>
     </div>
   </div>
 </template>
@@ -32,6 +32,10 @@ export default {
             clearInterval(this.startDayIntervall)
           } else {
             this.simulateSequDayNr = nextSimDay.dayNr
+
+            // Focus view on current matchday
+            const matchdayRef = this.$refs['matchday' + this.simulateSequDayNr]
+            if (matchdayRef && matchdayRef[0]) matchdayRef[0].focus()
 
             await new Promise(resolve => {
               const checkDayIntervall = setInterval(() => {
