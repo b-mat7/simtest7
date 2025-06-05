@@ -96,11 +96,6 @@ export class Club {
 
 
   // --- PERF AVG TOTAL ---
-  pointsL5Avg(lastNMatchdays) {
-    return this.matchesPlayed > 0 
-    ? formatD2((this.resultPoints.slice(-lastNMatchdays).reduce((a, b) => a + b, 0) / Math.min(this.resultPoints.length, lastNMatchdays))) 
-    : 0
-  }
   initiativeStrAvg() {
     return this.matchesPlayed > 0 
     ? formatD2(this.initiativeStrSum / this.intervalsPlayed) 
@@ -149,6 +144,11 @@ export class Club {
 
 
   // --- PERF AVG Last x ---
+  pointsL5Avg(lastNMatchdays) {
+    return this.matchesPlayed > 0 
+    ? formatD2((this.resultPoints.slice(-lastNMatchdays).reduce((a, b) => a + b, 0) / Math.min(this.resultPoints.length, lastNMatchdays))) 
+    : 0
+  }
 
 
   // --- PERF EFF TOTAL ( % ) ---
