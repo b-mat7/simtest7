@@ -668,6 +668,7 @@ const updateRoleDiff = (clubs) => {
 const formatD0 = (num, decimals = 0) => Number(num.toFixed(decimals))
 const formatD1 = (num, decimals = 1) => Number(num.toFixed(decimals))
 const formatD2 = (num, decimals = 2) => Number(num.toFixed(decimals))
+const formatD3 = (num, decimals = 3) => Number(num.toFixed(decimals))
 
 export {
   shuffleClubs,
@@ -695,4 +696,5 @@ export {
   formatD0,
   formatD1,
   formatD2,
+  formatD3,
 }

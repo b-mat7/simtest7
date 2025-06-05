@@ -48,6 +48,14 @@
                     :error="!globalState.selectedMatchday"
                     @update:modelValue="validateSelectedMatchdayInput"
                 />
+                <DataInput
+                    v-model="globalState.lastNMatchdays"
+                    title="Table: L.. entry: Select number of last matchdays min:1 max:5"
+                    label="Last matchdays"
+                    :disabled="globalState.simulatedMatchdays.length === 0"
+                    :error="!globalState.lastNMatchdays"
+                    @update:modelValue="validateLastNMatchdaysInput"
+                />
             </div>
         </div>
         <div class="season-controls">
@@ -91,6 +99,23 @@
                     class="app-controls-btn btn-interact"
                     title="Stop simulate matchdays in parallel"
                     @click="handleToggleSimulatePara"
+                    >Stop
+                </button>
+
+                <button 
+                    v-if="!globalState.focusMatchday"
+                    :disabled="!globalState.simulationCanStart"
+                    class="app-controls-btn btn-interact"
+                    title="Focus on current matchday"
+                    @click="handleToggleFocusMatchday"
+                    >Focus
+                </button>
+                <button 
+                    v-else
+                    :disabled="!globalState.simulationCanStart"
+                    class="app-controls-btn btn-interact"
+                    title="Stop focus on current matchday"
+                    @click="handleToggleFocusMatchday"
                     >Stop
                 </button>
 
@@ -217,6 +242,9 @@ export default {
         handleToggleSimulatePara() {
             globalState.simulatePara = !globalState.simulatePara
         },
+        handleToggleFocusMatchday() {
+            globalState.focusMatchday = !globalState.focusMatchday
+        },
         handleToggleControlsPane() {
             this.showFullPane = !this.showFullPane
         },
@@ -270,8 +298,12 @@ export default {
             if (this.globalState.goalkeeperDiceRange > 40) this.globalState.goalkeeperDiceRange = 40
         },
         validateSelectedMatchdayInput() {
-            if (!this.globalState.selectedMatchday  || this.globalState.selectedMatchday < 1) this.globalState.selectedMatchday = 1
+            if (!this.globalState.selectedMatchday || this.globalState.selectedMatchday < 1) this.globalState.selectedMatchday = 1
             if (this.globalState.selectedMatchday > this.matchdayTableDisplayMaxMatchday) this.globalState.selectedMatchday = this.matchdayTableDisplayMaxMatchday
+        },
+        validateLastNMatchdaysInput() {
+            if (!this.globalState.lastNMatchdays || this.globalState.lastNMatchdays < 1) this.globalState.lastNMatchdays = 1
+            if (this.globalState.lastNMatchdays > 5) this.globalState.lastNMatchdays = 5
         },
 
         generateNewSchedule() {

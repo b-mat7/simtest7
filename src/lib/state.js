@@ -1,15 +1,17 @@
 import { reactive } from 'vue'
 
 const globalState = reactive({
-    schedule: undefined,
-    simulatePara: false,
-    simulateSequ: false,
     simulateSpeed: 5,
     playOpponent: 4,
     outfieldPlayerDiceRange: 10,
     goalkeeperDiceRange: 14,
+
+    schedule: undefined,
     simulationCanStart: false,
     simulationHasStarted: false,
+    simulatePara: false,
+    simulateSequ: false,
+    focusMatchday: false,
 
     tableShowResultDetails: false,
     tableShowPerfAvgDetails: false,
@@ -26,7 +28,8 @@ const globalState = reactive({
     initClubs: [],
     simClubs: [],
     simulatedMatchdays: [],
-    selectedMatchday: 1
+    selectedMatchday: 1,
+    lastNMatchdays: 5
 })
 
 export {

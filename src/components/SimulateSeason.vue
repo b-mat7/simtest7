@@ -33,9 +33,7 @@ export default {
           } else {
             this.simulateSequDayNr = nextSimDay.dayNr
 
-            // Focus view on current matchday
-            const matchdayRef = this.$refs['matchday' + this.simulateSequDayNr]
-            if (matchdayRef && matchdayRef[0]) matchdayRef[0].focus()
+            this.focusMatchday()
 
             await new Promise(resolve => {
               const checkDayIntervall = setInterval(() => {
@@ -63,6 +61,10 @@ export default {
       updateRank(this.globalState.simClubs, null, 'rankMatchday')
       updateRoleDiff(this.globalState.simClubs)
       // updatePriceMoney(this.globalState.simClubs, this.finishedMatchdays)
+    },
+    focusMatchday() { // Focus view on current matchday
+      const matchdayRef = this.$refs['matchday' + this.simulateSequDayNr]
+      if (this.globalState.focusMatchday && matchdayRef && matchdayRef[0]) matchdayRef[0].focus()
     }
   },
   watch: {

@@ -85,11 +85,11 @@
 
                 <!-- PERF AVG TOTAL -->
                 <div class="column" v-if="globalState.tableShowPerfAvgDetails">
-                    <label title="Points last 5 games">P5</label>
+                    <label title="Points last n games">L{{ globalState.lastNMatchdays }}P</label>
                 </div>
                 <div class="column interact" :class="{ 'highlight': sortTopic === 'pointsL5Avg' }"
                     @click="setSortTopic('pointsL5Avg')" v-if="globalState.tableShowPerfAvgDetails">
-                    <label title="Points last 5 games avg">P5ø</label>
+                    <label title="Points last n games avg">L{{ globalState.lastNMatchdays }}Pø</label>
                 </div>
                 <div class="column interact" :class="{ 'highlight': sortTopic === 'initiativeStrAvg' }"
                     @click="setSortTopic('initiativeStrAvg')" v-if="globalState.tableShowPerfAvgDetails">
@@ -315,11 +315,11 @@
                     <!-- PERF AVG TOTAL -->
                     <div class="column pointsL5" :class="{ 'highlight': clubIsFocused(club) }"
                         v-if="globalState.tableShowPerfAvgDetails">
-                        <label>{{ club.resultPoints.slice(-5).join('') }}</label>
+                        <label>{{ club.resultPoints.slice(-globalState.lastNMatchdays).join('') }}</label>
                     </div>
                     <div class="column" :class="{ 'highlight': sortTopic === 'pointsL5Avg' || clubIsFocused(club) }"
                         v-if="globalState.tableShowPerfAvgDetails">
-                        <label>{{ club.pointsL5Avg() }}</label>
+                        <label>{{ club.pointsL5Avg(globalState.lastNMatchdays) }}</label>
                     </div>
                     <div class="column"
                         :class="{ 'highlight': sortTopic === 'initiativeStrAvg' || clubIsFocused(club) }"
