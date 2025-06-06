@@ -11,7 +11,7 @@
 
         <!-- PERF AVG TOTAL & RESULT-->
         <div class="result">
-            <label title="Points last n games (avg)">L{{ globalState.lastNMatchdays }}P(ø) {{ club.resultPoints.slice(-globalState.lastNMatchdays) }} ({{ club.pointsL5Avg(globalState.lastNMatchdays)
+            <label title="Points avg last n games">PL{{ globalState.lastNMatchdays }} {{ club.resultPoints.slice(-globalState.lastNMatchdays) }} ø({{ club.pointsAvgL5(globalState.lastNMatchdays)
                 }})</label>
             <label title="W - OTW - OTL - L">{{ club.wins() }}-{{ club.winsOvertime() }}-{{ club.lossesOvertime() }}-{{
                 club.losses() }}</label>

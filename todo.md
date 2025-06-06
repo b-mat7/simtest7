@@ -1,5 +1,6 @@
-> MATCHDAY TABLES:
-DisplayTable -> DisplayLiveTable
-    + DisplayMatchdayTable mit Auswahl im Season Control (just the from-to days)
-    LiveTable: + Rank diff zu last matchday
+TABLES:
+- vor 1.column: Position Diff zu last MatchdayPosition
+- MatchdayTable: mit Auswahl from-to days
 
+TABLES + CLUBS
+Für alle Totals Werte: Lx Wert (via lastNMatchdays) aus simulatedMatchdays[]

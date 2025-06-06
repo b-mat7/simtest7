@@ -144,7 +144,7 @@ export class Club {
 
 
   // --- PERF AVG Last x ---
-  pointsL5Avg(lastNMatchdays) {
+  pointsAvgL5(lastNMatchdays) {
     return this.matchesPlayed > 0 
     ? formatD2((this.resultPoints.slice(-lastNMatchdays).reduce((a, b) => a + b, 0) / Math.min(this.resultPoints.length, lastNMatchdays))) 
     : 0

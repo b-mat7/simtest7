@@ -35,11 +35,11 @@
                     <label title="Points">P</label>
                 </div>
                 <div class="column">
-                    <label title="Points last n games">L{{ globalState.lastNMatchdays }}P</label>
+                    <label title="Points last n games">PL{{ globalState.lastNMatchdays }}</label>
                 </div>
-                <div class="column interact" :class="{ 'highlight': sortTopic === 'pointsL5Avg' }"
-                    @click="setSortTopic('pointsL5Avg')">
-                    <label title="Points last n games avg">L{{ globalState.lastNMatchdays }}Pø</label>
+                <div class="column interact" :class="{ 'highlight': sortTopic === 'pointsAvgL5' }"
+                    @click="setSortTopic('pointsAvgL5')">
+                    <label title="Points avg last n games">PøL{{ globalState.lastNMatchdays }}</label>
                 </div>
 
 
@@ -262,8 +262,8 @@
                     <div class="column pointsL5" :class="{ 'highlight': clubIsFocused(club) }">
                         <label>{{ club.resultPoints.slice(-globalState.lastNMatchdays).join('') }}</label>
                     </div>
-                    <div class="column" :class="{ 'highlight': sortTopic === 'pointsL5Avg' || clubIsFocused(club) }">
-                        <label>{{ club.pointsL5Avg(globalState.lastNMatchdays) }}</label>
+                    <div class="column" :class="{ 'highlight': sortTopic === 'pointsAvgL5' || clubIsFocused(club) }">
+                        <label>{{ club.pointsAvgL5(globalState.lastNMatchdays) }}</label>
                     </div>
 
 
@@ -499,7 +499,7 @@ export default {
         createMatchdayTable(clubs, sortTopic, entryName) {
             this.matchdayTable = updateRank(clubs, sortTopic, entryName).sort((a, b) => {
                 return typeof a[this.sortTopic] === 'function'
-                    ? b[this.sortTopic]() - a[this.sortTopic]()
+                    ? b[this.sortTopic](this.globalState.lastNMatchdays) - a[this.sortTopic](this.globalState.lastNMatchdays)
                     : b[this.sortTopic] - a[this.sortTopic]
             })
         },
